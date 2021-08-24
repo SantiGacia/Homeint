@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 17-06-2021 a las 07:06:17
--- Versión del servidor: 10.4.17-MariaDB
--- Versión de PHP: 8.0.2
+-- Tiempo de generación: 19-08-2021 a las 00:16:11
+-- Versión del servidor: 10.4.20-MariaDB
+-- Versión de PHP: 8.0.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `actitud` (
   `idActitud` int(11) NOT NULL,
-  `Descripcion` varchar(20) NOT NULL
+  `Descripcion` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -87,7 +87,7 @@ CREATE TABLE `candidato` (
   `RFC` varchar(13) DEFAULT NULL,
   `Nombre` varchar(45) DEFAULT NULL,
   `Domicilio` varchar(45) DEFAULT NULL,
-  `Telefono` varchar(45) DEFAULT NULL,
+  `Telefono` varchar(10) DEFAULT NULL,
   `E_Mail` varchar(45) DEFAULT NULL,
   `Sexo` varchar(45) DEFAULT NULL,
   `Edad` tinyint(2) DEFAULT NULL,
@@ -168,7 +168,7 @@ CREATE TABLE `candidato_has_nivelacademico` (
 --
 
 INSERT INTO `candidato_has_nivelacademico` (`Curp`, `idNivelAcademico`, `idCarrera`, `Institucion`, `valida`) VALUES
-('COCR800325HASDD03', 11, 8, 'UAA', 'Si'),
+('COCR800325HASDD03', 11, 8, 'UAA', 'No'),
 ('GOML900330MASDD03', 11, 8, 'UAA', 'Si');
 
 -- --------------------------------------------------------
@@ -198,19 +198,21 @@ INSERT INTO `carrera` (`idCarrera`, `Descripcion`) VALUES
 
 CREATE TABLE `contacto` (
   `idcontacto` int(11) NOT NULL,
-  `Nombre` varchar(100) NOT NULL,
+  `Nombre` varchar(45) NOT NULL,
   `Domicilio` varchar(45) DEFAULT NULL,
   `Razon_Social` varchar(45) DEFAULT NULL,
-  `Telefono` varchar(45) DEFAULT NULL
+  `Telefono` varchar(10) DEFAULT NULL,
+  `Email` varchar(45) NOT NULL,
+  `Link` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `contacto`
 --
 
-INSERT INTO `contacto` (`idcontacto`, `Nombre`, `Domicilio`, `Razon_Social`, `Telefono`) VALUES
-(3, 'Contacto de contratación 1', 'conocido', 'SR', '9999999999'),
-(4, 'Contacto de contratación 2 ', 'conocido', 'SR', '9999999999');
+INSERT INTO `contacto` (`idcontacto`, `Nombre`, `Domicilio`, `Razon_Social`, `Telefono`, `Email`, `Link`) VALUES
+(3, 'Contacto de contratación 1', 'conocido', 'SR', '4495566907', '', ''),
+(4, 'Contacto de contratación 2 ', 'conocido', 'SR', '2147483647', '', '');
 
 -- --------------------------------------------------------
 
@@ -220,15 +222,15 @@ INSERT INTO `contacto` (`idcontacto`, `Nombre`, `Domicilio`, `Razon_Social`, `Te
 
 CREATE TABLE `datos_de_empresa` (
   `idEmpresa` int(11) NOT NULL,
-  `Nombre_de_empresa` varchar(100) NOT NULL,
-  `Descripcion` varchar(100) DEFAULT NULL,
-  `Telefono` varchar(40) DEFAULT NULL,
-  `Domicilio` varchar(100) DEFAULT NULL,
-  `E_Mail` varchar(50) DEFAULT NULL,
-  `RazonSocial` varchar(50) DEFAULT NULL,
-  `Estructura_Juridica` varchar(50) DEFAULT NULL,
-  `Encargado` varchar(50) DEFAULT NULL,
-  `CIF_Empresa` varchar(45) DEFAULT NULL
+  `Nombre_de_empresa` varchar(45) NOT NULL,
+  `Descripcion` varchar(45) DEFAULT NULL,
+  `Telefono` varchar(10) DEFAULT NULL,
+  `Domicilio` varchar(45) DEFAULT NULL,
+  `E_Mail` varchar(45) DEFAULT NULL,
+  `RazonSocial` varchar(45) DEFAULT NULL,
+  `Estructura_Juridica` varchar(45) DEFAULT NULL,
+  `Encargado` varchar(45) DEFAULT NULL,
+  `CIF_Empresa` varchar(9) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -236,7 +238,7 @@ CREATE TABLE `datos_de_empresa` (
 --
 
 INSERT INTO `datos_de_empresa` (`idEmpresa`, `Nombre_de_empresa`, `Descripcion`, `Telefono`, `Domicilio`, `E_Mail`, `RazonSocial`, `Estructura_Juridica`, `Encargado`, `CIF_Empresa`) VALUES
-(1, 'PruebaSist S.A ', 'Empresa de prueba para el sistema ', '449-999-8888', '449-999-8888', 'pruebasist@pruebasist.com.mx', 'PruebaSist S.A.', 'S.A', 'Nombre del CEO ', '?????????');
+(1, 'PruebaSist S.A ', 'Empresa de prueba para el sistema ', '449-999-88', '449-999-8888', 'pruebasist@pruebasist.com.mx', 'PruebaSist S.A.', 'S.A', 'Nombre del CEO ', '?????????');
 
 -- --------------------------------------------------------
 
@@ -388,7 +390,7 @@ INSERT INTO `nivelacademico` (`idNivelAcademico`, `Descripcion`) VALUES
 
 CREATE TABLE `perfil_admo` (
   `id_perfil` int(11) NOT NULL,
-  `Descripcion` varchar(50) NOT NULL
+  `Descripcion` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -420,7 +422,7 @@ CREATE TABLE `perfil_has_proceso` (
 
 CREATE TABLE `permisos` (
   `id_permiso` int(11) NOT NULL,
-  `Descripcion` varchar(50) NOT NULL
+  `Descripcion` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -557,8 +559,8 @@ CREATE TABLE `resultadocandidato` (
 --
 
 INSERT INTO `resultadocandidato` (`EstatusProceso`, `Comentarios_area`, `Comentarios_ofertas_salario`, `Comentarios_area_seleccion`, `estatus`, `idSolicitud`, `Curp`, `id_actitud`, `Coeficiente_Intelectual`, `Personalidad`, `apto_psico`, `Validar_ref`, `Calificacion_Medica`, `validacion`, `Calificacion`, `Califica_el_Perfil`) VALUES
-('3', '', '', '', 'Si', 31, 'COCR800325HASDD03', 0, 100, 'Bueno', 0, 'Si', 'No Apto', 'Si', 'Apto', 'bueno'),
-('2', '', '', '', 'No', 31, 'GOML900330MASDD03', 0, 50, 'Regular', 0, 'No', 'Apto', 'No', 'Apto', '75');
+('3', '', '', '', 'Si', 31, 'COCR800325HASDD03', 0, 100, 'Bueno', 0, 'Si', 'No Apto', 'Si', 'No Apto', 'bueno'),
+('3', '', '', '', 'No', 31, 'GOML900330MASDD03', 0, 50, 'Regular', 0, 'No', 'Apto', 'No', 'No Apto', '75');
 
 -- --------------------------------------------------------
 
