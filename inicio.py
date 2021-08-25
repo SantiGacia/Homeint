@@ -1619,11 +1619,11 @@ def bo_candidato(Curp):
         error = "El candidato tiene dependientes, no puede ser borrado."
         return render_template("error.html", des_error=error, paginaant="/candidato")
     else:
-        cursor.execute("delete from `candidato_has_idioma` where Curp = '%s'"%(Curp))
+        cursor.execute('delete from candidato_has_idioma where Curp = %s',(Curp))
         conn.commit()
-        cursor.execute("delete from `candidato_has_habilidad` where Curp = '%s'"%(Curp))
+        cursor.execute('delete from candidato_has_habilidad where Curp = %s',(Curp))
         conn.commit()
-        cursor.execute("delete from `candidato` where Curp = '%s'"%(Curp))
+        cursor.execute('delete from candidato where Curp = %s',(Curp))
         conn.commit()
         conn.close()
         return redirect(url_for('candidato'))
@@ -1687,15 +1687,15 @@ def ed_perfil(id):
     datos = cursor.fetchall()
 
     cursor.execute(
-        'select a.idPerfil, b.idProceso, b.desProceso, c.idPerfil, c.idProceso, c.idPermiso, d.idPermiso, d.Descripcion '
+        'select a.idPerfil, b.id_proceso, b.Descripcion, c.id_perfil, c.id_proceso, c.id_permiso, d.id_permiso, d.Descripcion '
         ' from perfil_admo a, proceso b,perfil_has_proceso c, permisos d '
-        ' where a.idPerfil=c.idPerfil and b.idProceso=c.idProceso and d.idPermiso=c.idPermiso and c.idPerfil=%s',(id))
+        ' where a.idPerfil=c.id_perfil and b.id_proceso=c.id_proceso and d.id_permiso=c.id_permiso and c.id_perfil=%s',(id))
     datos1 = cursor.fetchall()
 
-    cursor.execute('select idProceso, desProceso from proceso order by desProceso')
+    cursor.execute('select id_proceso, Descripcion from proceso order by Descripcion')
     datos2 = cursor.fetchall()
 
-    cursor.execute('select idPermiso, Descripcion from permisos order by Descripcion')
+    cursor.execute('select id_permiso, Descripcion from permisos order by Descripcion')
     datos3 = cursor.fetchall()
     conn.close()
     return render_template("edi_perfil.html", perfiles=datos, per_proc=datos1, procesos=datos2, permisos=datos3)
@@ -1794,14 +1794,17 @@ def agrega_usuario():
         cursor.execute('insert into usuario (Usuario, Password, Nombre) '
                        'values (%s,%s,%s)', (aux_usuario, aux_pass, aux_nom))
         conn.commit()
+
         cursor.execute('select idUsuario, Usuario, Password, Nombre, Perfil '
                        'from usuario where idUsuario=(select max(idUsuario) from usuario)')
         datos = cursor.fetchall()
+
         cursor.execute('select a.idUsuario, a.Perfil, b.Descripcion '
                        ' from usuario a, perfil_admo b '
-                       ' where a.Perfil=b.idPerfil and b.idPerfil=(select max(idPerfil) from perfil_admo)')
+                       ' where a.Perfil=b.id_perfil and b.id_perfil=(select max(id_perfil) from perfil_admo)')
         datos1=cursor.fetchall()
-        cursor.execute('select idPerfil, Descripcion from perfil_admo order by Descripcion')
+
+        cursor.execute('select id_perfil, Descripcion from perfil_admo order by Descripcion')
         datos2 = cursor.fetchall()
         conn.close()
         return render_template("edi_usuario2.html", usuarios = datos, usu_per=datos1, pers=datos2)
@@ -1835,7 +1838,7 @@ def modifica_usuario(id):
         aux_usuario = request.form['Usuario']
         aux_pass = request.form['Password']
         aux_nom = request.form['Nombre']
-        aux_perfil = request.form['per']
+        aux_perfil = request.form['Perfil']
         conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
         cursor = conn.cursor()
         cursor.execute('update usuario set Usuario=%s, Password=%s, Nombre=%s, Perfil=%s '
@@ -1907,8 +1910,8 @@ def sel_candidato(id):
 
     return render_template("tabla_agr_sel_candidato.html",sol=dato_sol, candidatos=datos, can_seleccionados=datos1, solicitud=id)
 
-@app.route('/ins_candidato/<string:ca>/<string:so>')
-def ins_candidato(ca,so):
+@app.route('/ins_candidato/<string:ca>/<string:so>/<string:ans>')
+def ins_candidato(ca,so,ans):
     conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
     cursor = conn.cursor()
     cursor.execute('select count(*) from resultadocandidato where idSolicitud=%s and Curp=%s',(so,ca))
@@ -1917,7 +1920,7 @@ def ins_candidato(ca,so):
         error = "No puede eleccionar a un candidato mas de dos veces."
         return render_template("error.html", des_error=error, paginaant="/agr_sel_candidato")
     else:
-        cursor.execute('insert into resultadocandidato (idSolicitud,Curp, EstatusProceso) values (%s,%s,1)',(so,ca))
+        cursor.execute('insert into resultadocandidato (idSolicitud,Curp,Calificacion_Medica, Calificacion, validacion ,EstatusProceso) values (%s,%s,%s,%s,%s,1)',(so,ca,ans, ans, ans))
         conn.commit()
         cursor.execute(
             ' select a.idSolicitud, a.FechaSolicitud, a.idArea, b.AreaNombre, a.idPuesto, c.Descripcion, a.NumeroVacante, a.idEstatus_Solicitud, d.Descripcion '
@@ -2201,7 +2204,7 @@ def sel_candidato2(id):
 
     dato_sol = cursor.fetchone()
 
-    cursor.execute('select a.Curp, b.Nombre, c.idNivelAcademico, c.idCarrera, d.Descripcion, e.Descripcion '
+    cursor.execute('select a.Curp, b.Nombre, c.idNivelAcademico, c.idCarrera, d.Descripcion, e.Descripcion, a.validacion '
     'from resultadocandidato a, candidato b, candidato_has_nivelacademico c, nivelacademico d, carrera e '
     'where b.curp= a.Curp and c.Curp = b.Curp and d.idNivelAcademico = c.idNivelAcademico '
     'and e.idCarrera = c.idCarrera and a.idSolicitud=%s order by Nombre', (id))

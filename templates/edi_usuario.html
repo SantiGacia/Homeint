@@ -25,10 +25,11 @@
                 {% for per_usu in usu_per %}
 
                         {{ per_usu.2 }}
-
-                {% endfor %}
                 <label for="Perfil">Perfil Definido</label>
                 <input type="text" class="form-control" name="Perfil" id="Perfil" value="{{per_usu.2}}" disabled>
+
+                {% endfor %}
+
             </div>
         </div>
 </form>
@@ -45,6 +46,7 @@
         </div>
         <br>
         <button type="submit" class="btn btn-primary" style="background:lightseagreen">Actualizar</button>
+        <a class="btn btn-primary" href="/usuario" align="right" style="background:lightseagreen">Cancelar</a>
     </form>
 
 
