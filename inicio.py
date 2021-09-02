@@ -130,9 +130,16 @@ def modifica_habilidad(id):
         descrip=request.form['descripcion']
         conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
         cursor = conn.cursor()
-        cursor.execute('update habilidad set  Descripcion=%s where idHabilidad=%s',(descrip,id))
-        conn.commit()
-        conn.close()
+        cursor.execute('select count(*) from habilidad where Descripcion = %s',(descrip))
+        habilidades = cursor.fetchone()
+        if (habilidades[0] != 0):
+            error = "La Habilidad ya se encuentra agregada."
+            return render_template("error.html", des_error=error, paginaant="/agr_datos_habilidad")
+        else:
+            cursor.execute('update habilidad set  Descripcion=%s where idHabilidad=%s', (descrip,id))
+            conn.commit()
+            conn.close()
+            return redirect(url_for('agr_datos_habilidad'))
     return redirect(url_for('agr_datos_habilidad'))
 
 
@@ -158,6 +165,34 @@ def carrera_agr():
             conn.close()
             return redirect(url_for('agr_datos_carrera'))
 
+
+@app.route('/modifica_carrera/<string:id>', methods=['POST'])
+def modifica_carrera(id):
+    if request.method == 'POST':
+        descrip=request.form['descripcion']
+        conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
+        cursor = conn.cursor()
+        cursor.execute('select count(*) from carrera where Descripcion = %s',(descrip))
+        carreras = cursor.fetchone()
+        if (carreras[0] != 0):
+            error = "La Carrera ya se encuentra agregada."
+            return render_template("error.html", des_error=error, paginaant="/agr_datos_carrera")
+        else:
+            cursor.execute('update carrera set  Descripcion=%s where idCarrera=%s', (descrip,id))
+            conn.commit()
+            conn.close()
+    return redirect(url_for('agr_datos_carrera'))
+
+@app.route('/ed_carrera/<string:id>')
+def ed_carrera(id):
+    conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
+    cursor = conn.cursor()
+    cursor.execute('select idCarrera, Descripcion from carrera where idCarrera = %s', (id))
+    dato=cursor.fetchall()
+    conn.close()
+    return render_template("edi_carrera.html", nivel = dato[0])
+
+
 @app.route('/agr_datos_carrera')
 def agr_datos_carrera():
     conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
@@ -182,25 +217,7 @@ def bo_carrera(id):
         conn.close()
         return redirect(url_for('agr_datos_carrera'))
 
-@app.route('/ed_carrera/<string:id>')
-def ed_carrera(id):
-    conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
-    cursor = conn.cursor()
-    cursor.execute('select idCarrera, Descripcion from carrera where idCarrera = %s', (id))
-    dato=cursor.fetchall()
-    conn.close()
-    return render_template("edi_carrera.html", nivel = dato[0])
 
-@app.route('/modifica_carrera/<string:id>', methods=['POST'])
-def modifica_carrera(id):
-    if request.method == 'POST':
-        descrip=request.form['descripcion']
-        conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
-        cursor = conn.cursor()
-        cursor.execute('update carrera set  Descripcion=%s where idCarrera=%s',(descrip,id))
-        conn.commit()
-        conn.close()
-    return redirect(url_for('agr_datos_carrera'))
 
 
 # Medio Publicidad
@@ -264,11 +281,16 @@ def modifica_publicidad(id):
         aux_descripcion = request.form['nombre_e']
         conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
         cursor = conn.cursor()
-        cursor.execute('update mediopublicidad set Descripcion=%s where idMedioPublicidad=%s',
-                       (aux_descripcion, id))
-        conn.commit()
-        conn.close()
-    return redirect(url_for('agr_datos_publicidad'))
+        cursor.execute('select count(*) from mediopublicidad where Descripcion = %s', (aux_descripcion))
+        publicidades = cursor.fetchone()
+        if (publicidades[0] != 0):
+            error = "El Medio de Publicidad ya se encuentra agregado."
+            return render_template("error.html", des_error=error, paginaant="/agr_datos_publicidad")
+        else:
+            cursor.execute('update mediopublicidad set Descripcion=%s where idMedioPublicidad=%s',(aux_descripcion, id))
+            conn.commit()
+            conn.close()
+            return redirect(url_for('agr_datos_publicidad'))
 
 
 # Nivel Academico
@@ -332,9 +354,15 @@ def modifica_nivel(id):
         descrip=request.form['descripcion']
         conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
         cursor = conn.cursor()
-        cursor.execute('update nivelacademico set  descripcion=%s where idNivelAcademico=%s',(descrip,id))
-        conn.commit()
-        conn.close()
+        cursor.execute('select count(*) from nivelacademico where Descripcion = %s',(descrip))
+        niveles = cursor.fetchone()
+        if (niveles[0] != 0):
+            error = "El Nivel Academico ya se encuentra agregado."
+            return render_template("error.html", des_error=error, paginaant="/agr_datos_nivel_academico")
+        else:
+            cursor.execute('update nivelacademico set  descripcion=%s where idNivelAcademico=%s', (descrip, id))
+            conn.commit()
+            conn.close()
     return redirect(url_for('agr_datos_nivel_academico'))
 
 
@@ -677,6 +705,23 @@ def idioma_agr():
             conn.close()
             return redirect(url_for('agr_datos_idioma'))
 
+@app.route('/modifica_idioma/<string:id>', methods=['POST'])
+def modifica_idioma(id):
+    if request.method == 'POST':
+        aux_idioma = request.form['fidioma']
+        conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
+        cursor = conn.cursor()
+        cursor.execute('select count(*) from idioma where Lenguaje = %s', (aux_idioma))
+        idiomas = cursor.fetchone()
+        if (idiomas[0] != 0):
+            error = "El Idioma ya se encuentra agregado."
+            return render_template("error.html", des_error=error, paginaant="/agr_datos_idioma")
+        else:
+            cursor.execute('update idioma set  Lenguaje=%s where idIdioma=%s',(aux_idioma,id))
+            conn.commit()
+            conn.close()
+            return redirect(url_for('agr_datos_idioma'))
+
 @app.route('/bo_idioma/<string:id>')
 def bo_idioma(id):
     conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
@@ -712,17 +757,7 @@ def ed_idioma(id):
     conn.close()
     return render_template("edi_idioma.html", nivel = dato[0])
 
-@app.route('/modifica_idioma/<string:id>', methods=['POST'])
-def modifica_idioma(id):
-    if request.method == 'POST':
-        aux_idioma = request.form['fidioma']
-        conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
-        cursor = conn.cursor()
-        cursor.execute('update idioma set  Lenguaje=%s where idIdioma=%s',
-        (aux_idioma, id))
-        conn.commit()
-        conn.close()
-    return redirect(url_for('agr_datos_idioma'))
+
 
 #Area
 @app.route('/area')
@@ -772,11 +807,16 @@ def modifica_area(id):
         aux_descripcion = request.form['desc']
         conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
         cursor = conn.cursor()
-        cursor.execute('update area set AreaNombre=%s, AreaDescripcion=%s where idArea=%s',
-                       (aux_area,aux_descripcion, id))
-        conn.commit()
-        conn.close()
-    return redirect(url_for('agr_datos_area'))
+        cursor.execute('select count(*) from area where AreaNombre = %s', (aux_area))
+        areas = cursor.fetchone()
+        if (areas[0] != 0):
+            error = "El Area ya se encuentra agregado."
+            return render_template("error.html", des_error=error, paginaant="/agr_datos_area")
+        else:
+            cursor.execute('update area set AreaNombre=%s, AreaDescripcion=%s where idArea=%s',(aux_area,aux_descripcion, id))
+            conn.commit()
+            conn.close()
+            return redirect(url_for('agr_datos_area'))
 
 @app.route('/bo_area/<string:id>')
 def bo_area(id):
@@ -850,11 +890,17 @@ def modifica_contacto(id):
         aux_link = request.form['link']
         conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
         cursor = conn.cursor()
-        cursor.execute('update contacto set  Nombre=%s,Domicilio=%s,Razon_Social=%s,Telefono=%s,Email=%s,Link=%s where idcontacto=%s',
+        cursor.execute('select count(*) from contacto where Nombre = %s', (aux_nombre))
+        contactos = cursor.fetchone()
+        if (contactos[0] != 0):
+            error = "El Contacto ya se encuentra agregado."
+            return render_template("error.html", des_error=error, paginaant="/agr_datos_contacto")
+        else:
+            cursor.execute('update contacto set  Nombre=%s,Domicilio=%s,Razon_Social=%s,Telefono=%s,Email=%s,Link=%s where idcontacto=%s',
                        (aux_nombre, aux_domicilio, aux_razon, aux_tel,aux_email,aux_link, id))
-        conn.commit()
-        conn.close()
-    return redirect(url_for('agr_datos_contacto'))
+            conn.commit()
+            conn.close()
+            return redirect(url_for('agr_datos_contacto'))
 
 @app.route('/bo_contacto/<string:id>')
 def bo_contacto(id):
@@ -2287,11 +2333,11 @@ def ed_candidato3(Curp,ca,id):
         return render_template("edi_candidato3.html",sol=id ,sexo=sexos,carrera_can=datos8, candidatos=datos, can_habs=datos1, can_idis=datos2,can_acas=datos6, habs=datos3, idiomas=datos4, nivel_academico=datos7, ecivil=datos5)
 
 
-@app.route('/cal_hab_cdto/<string:Curp>/<string:idH>/<string:ca>/<string:id>')
-def cal_hab_cdto(Curp,idH,ca,id):
+@app.route('/cal_hab_cdto/<string:Curp>/<string:idH>/<string:co>/<string:id>')
+def cal_hab_cdto(Curp,idH,co,id):
         conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
         cursor = conn.cursor()
-        cursor.execute('update candidato_has_habilidad set valida=%s where Curp=%s and idHabilidad=%s',(ca,Curp,idH))
+        cursor.execute('update candidato_has_habilidad set valida=%s where Curp=%s and idHabilidad=%s',(co,Curp,idH))
         conn.commit()
 
         cursor.execute(' select Curp, RFC, Nombre, Domicilio, Telefono, E_Mail, Sexo, Edad, NSS, idEstadoCivil'
@@ -2379,11 +2425,11 @@ def cal_idio_cdto(Curp,idI,ca,id):
         conn.close()
         return render_template("edi_candidato3.html",sol=id,sexo=sexos,carrera_can=datos8, candidatos=datos, can_habs=datos1, can_idis=datos2,can_acas=datos6, habs=datos3, idiomas=datos4, nivel_academico=datos7, ecivil=datos5)
 
-@app.route('/cal_aca_cdto/<string:Curp>/<string:idA>/<string:ca>/<string:id>')
-def cal_aca_cdto(Curp,idA,ca,id):
+@app.route('/cal_aca_cdto/<string:Curp>/<string:idA>/<string:co>/<string:id>')
+def cal_aca_cdto(Curp,idA,co,id):
         conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
         cursor = conn.cursor()
-        cursor.execute('update candidato_has_nivelacademico set valida=%s where Curp=%s and idNivelAcademico=%s',(ca,Curp,idA))
+        cursor.execute('update candidato_has_nivelacademico set valida=%s where Curp=%s and idNivelAcademico=%s',(co,Curp,idA))
         conn.commit()
 
         cursor.execute(' select Curp, RFC, Nombre, Domicilio, Telefono, E_Mail, Sexo, Edad, NSS, idEstadoCivil'
