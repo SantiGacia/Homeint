@@ -6,8 +6,8 @@
 </head>
 <body style="background-color:#D5DBDB;">
 <br>
-<form action="/agrega_candidato" method="post">
-<h2>Agregar Candidato</h2>
+<form action="/agrega_empleado" method="post">
+<h2>Agregar Empleado</h2>
     <script type="text/javascript" src="/static/js/jquery-3.2.1.slim.min.js"></script>
     <script type="text/javascript" src="/static/js/popper.min.js"></script>
     <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
@@ -18,13 +18,13 @@
         </div>
         <div class="form-group col-md-9">
             <label for="nombre">AP. Paterno    Ap.Materno    Nombre(s)</label>
-            <input  type="text" class="form-control" name="nombre" id="nombre" placeholder="AP. Paterno    Ap.Materno    Nombre(s)" required>
+            <input type="text" class="form-control" name="nombre" id="nombre" placeholder="AP. Paterno    Ap.Materno    Nombre(s)" required>
         </div>
     </div>
     <div class="form-row">
         <div class="form-group col-md-7">
             <label for="domicilio">Domicilio</label>
-            <input  type="text" class="form-control" name="domicilio" id="domicilio" placeholder="Calle y No. - Colonia - Cod. Postal" required>
+            <input type="text" class="form-control" name="domicilio" id="domicilio" placeholder="Calle y No. - Colonia - Cod. Postal" required>
         </div>
         <div class="form-group col-md-4">
             <label for="rfc">RFC</label>
@@ -38,7 +38,7 @@
         </div>
         <div class="form-group col-md-3">
             <label for="correoe">Correo Electronico</label>
-            <input type="email" class="form-control" name="correoe" id="correoe" placeholder="correo@mail.com" required>
+            <input type="email" class="form-control" name="correoe" id="correoe" placeholder="correo@gmail.com" required>
         </div>
 
         <div class="form-group col-md-1">
@@ -67,8 +67,31 @@
             </select>
         </div>
     </div>
-    <button type="submit" class="btn btn-primary" style="background:lightseagreen">Agrega Candidato</button>
-    <a class="btn btn-primary" href="/candidato" align="right" style="background:lightseagreen">Cancelar</a>
+    <div class="form-row">
+        <div class="form-group col-md-9">
+                <label for="nomcoy">Conyugue_concubino(nombre de esposa)</label>
+            <input type="text" class="form-control" name="nomcoy" id="nomcoy" value="" required>
+        </div>
+
+
+        <div class="form-group col-md-9">
+            <label for="nomcaux">Nombre de contacto</label>
+            <input type="text" class="form-control" name="nomcaux" id="nomcaux" value="" required>
+        </div>
+
+        <div class="form-group col-md-2">
+            <label for="telaux">Telefono de contacto</label>
+        <input minlength="10" maxlength="10" type="text" class="form-control" name="telaux" id="telaux" value="" pattern="[0-9.]+"autocomplete="off" required>
+        </div>
+
+
+    <div class="form-group col-md-4">
+            <label for="numinfonavit">Numero de infonavit</label>
+            <input type="text" class="form-control" name="numinfonavit" id="numinfonavit"  value="" pattern="[0-9.]+" required>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary" style="background:lightseagreen">Agrega Empleado</button>
+    <a class="btn btn-primary" href="/empleado" align="right" style="background:lightseagreen">Cancelar</a>
 </form>
 </body>
 {% endblock %}

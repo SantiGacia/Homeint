@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 25-08-2021 a las 23:38:05
+-- Tiempo de generación: 05-10-2021 a las 05:01:43
 -- Versión del servidor: 10.4.19-MariaDB
 -- Versión de PHP: 8.0.7
 
@@ -54,9 +54,7 @@ CREATE TABLE `anuncio` (
 
 INSERT INTO `anuncio` (`idAnuncio`, `idSolicitud`, `Num_Solicitantes`, `FechaPublicacion`, `FechaCierre`, `idcontacto`, `idMedioPublicidad`) VALUES
 (21, 31, 3, '2021-04-08', '2021-04-09', 3, 8),
-(22, 31, 3, '2021-04-08', '2021-04-09', 4, 6),
-(24, 33, 10, '2021-08-20', '2021-08-24', 7, 9),
-(25, 33, 2, '2021-08-20', '2021-08-24', 3, 8);
+(22, 31, 3, '2021-04-08', '2021-04-09', 4, 6);
 
 -- --------------------------------------------------------
 
@@ -75,9 +73,8 @@ CREATE TABLE `area` (
 --
 
 INSERT INTO `area` (`idArea`, `AreaDescripcion`, `AreaNombre`) VALUES
-(5, 'Desarrollo de sistemas WEB y móviles para Android', 'Desarrollo de sistemas '),
-(6, 'Integración de sistemas electrónicos ', 'Integración de electrónica'),
-(7, 'Reparar sistemas computacionales Software y Hardware', 'Mantenimiento');
+(5, 'Desarrollo de sistemas WEB y móviles para Android..', 'Desarrollo de sistemas web'),
+(6, 'Integración de sistemas electrónicos ', 'Integración de electrónica');
 
 -- --------------------------------------------------------
 
@@ -104,8 +101,9 @@ CREATE TABLE `candidato` (
 --
 
 INSERT INTO `candidato` (`Curp`, `RFC`, `Nombre`, `Domicilio`, `Telefono`, `E_Mail`, `Sexo`, `Edad`, `NSS`, `Fotografia`, `idEstadoCivil`) VALUES
-('FEEA770826MPLRSL72', 'FEEA770828SE5', 'Fernandez Espinoza Alejandra', 'VOLCAN SORULLO NO. 11, EL COLLI URBANO, 45010', '4491240122', 'AleEspinoza123@gmail.com', 'F', 43, 88231, NULL, 2),
-('GGJJ770826HZSRTS68', '1243445', 'Garza Guitierrez Jose de Jesus', 'AVENIDA NIÑOS HEROES NO. 3 #502 20345', '1234424312', 'Garzagjose12@gmail.com', 'M', 44, 12345, NULL, 2);
+('COCR800325HASDD03', 'COCR80032', 'CORONA CORONA ROBERTO', 'conocido', '99999999', 'COC@GMAIL.COM', 'M', 40, 155545445, NULL, 2),
+('GOML900330MASDD03', 'GOML900330', 'GONZALEZ MARTINEZ LAURA', 'conocido', '999999999', 'GOML@GMAIL.COM', 'F', 30, 15544545, NULL, 2),
+('MAMA770826HSLRRI22', 'MAMA770826JVP', 'MARTINEZ MORENO ALEJANDRO', 'Conocido', '4491915799', 'sgamer.garcia@gmail.com', 'M', 20, 1234567, NULL, 3);
 
 -- --------------------------------------------------------
 
@@ -125,8 +123,11 @@ CREATE TABLE `candidato_has_habilidad` (
 --
 
 INSERT INTO `candidato_has_habilidad` (`Curp`, `idHabilidad`, `Experiencia`, `valida`) VALUES
-('FEEA770826MPLRSL72', 9, '3 años', ''),
-('GGJJ770826HZSRTS68', 10, '7 años', '');
+('COCR800325HASDD03', 9, '5 años ', 'Si'),
+('COCR800325HASDD03', 10, '5 años ', 'Si'),
+('GOML900330MASDD03', 9, '2 años ', 'Si'),
+('GOML900330MASDD03', 10, '2 años ', 'Si'),
+('MAMA770826HSLRRI22', 9, '1 year', 'Si');
 
 -- --------------------------------------------------------
 
@@ -146,8 +147,11 @@ CREATE TABLE `candidato_has_idioma` (
 --
 
 INSERT INTO `candidato_has_idioma` (`Curp`, `idIdioma`, `NIvel`, `valida`) VALUES
-('FEEA770826MPLRSL72', 9, 'Basico', ''),
-('GGJJ770826HZSRTS68', 7, 'Medio', '');
+('COCR800325HASDD03', 7, 'Experto', 'Si'),
+('COCR800325HASDD03', 9, 'Medio', ''),
+('GOML900330MASDD03', 7, 'Experto', 'Si'),
+('GOML900330MASDD03', 8, 'Básico', 'No'),
+('MAMA770826HSLRRI22', 7, '1 year', 'No');
 
 -- --------------------------------------------------------
 
@@ -168,9 +172,9 @@ CREATE TABLE `candidato_has_nivelacademico` (
 --
 
 INSERT INTO `candidato_has_nivelacademico` (`Curp`, `idNivelAcademico`, `idCarrera`, `Institucion`, `valida`) VALUES
-('FEEA770826MPLRSL72', 10, 9, 'DGETI', ''),
-('FEEA770826MPLRSL72', 11, 8, 'UAA', ''),
-('GGJJ770826HZSRTS68', 10, 11, 'UAA', '');
+('COCR800325HASDD03', 11, 8, 'UAA', 'No'),
+('GOML900330MASDD03', 11, 8, 'UAA', 'Si'),
+('MAMA770826HSLRRI22', 11, 8, 'abc', 'Si');
 
 -- --------------------------------------------------------
 
@@ -189,9 +193,7 @@ CREATE TABLE `carrera` (
 
 INSERT INTO `carrera` (`idCarrera`, `Descripcion`) VALUES
 (8, 'Ingeniería en sistemas computacionales'),
-(9, 'Técnico en electrónica'),
-(10, 'Desarrollador de Aplicaciones Moviles Android'),
-(11, 'Mantenimiento de computo');
+(9, 'Técnico en electrónica');
 
 -- --------------------------------------------------------
 
@@ -215,9 +217,7 @@ CREATE TABLE `contacto` (
 
 INSERT INTO `contacto` (`idcontacto`, `Nombre`, `Domicilio`, `Razon_Social`, `Telefono`, `Email`, `Link`) VALUES
 (3, 'Contacto de contratación 1', 'conocido', 'SR', '4495566907', '', ''),
-(4, 'Contacto de contratación 2 ', 'conocido', 'SR', '2147483647', '', ''),
-(6, 'Cetis 155', 'Casiopea 408# Gomez Portugal', 'Admin', '1000000001', 'fmontantes02@gmail.com', 'Empresa1_234'),
-(7, 'Contacto numero 3', 'Casiopea 408# Gomez Portugal', 'Admin', '1234567891', 'fmontantes02@gmail.com', 'Empresa1_23');
+(4, 'Contacto de contratación 2 ', 'conocido', 'SR', '2147483647', '', '');
 
 -- --------------------------------------------------------
 
@@ -235,15 +235,122 @@ CREATE TABLE `datos_de_empresa` (
   `RazonSocial` varchar(45) DEFAULT NULL,
   `Estructura_Juridica` varchar(45) DEFAULT NULL,
   `Encargado` varchar(45) DEFAULT NULL,
-  `CIF_Empresa` varchar(9) DEFAULT NULL
+  `CIF_Empresa` varchar(9) DEFAULT NULL,
+  `Acta_constitutiva` varchar(100) NOT NULL,
+  `No_Escritura Publica` varchar(11) NOT NULL,
+  `Libro_Escritura Publica` varchar(11) NOT NULL,
+  `Fecha_Escritura Publica` date NOT NULL,
+  `Fe_Escritura Publica` varchar(11) NOT NULL,
+  `NP_Escritura Publica` varchar(11) NOT NULL,
+  `Ciu_Escritura Publica` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `datos_de_empresa`
 --
 
-INSERT INTO `datos_de_empresa` (`idEmpresa`, `Nombre_de_empresa`, `Descripcion`, `Telefono`, `Domicilio`, `E_Mail`, `RazonSocial`, `Estructura_Juridica`, `Encargado`, `CIF_Empresa`) VALUES
-(1, 'PruebaSist S.A ', 'Empresa de prueba para el sistema ', '449-999-88', '449-999-8888', 'pruebasist@pruebasist.com.mx', 'PruebaSist S.A.', 'S.A', 'Nombre del CEO ', '???????');
+INSERT INTO `datos_de_empresa` (`idEmpresa`, `Nombre_de_empresa`, `Descripcion`, `Telefono`, `Domicilio`, `E_Mail`, `RazonSocial`, `Estructura_Juridica`, `Encargado`, `CIF_Empresa`, `Acta_constitutiva`, `No_Escritura Publica`, `Libro_Escritura Publica`, `Fecha_Escritura Publica`, `Fe_Escritura Publica`, `NP_Escritura Publica`, `Ciu_Escritura Publica`) VALUES
+(1, 'PruebaSist S.A ', 'Empresa de prueba para el sistema ', '449-999-88', '449-999-8888', 'pruebasist@pruebasist.com.mx', 'PruebaSist S.A.', 'S.A', 'Nombre del CEO ', '?????????', '', '0', '', '0000-00-00', '', '0', '');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `empleado`
+--
+
+CREATE TABLE `empleado` (
+  `Curp` varchar(18) NOT NULL,
+  `RFC` varchar(13) NOT NULL,
+  `Nombre` varchar(45) NOT NULL,
+  `Domicilio` varchar(45) NOT NULL,
+  `Telefono` varchar(10) NOT NULL,
+  `E_mail` varchar(45) NOT NULL,
+  `Sexo` varchar(2) NOT NULL,
+  `Edad` int(11) NOT NULL,
+  `NSS` varchar(11) NOT NULL,
+  `idEstadoCivil` int(11) NOT NULL,
+  `Conyuje_Concubino` varchar(45) NOT NULL,
+  `tel_emergencia` varchar(10) NOT NULL,
+  `nombre_emergencia` varchar(45) NOT NULL,
+  `no_infonavit` varchar(20) NOT NULL,
+  `idArea` int(11) NOT NULL,
+  `idPuesto` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `empleado`
+--
+
+INSERT INTO `empleado` (`Curp`, `RFC`, `Nombre`, `Domicilio`, `Telefono`, `E_mail`, `Sexo`, `Edad`, `NSS`, `idEstadoCivil`, `Conyuje_Concubino`, `tel_emergencia`, `nombre_emergencia`, `no_infonavit`, `idArea`, `idPuesto`) VALUES
+('COCR800328HASRRB47', 'COCR800325B29', 'CORONA CORONA ROBERTO', 'conocido', '99999999', 'COC@GMAIL.COM', 'F', 40, '155545445', 2, '', '', '', '', 5, 20),
+('FEEA770826MPLRSL72', 'FEEA770828SE5', 'Fernandez Espinoza Alejandra', 'Conocido', '4492123453', 'correo@gmail.com', 'F', 30, '12341234124', 1, '...', '449234765', 'Fernandez Espinoza Alejandro', '...', 0, 0),
+('GGJJ770826HZSRTS68', 'JJGG770827UR2', 'Garza Guitierrez Jose de Jesus', 'conocido', '9999999999', 'Garzagjose12@gmail.com', 'M', 35, '1424532', 2, 'Señora Garza', '4449931212', 'María José ', '12414142315', 0, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `empleado_has_habilidad`
+--
+
+CREATE TABLE `empleado_has_habilidad` (
+  `Curp` varchar(18) NOT NULL,
+  `idHabilidad` int(11) NOT NULL,
+  `Experiencia` varchar(45) NOT NULL,
+  `valida` varchar(2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `empleado_has_habilidad`
+--
+
+INSERT INTO `empleado_has_habilidad` (`Curp`, `idHabilidad`, `Experiencia`, `valida`) VALUES
+('COCR800328HASRRB47', 9, '5 años ', 'Si'),
+('COCR800328HASRRB47', 10, '5 años ', 'Si'),
+('FEEA770826MPLRSL72', 9, '5 años', '');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `empleado_has_idioma`
+--
+
+CREATE TABLE `empleado_has_idioma` (
+  `Curp` varchar(18) NOT NULL,
+  `idIdioma` int(11) NOT NULL,
+  `Nivel` varchar(45) NOT NULL,
+  `valida` varchar(2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `empleado_has_idioma`
+--
+
+INSERT INTO `empleado_has_idioma` (`Curp`, `idIdioma`, `Nivel`, `valida`) VALUES
+('COCR800328HASRRB47', 7, 'Experto', 'Si'),
+('COCR800328HASRRB47', 9, 'Medio', ''),
+('FEEA770826MPLRSL72', 7, 'Medio', '');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `empleado_has_nivelacademico`
+--
+
+CREATE TABLE `empleado_has_nivelacademico` (
+  `Curp` varchar(18) NOT NULL,
+  `idNivelAcademico` int(11) NOT NULL,
+  `idCarrera` int(11) NOT NULL,
+  `Institucion` varchar(20) NOT NULL,
+  `valida` varchar(2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `empleado_has_nivelacademico`
+--
+
+INSERT INTO `empleado_has_nivelacademico` (`Curp`, `idNivelAcademico`, `idCarrera`, `Institucion`, `valida`) VALUES
+('COCR800328HASRRB47', 11, 8, 'UAA', 'No'),
+('FEEA770826MPLRSL72', 11, 8, 'UAA', '');
 
 -- --------------------------------------------------------
 
@@ -262,7 +369,9 @@ CREATE TABLE `estadocivil` (
 
 INSERT INTO `estadocivil` (`idEstadoCivil`, `Descripcion`) VALUES
 (1, 'Soltero'),
-(2, 'Casado');
+(2, 'Casado'),
+(3, 'Union Libre'),
+(4, 'Divorcio');
 
 -- --------------------------------------------------------
 
@@ -325,9 +434,8 @@ CREATE TABLE `habilidad` (
 
 INSERT INTO `habilidad` (`idHabilidad`, `Descripcion`) VALUES
 (9, 'Desarrollo de sistemas WEB'),
-(10, 'Desarrollo de sistema Móviles Android'),
-(11, 'Instalación de tarjetas de control'),
-(12, 'Nada.');
+(10, 'Desarrollo de sistema Móviles Android '),
+(11, 'Instalación de tarjetas de control');
 
 -- --------------------------------------------------------
 
@@ -367,8 +475,7 @@ CREATE TABLE `mediopublicidad` (
 INSERT INTO `mediopublicidad` (`idMedioPublicidad`, `Descripcion`) VALUES
 (6, 'Radio'),
 (7, 'Televisión '),
-(8, 'Diarios locales '),
-(9, 'Facebook.');
+(8, 'Diarios locales ');
 
 -- --------------------------------------------------------
 
@@ -388,8 +495,7 @@ CREATE TABLE `nivelacademico` (
 INSERT INTO `nivelacademico` (`idNivelAcademico`, `Descripcion`) VALUES
 (10, 'Tecnico'),
 (11, 'Licenciatura'),
-(12, 'Maestría '),
-(15, 'Doctorado');
+(12, 'Maestría ');
 
 -- --------------------------------------------------------
 
@@ -418,10 +524,17 @@ INSERT INTO `perfil_admo` (`idPerfil`, `Descripcion`) VALUES
 --
 
 CREATE TABLE `perfil_has_proceso` (
-  `id_perfil` int(11) NOT NULL,
-  `id_proceso` int(11) NOT NULL,
-  `id_permiso` int(11) NOT NULL
+  `idPerfil` int(11) NOT NULL,
+  `idProceso` int(11) NOT NULL,
+  `idPermiso` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `perfil_has_proceso`
+--
+
+INSERT INTO `perfil_has_proceso` (`idPerfil`, `idProceso`, `idPermiso`) VALUES
+(1, 10, 1);
 
 -- --------------------------------------------------------
 
@@ -449,7 +562,7 @@ INSERT INTO `permisos` (`id_permiso`, `Descripcion`) VALUES
 --
 
 CREATE TABLE `proceso` (
-  `id_proceso` int(11) NOT NULL,
+  `idProceso` int(11) NOT NULL,
   `Descripcion` varchar(70) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -457,7 +570,7 @@ CREATE TABLE `proceso` (
 -- Volcado de datos para la tabla `proceso`
 --
 
-INSERT INTO `proceso` (`id_proceso`, `Descripcion`) VALUES
+INSERT INTO `proceso` (`idProceso`, `Descripcion`) VALUES
 (1, 'Nivel Academico'),
 (2, 'Carrera'),
 (3, 'idioma'),
@@ -496,8 +609,7 @@ CREATE TABLE `puesto` (
 --
 
 INSERT INTO `puesto` (`idPuesto`, `Descripcion`, `SalarioAnual`, `Beneficios`, `Bonos`, `Aprobacion`) VALUES
-(20, 'Desarrollador de sistemas WEB y Móviles ', 1500000, 'de ley ', 0, 0),
-(21, 'Mantenimiento de computo', 750000, 'De ley', 30000, 0);
+(20, 'Desarrollador de sistemas WEB y Móviles ', 1500000, 'de ley ', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -517,9 +629,7 @@ CREATE TABLE `puesto_has_habilidad` (
 
 INSERT INTO `puesto_has_habilidad` (`idPuesto`, `idHabilidad`, `Experiencia`) VALUES
 (20, 9, '2 años '),
-(20, 10, '2 años '),
-(21, 11, '3 años'),
-(21, 12, '7 años');
+(20, 10, '2 años ');
 
 -- --------------------------------------------------------
 
@@ -539,8 +649,7 @@ CREATE TABLE `puesto_has_idioma` (
 
 INSERT INTO `puesto_has_idioma` (`idPuesto`, `idIdioma`, `Nivel`) VALUES
 (20, 7, 'Experto'),
-(20, 8, 'Básico'),
-(21, 7, 'Basico');
+(20, 8, 'Básico');
 
 -- --------------------------------------------------------
 
@@ -572,7 +681,9 @@ CREATE TABLE `resultadocandidato` (
 --
 
 INSERT INTO `resultadocandidato` (`EstatusProceso`, `Comentarios_area`, `Comentarios_ofertas_salario`, `Comentarios_area_seleccion`, `estatus`, `idSolicitud`, `Curp`, `id_actitud`, `Coeficiente_Intelectual`, `Personalidad`, `apto_psico`, `Validar_ref`, `Calificacion_Medica`, `validacion`, `Calificacion`, `Califica_el_Perfil`) VALUES
-('1', '', '', '', '', 31, 'GGJJ770826HZSRTS68', 0, 0, '', 0, '', 'Pendiente', 'Pendiente', 'Pendiente', '');
+('3', '', '', '', 'Si', 31, 'COCR800325HASDD03', 0, 100, 'Bueno', 0, 'Si', 'No Apto', 'Si', 'No Apto', 'bueno'),
+('3', '', '', '', 'No', 31, 'GOML900330MASDD03', 0, 50, 'Regular', 0, 'Si', 'Apto', 'No', 'No Apto', '75'),
+('3', '', '', '', 'Si', 31, 'MAMA770826HSLRRI22', 0, 100, 'si', 0, 'Si', 'Apto', 'Si', 'Apto', '100');
 
 -- --------------------------------------------------------
 
@@ -596,8 +707,7 @@ CREATE TABLE `solicitud` (
 --
 
 INSERT INTO `solicitud` (`idSolicitud`, `FechaSolicitud`, `NumeroVacante`, `idArea`, `idPuesto`, `idNivelAcademico`, `idCarrera`, `idEstatus_Solicitud`) VALUES
-(31, '2021-04-06', 3, 5, 20, 11, 8, 3),
-(33, '2021-08-20', 10, 7, 21, 11, 11, 3);
+(31, '2021-04-06', 3, 5, 20, 11, 8, 3);
 
 -- --------------------------------------------------------
 
@@ -607,9 +717,9 @@ INSERT INTO `solicitud` (`idSolicitud`, `FechaSolicitud`, `NumeroVacante`, `idAr
 
 CREATE TABLE `usuario` (
   `idUsuario` int(11) NOT NULL,
-  `Usuario` varchar(10) NOT NULL,
-  `Password` varchar(20) NOT NULL,
-  `Nombre` varchar(70) NOT NULL,
+  `usuario` varchar(10) NOT NULL,
+  `password` varchar(20) NOT NULL,
+  `nombre` varchar(70) NOT NULL,
   `Perfil` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -617,9 +727,9 @@ CREATE TABLE `usuario` (
 -- Volcado de datos para la tabla `usuario`
 --
 
-INSERT INTO `usuario` (`idUsuario`, `Usuario`, `Password`, `Nombre`, `Perfil`) VALUES
+INSERT INTO `usuario` (`idUsuario`, `usuario`, `password`, `nombre`, `Perfil`) VALUES
 (1, 'Fernando', 'abcd1234', 'Luis Fernando', 1),
-(2, 'Jaun', 'aaaa1111', 'Juan Carloz Lopez', 1);
+(2, 'Juanpe', 'aaaa1111', 'Juan Carloz Lopez', 1);
 
 --
 -- Índices para tablas volcadas
@@ -665,7 +775,7 @@ ALTER TABLE `candidato_has_idioma`
 -- Indices de la tabla `candidato_has_nivelacademico`
 --
 ALTER TABLE `candidato_has_nivelacademico`
-  ADD PRIMARY KEY (`Curp`,`idNivelAcademico`,`idCarrera`) USING BTREE,
+  ADD PRIMARY KEY (`Curp`,`idNivelAcademico`),
   ADD KEY `fk_Candidato_has_NivelAcademico_NivelAcademico1` (`idNivelAcademico`),
   ADD KEY `fk_Candidato_has_NivelAcademico_Carrera1` (`idCarrera`);
 
@@ -686,6 +796,34 @@ ALTER TABLE `contacto`
 --
 ALTER TABLE `datos_de_empresa`
   ADD PRIMARY KEY (`idEmpresa`);
+
+--
+-- Indices de la tabla `empleado`
+--
+ALTER TABLE `empleado`
+  ADD PRIMARY KEY (`Curp`);
+
+--
+-- Indices de la tabla `empleado_has_habilidad`
+--
+ALTER TABLE `empleado_has_habilidad`
+  ADD PRIMARY KEY (`Curp`,`idHabilidad`),
+  ADD KEY `idHabilidad` (`idHabilidad`);
+
+--
+-- Indices de la tabla `empleado_has_idioma`
+--
+ALTER TABLE `empleado_has_idioma`
+  ADD PRIMARY KEY (`Curp`,`idIdioma`),
+  ADD KEY `idIdioma` (`idIdioma`);
+
+--
+-- Indices de la tabla `empleado_has_nivelacademico`
+--
+ALTER TABLE `empleado_has_nivelacademico`
+  ADD PRIMARY KEY (`Curp`,`idNivelAcademico`),
+  ADD KEY `idNivelAcademico` (`idNivelAcademico`,`idCarrera`),
+  ADD KEY `idCarrera` (`idCarrera`);
 
 --
 -- Indices de la tabla `estadocivil`
@@ -739,9 +877,9 @@ ALTER TABLE `perfil_admo`
 -- Indices de la tabla `perfil_has_proceso`
 --
 ALTER TABLE `perfil_has_proceso`
-  ADD PRIMARY KEY (`id_perfil`,`id_proceso`),
-  ADD KEY `fk_PERFIL_HAS_PROCESO_PROCESO` (`id_proceso`),
-  ADD KEY `fk_PERFIL_HAS_PROCESO_PERMISOO` (`id_permiso`);
+  ADD PRIMARY KEY (`idPerfil`,`idProceso`),
+  ADD KEY `fk_PERFIL_HAS_PROCESO_PROCESO` (`idProceso`),
+  ADD KEY `fk_PERFIL_HAS_PROCESO_PERMISOO` (`idPermiso`);
 
 --
 -- Indices de la tabla `permisos`
@@ -753,7 +891,7 @@ ALTER TABLE `permisos`
 -- Indices de la tabla `proceso`
 --
 ALTER TABLE `proceso`
-  ADD PRIMARY KEY (`id_proceso`);
+  ADD PRIMARY KEY (`idProceso`);
 
 --
 -- Indices de la tabla `puesto`
@@ -801,25 +939,25 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `anuncio`
 --
 ALTER TABLE `anuncio`
-  MODIFY `idAnuncio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `idAnuncio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT de la tabla `area`
 --
 ALTER TABLE `area`
-  MODIFY `idArea` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `idArea` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `carrera`
 --
 ALTER TABLE `carrera`
-  MODIFY `idCarrera` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `idCarrera` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `contacto`
 --
 ALTER TABLE `contacto`
-  MODIFY `idcontacto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `idcontacto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `datos_de_empresa`
@@ -849,7 +987,7 @@ ALTER TABLE `estatus_solicitud`
 -- AUTO_INCREMENT de la tabla `habilidad`
 --
 ALTER TABLE `habilidad`
-  MODIFY `idHabilidad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `idHabilidad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `idioma`
@@ -861,19 +999,19 @@ ALTER TABLE `idioma`
 -- AUTO_INCREMENT de la tabla `mediopublicidad`
 --
 ALTER TABLE `mediopublicidad`
-  MODIFY `idMedioPublicidad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `idMedioPublicidad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `nivelacademico`
 --
 ALTER TABLE `nivelacademico`
-  MODIFY `idNivelAcademico` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `idNivelAcademico` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `perfil_admo`
 --
 ALTER TABLE `perfil_admo`
-  MODIFY `idPerfil` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `idPerfil` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT de la tabla `permisos`
@@ -885,25 +1023,25 @@ ALTER TABLE `permisos`
 -- AUTO_INCREMENT de la tabla `proceso`
 --
 ALTER TABLE `proceso`
-  MODIFY `id_proceso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `idProceso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT de la tabla `puesto`
 --
 ALTER TABLE `puesto`
-  MODIFY `idPuesto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `idPuesto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT de la tabla `solicitud`
 --
 ALTER TABLE `solicitud`
-  MODIFY `idSolicitud` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `idSolicitud` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Restricciones para tablas volcadas
@@ -928,7 +1066,7 @@ ALTER TABLE `candidato`
 -- Filtros para la tabla `candidato_has_habilidad`
 --
 ALTER TABLE `candidato_has_habilidad`
-  ADD CONSTRAINT `fk_Candidato_has_Habilidad_Candidato1` FOREIGN KEY (`Curp`) REFERENCES `candidato` (`Curp`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_Candidato_has_Habilidad_Candidato1` FOREIGN KEY (`Curp`) REFERENCES `candidato` (`Curp`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_Candidato_has_Habilidad_Habilidad1` FOREIGN KEY (`idHabilidad`) REFERENCES `habilidad` (`idHabilidad`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
@@ -942,16 +1080,39 @@ ALTER TABLE `candidato_has_idioma`
 -- Filtros para la tabla `candidato_has_nivelacademico`
 --
 ALTER TABLE `candidato_has_nivelacademico`
-  ADD CONSTRAINT `fk_Candidato_has_NivelAcademico_Carrera1` FOREIGN KEY (`idCarrera`) REFERENCES `carrera` (`idCarrera`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_Candidato_has_NivelAcademico_Candidato1` FOREIGN KEY (`Curp`) REFERENCES `candidato` (`Curp`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_Candidato_has_NivelAcademico_Carrera1` FOREIGN KEY (`idCarrera`) REFERENCES `carrera` (`idCarrera`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_Candidato_has_NivelAcademico_NivelAcademico1` FOREIGN KEY (`idNivelAcademico`) REFERENCES `nivelacademico` (`idNivelAcademico`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `empleado_has_habilidad`
+--
+ALTER TABLE `empleado_has_habilidad`
+  ADD CONSTRAINT `empleado_has_habilidad_ibfk_1` FOREIGN KEY (`idHabilidad`) REFERENCES `habilidad` (`idHabilidad`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `empleado_has_habilidad_ibfk_2` FOREIGN KEY (`Curp`) REFERENCES `empleado` (`Curp`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `empleado_has_idioma`
+--
+ALTER TABLE `empleado_has_idioma`
+  ADD CONSTRAINT `empleado_has_idioma_ibfk_1` FOREIGN KEY (`idIdioma`) REFERENCES `idioma` (`idIdioma`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `empleado_has_idioma_ibfk_2` FOREIGN KEY (`Curp`) REFERENCES `empleado` (`Curp`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `empleado_has_nivelacademico`
+--
+ALTER TABLE `empleado_has_nivelacademico`
+  ADD CONSTRAINT `empleado_has_nivelacademico_ibfk_1` FOREIGN KEY (`idNivelAcademico`) REFERENCES `nivelacademico` (`idNivelAcademico`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `empleado_has_nivelacademico_ibfk_2` FOREIGN KEY (`idCarrera`) REFERENCES `carrera` (`idCarrera`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `empleado_has_nivelacademico_ibfk_3` FOREIGN KEY (`Curp`) REFERENCES `empleado` (`Curp`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `perfil_has_proceso`
 --
 ALTER TABLE `perfil_has_proceso`
-  ADD CONSTRAINT `fk_PERFIL_HAS_PROCESO_PERMISOO` FOREIGN KEY (`id_permiso`) REFERENCES `permisos` (`id_permiso`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_PERFIL_HAS_PROCESO_PROCESO` FOREIGN KEY (`id_proceso`) REFERENCES `proceso` (`id_proceso`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_PERFIL_HAS_PROCESO_perfil` FOREIGN KEY (`id_perfil`) REFERENCES `perfil_admo` (`idPerfil`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_PERFIL_HAS_PROCESO_PERMISOO` FOREIGN KEY (`idPermiso`) REFERENCES `permisos` (`id_permiso`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_PERFIL_HAS_PROCESO_PROCESO` FOREIGN KEY (`idProceso`) REFERENCES `proceso` (`idProceso`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_PERFIL_HAS_PROCESO_perfil` FOREIGN KEY (`idPerfil`) REFERENCES `perfil_admo` (`idPerfil`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `puesto_has_habilidad`
@@ -981,7 +1142,7 @@ ALTER TABLE `solicitud`
 -- Filtros para la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  ADD CONSTRAINT `fk_usuario_perfil` FOREIGN KEY (`Perfil`) REFERENCES `perfil_admo` (`idPerfil`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_usuario_perfil` FOREIGN KEY (`Perfil`) REFERENCES `perfil_admo` (`idPerfil`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
