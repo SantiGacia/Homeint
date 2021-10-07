@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 05-10-2021 a las 05:01:43
+-- Tiempo de generación: 08-10-2021 a las 00:39:16
 -- Versión del servidor: 10.4.19-MariaDB
 -- Versión de PHP: 8.0.7
 
@@ -54,7 +54,8 @@ CREATE TABLE `anuncio` (
 
 INSERT INTO `anuncio` (`idAnuncio`, `idSolicitud`, `Num_Solicitantes`, `FechaPublicacion`, `FechaCierre`, `idcontacto`, `idMedioPublicidad`) VALUES
 (21, 31, 3, '2021-04-08', '2021-04-09', 3, 8),
-(22, 31, 3, '2021-04-08', '2021-04-09', 4, 6);
+(22, 31, 3, '2021-04-08', '2021-04-09', 4, 6),
+(23, 32, 2, '2021-10-05', '2021-10-06', 3, 7);
 
 -- --------------------------------------------------------
 
@@ -102,6 +103,7 @@ CREATE TABLE `candidato` (
 
 INSERT INTO `candidato` (`Curp`, `RFC`, `Nombre`, `Domicilio`, `Telefono`, `E_Mail`, `Sexo`, `Edad`, `NSS`, `Fotografia`, `idEstadoCivil`) VALUES
 ('COCR800325HASDD03', 'COCR80032', 'CORONA CORONA ROBERTO', 'conocido', '99999999', 'COC@GMAIL.COM', 'M', 40, 155545445, NULL, 2),
+('FEEA770826MPLRSL72', 'FEEA770828SE5', 'Fernandez Espinoza Alejandra', 'conocido', '9999999999', 'COC@GMAIL.com', 'F', 20, 3124125, NULL, 1),
 ('GOML900330MASDD03', 'GOML900330', 'GONZALEZ MARTINEZ LAURA', 'conocido', '999999999', 'GOML@GMAIL.COM', 'F', 30, 15544545, NULL, 2),
 ('MAMA770826HSLRRI22', 'MAMA770826JVP', 'MARTINEZ MORENO ALEJANDRO', 'Conocido', '4491915799', 'sgamer.garcia@gmail.com', 'M', 20, 1234567, NULL, 3);
 
@@ -237,20 +239,20 @@ CREATE TABLE `datos_de_empresa` (
   `Encargado` varchar(45) DEFAULT NULL,
   `CIF_Empresa` varchar(9) DEFAULT NULL,
   `Acta_constitutiva` varchar(100) NOT NULL,
-  `No_Escritura Publica` varchar(11) NOT NULL,
-  `Libro_Escritura Publica` varchar(11) NOT NULL,
-  `Fecha_Escritura Publica` date NOT NULL,
-  `Fe_Escritura Publica` varchar(11) NOT NULL,
-  `NP_Escritura Publica` varchar(11) NOT NULL,
-  `Ciu_Escritura Publica` varchar(100) NOT NULL
+  `No_Escriturapub` varchar(24) NOT NULL,
+  `Libro_Escriturapub` varchar(24) NOT NULL,
+  `Fecha_Escriturapub` date NOT NULL,
+  `Fe_Escriturapub` varchar(24) NOT NULL,
+  `NP_Escriturapub` varchar(24) NOT NULL,
+  `Ciu_Escriturapub` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `datos_de_empresa`
 --
 
-INSERT INTO `datos_de_empresa` (`idEmpresa`, `Nombre_de_empresa`, `Descripcion`, `Telefono`, `Domicilio`, `E_Mail`, `RazonSocial`, `Estructura_Juridica`, `Encargado`, `CIF_Empresa`, `Acta_constitutiva`, `No_Escritura Publica`, `Libro_Escritura Publica`, `Fecha_Escritura Publica`, `Fe_Escritura Publica`, `NP_Escritura Publica`, `Ciu_Escritura Publica`) VALUES
-(1, 'PruebaSist S.A ', 'Empresa de prueba para el sistema ', '449-999-88', '449-999-8888', 'pruebasist@pruebasist.com.mx', 'PruebaSist S.A.', 'S.A', 'Nombre del CEO ', '?????????', '', '0', '', '0000-00-00', '', '0', '');
+INSERT INTO `datos_de_empresa` (`idEmpresa`, `Nombre_de_empresa`, `Descripcion`, `Telefono`, `Domicilio`, `E_Mail`, `RazonSocial`, `Estructura_Juridica`, `Encargado`, `CIF_Empresa`, `Acta_constitutiva`, `No_Escriturapub`, `Libro_Escriturapub`, `Fecha_Escriturapub`, `Fe_Escriturapub`, `NP_Escriturapub`, `Ciu_Escriturapub`) VALUES
+(1, 'PruebaSist S.A ', 'Empresa de prueba para el sistema ', '449-999-88', 'Cetis155', 'pruebasist@pruebasist.com.mx', 'PruebaSist S.A.', 'S.A', 'Nombre del CEO ', '?????????', 'Acta Prueba', '2008', 'libro prueba', '2021-10-07', 'fe prueba', '2008', 'Aguascalientes');
 
 -- --------------------------------------------------------
 
@@ -534,7 +536,8 @@ CREATE TABLE `perfil_has_proceso` (
 --
 
 INSERT INTO `perfil_has_proceso` (`idPerfil`, `idProceso`, `idPermiso`) VALUES
-(1, 10, 1);
+(1, 10, 1),
+(3, 13, 2);
 
 -- --------------------------------------------------------
 
@@ -609,7 +612,8 @@ CREATE TABLE `puesto` (
 --
 
 INSERT INTO `puesto` (`idPuesto`, `Descripcion`, `SalarioAnual`, `Beneficios`, `Bonos`, `Aprobacion`) VALUES
-(20, 'Desarrollador de sistemas WEB y Móviles ', 1500000, 'de ley ', 0, 0);
+(20, 'Desarrollador de sistemas WEB y Móviles ', 1500000, 'de ley ', 0, 0),
+(21, 'Técnico en electrónica', 1500000, 'De ley', 30000, 0);
 
 -- --------------------------------------------------------
 
@@ -629,7 +633,8 @@ CREATE TABLE `puesto_has_habilidad` (
 
 INSERT INTO `puesto_has_habilidad` (`idPuesto`, `idHabilidad`, `Experiencia`) VALUES
 (20, 9, '2 años '),
-(20, 10, '2 años ');
+(20, 10, '2 años '),
+(21, 11, '5 años');
 
 -- --------------------------------------------------------
 
@@ -649,7 +654,8 @@ CREATE TABLE `puesto_has_idioma` (
 
 INSERT INTO `puesto_has_idioma` (`idPuesto`, `idIdioma`, `Nivel`) VALUES
 (20, 7, 'Experto'),
-(20, 8, 'Básico');
+(20, 8, 'Básico'),
+(21, 7, 'Medio');
 
 -- --------------------------------------------------------
 
@@ -683,7 +689,8 @@ CREATE TABLE `resultadocandidato` (
 INSERT INTO `resultadocandidato` (`EstatusProceso`, `Comentarios_area`, `Comentarios_ofertas_salario`, `Comentarios_area_seleccion`, `estatus`, `idSolicitud`, `Curp`, `id_actitud`, `Coeficiente_Intelectual`, `Personalidad`, `apto_psico`, `Validar_ref`, `Calificacion_Medica`, `validacion`, `Calificacion`, `Califica_el_Perfil`) VALUES
 ('3', '', '', '', 'Si', 31, 'COCR800325HASDD03', 0, 100, 'Bueno', 0, 'Si', 'No Apto', 'Si', 'No Apto', 'bueno'),
 ('3', '', '', '', 'No', 31, 'GOML900330MASDD03', 0, 50, 'Regular', 0, 'Si', 'Apto', 'No', 'No Apto', '75'),
-('3', '', '', '', 'Si', 31, 'MAMA770826HSLRRI22', 0, 100, 'si', 0, 'Si', 'Apto', 'Si', 'Apto', '100');
+('3', '', '', '', 'Si', 31, 'MAMA770826HSLRRI22', 0, 100, 'si', 0, 'Si', 'Apto', 'Si', 'Apto', '100'),
+('2', '', '', '', 'Pendiente', 32, 'MAMA770826HSLRRI22', 0, 1000, 'Bueno', 0, 'Pendiente', 'Pendiente', 'Pendiente', 'Apto', '10');
 
 -- --------------------------------------------------------
 
@@ -707,7 +714,8 @@ CREATE TABLE `solicitud` (
 --
 
 INSERT INTO `solicitud` (`idSolicitud`, `FechaSolicitud`, `NumeroVacante`, `idArea`, `idPuesto`, `idNivelAcademico`, `idCarrera`, `idEstatus_Solicitud`) VALUES
-(31, '2021-04-06', 3, 5, 20, 11, 8, 3);
+(31, '2021-04-06', 3, 5, 20, 11, 8, 3),
+(32, '2021-10-05', 2, 6, 21, 10, 9, 3);
 
 -- --------------------------------------------------------
 
@@ -939,7 +947,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `anuncio`
 --
 ALTER TABLE `anuncio`
-  MODIFY `idAnuncio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `idAnuncio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT de la tabla `area`
@@ -1029,13 +1037,13 @@ ALTER TABLE `proceso`
 -- AUTO_INCREMENT de la tabla `puesto`
 --
 ALTER TABLE `puesto`
-  MODIFY `idPuesto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `idPuesto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT de la tabla `solicitud`
 --
 ALTER TABLE `solicitud`
-  MODIFY `idSolicitud` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `idSolicitud` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
