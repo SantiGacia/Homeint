@@ -414,26 +414,18 @@ def modificar_datos_empresa(id):
       aux_estructura = request.form['estructura_juridica']
       aux_razon = request.form['razon_social']
       aux_correo = request.form['correo']
-
-      aux_acta = request.form['acta_consti']
-      
       aux_domicilio = request.form['domicilio']
       aux_telefono = request.form['tel']
       aux_encargado = request.form['encargado']
-
-      aux_noescpub = request.form ['no_esct_publica']
-      aux_libroescpub = request.form ['libro_esct_publica']
-      aux_fechaescpub = request.form ['fecha_esct_publica']
-      aux_feescpub = request.form ['fe_esct_publica']
-      aux_npescpub = request.form ['np_esct_publica']
-      aux_ciuescpub = request.form ['ciu_escpub']
-
       aux_CIF = request.form['CIF']
 
       conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
       cursor = conn.cursor()
-      cursor.execute('update datos_de_empresa set Nombre_de_empresa=%s,Descripcion=%s, Telefono=%s, Domicilio=%s, E_Mail=%s, Acta_constitutiva=%s,RazonSocial=%s, Estructura_Juridica=%s, Encargado=%s, CIF_Empresa=%s,No_Escriturapub=%s, Libro_Escriturapub=%s, Fecha_Escriturapub=%s, Fe_Escriturapub=%s, NP_Escriturapub=%s, Ciu_Escriturapub=%s'
-                     'where Nombre_de_empresa=%s', (aux_nombre, aux_descripcion, aux_telefono,aux_domicilio, aux_correo, aux_acta,aux_razon,aux_estructura, aux_encargado, aux_CIF,aux_noescpub,aux_libroescpub,aux_fechaescpub,aux_feescpub,aux_npescpub,aux_ciuescpub,id))
+      cursor.execute('update datos_de_empresa set Nombre_de_empresa=%s, '
+                     'Descripcion=%s, Telefono=%s, Domicilio=%s, E_Mail=%s, RazonSocial=%s, Estructura_Juridica=%s, '
+                     'Encargado=%s, CIF_Empresa=%s where Nombre_de_empresa=%s', (aux_nombre, aux_descripcion, aux_estructura,
+                                                                        aux_razon, aux_correo, aux_domicilio,
+                                                                        aux_telefono, aux_encargado, aux_CIF, id))
       conn.commit()
       conn.close()
    return redirect(url_for('agr_datos_empresa'))
@@ -452,7 +444,7 @@ def ed_datos_empresa(id):
     conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
     cursor = conn.cursor()
     cursor.execute('select Nombre_de_empresa, Descripcion, Telefono, Domicilio, E_Mail, RazonSocial, '
-                   'Estructura_Juridica, Encargado, CIF_Empresa,`Acta_constitutiva`,`No_Escriturapub`,`Libro_Escriturapub`,`Fecha_Escriturapub`,`Fe_Escriturapub`,`NP_Escriturapub`,`Ciu_Escriturapub`'
+                   'Estructura_Juridica, Encargado, CIF_Empresa '
                    'from datos_de_empresa where Nombre_de_empresa = %s', (id))
     dato=cursor.fetchall()
     conn.close()
@@ -2927,6 +2919,8 @@ def ed_empleado(Curp):
         conn.close()
         return render_template("ed_empleado.html" ,sexo=sexos,carrera_can=datos8, empleados=datos, can_habs=datos1, can_idis=datos2,can_acas=datos6, habs=datos3, idiomas=datos4, nivel_academico=datos7, ecivil=datos5)
 
+
+
 @app.route('/modifica_empleado/<string:Curp>', methods=['POST'])
 def modifica_empleado(Curp):
     if request.method == 'POST':
@@ -3259,6 +3253,169 @@ def bo_emp_aca_can(idC,idA,idCA):
     return render_template("edi_empleado.html", carrera_can=datos8, empleados=datos, can_habs=datos1, can_idis=datos2,
                            can_acas=datos6,
                            habs=datos3, idiomas=datos4, nivel_academico=datos7, ecivil=datos5)
+
+@app.route('/contrato')
+def contrato():
+    conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
+    cursor = conn.cursor()
+    cursor.execute(' select Curp, Nombre from empleado order by Nombre')
+    datos=cursor.fetchall()
+    conn.close()
+    return render_template("tabla_contrato.html", empleados = datos)
+
+@app.route('/ed_contrato/<string:Curp>')
+def ed_contrato(Curp):
+        conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
+        cursor = conn.cursor()
+        cursor.execute(' select Curp, RFC, Nombre, Domicilio, Telefono, E_Mail, Sexo, Edad, NSS, idEstadoCivil, Conyuje_Concubino,tel_emergencia, nombre_emergencia, no_infonavit'
+                       ' from empleado where Curp=%s',(Curp))
+        datos=cursor.fetchall()
+
+
+        cursor.execute(' select a.Curp, b.idHabilidad, b.Descripcion, c.Curp, c.idHabilidad, c.Experiencia'
+                       ' from empleado a, habilidad b, empleado_has_habilidad c'
+                       ' where a.Curp=c.Curp and b.idHabilidad=c.idHabilidad and c.Curp=%s',(Curp))
+        datos1=cursor.fetchall()
+
+        cursor.execute(' select a.Curp, b.idIdioma, b.Lenguaje, c.Curp, c.idIdioma, c.Nivel'
+                       ' from empleado a, idioma b, empleado_has_idioma c'
+                       ' where a.Curp=c.Curp and b.idIdioma=c.idIdioma and c.Curp=%s',(Curp))
+        datos2 = cursor.fetchall()
+
+        cursor.execute(' select a.Curp, b.idNivelAcademico, b.Descripcion, c.idCarrera, c.Descripcion, d.Curp, d.idNivelAcademico, d.idCarrera, d.Institucion'
+                       ' from empleado a, nivelacademico b, carrera c, empleado_has_nivelacademico d'
+                       ' where a.Curp=d.Curp and b.idNivelAcademico=d.idNivelAcademico and c.idCarrera=d.idCarrera and d.Curp=%s',(Curp))
+        datos6 = cursor.fetchall()
+
+
+        cursor.execute(' select idhabilidad, Descripcion from habilidad order by Descripcion')
+        datos3 = cursor.fetchall()
+
+        cursor.execute(' select idIdioma, Lenguaje from idioma order by Lenguaje')
+        datos4 = cursor.fetchall()
+
+        cursor.execute(' select idNivelAcademico, Descripcion from nivelacademico order by Descripcion')
+        datos7 = cursor.fetchall()
+
+        cursor.execute(' select Curp,Sexo from empleado where Curp=%s',(Curp))
+        sexos = cursor.fetchall()
+
+        cursor.execute('select idCarrera, Descripcion from carrera order by Descripcion')
+        datos8=cursor.fetchall()
+
+        cursor.execute(' select idEstadoCivil, Descripcion from estadocivil')
+        datos5 = cursor.fetchall()
+
+        
+
+        conn.close()
+        return render_template("ed_contrato.html" ,sexo=sexos,carrera_can=datos8, empleados=datos, can_habs=datos1, can_idis=datos2,can_acas=datos6, habs=datos3, idiomas=datos4, nivel_academico=datos7, ecivil=datos5)
+
+@app.route('/modifica_contrato/<string:Curp>', methods=['POST'])
+def modifica_contrato(Curp):
+    if request.method == 'POST':
+        aux_cur = request.form['curp']
+        aux_rfc = request.form['rfc']
+        aux_nom = request.form['nombre']
+        aux_dom = request.form['domicilio']
+        aux_tel = request.form['telefono']
+        aux_cor = request.form['correoe']
+        aux_sex = request.form['sexo']
+        aux_eda = request.form['edad']
+        aux_nss = request.form['nss']
+
+        aux_eci = request.form['edociv']
+
+        aux_nomc = request.form['nomcoy']
+        aux_nomcaux = request.form['nomcaux']
+        aux_telaux= request.form['telaux']
+        aux_numinfonavit =request.form['numinfonavit']
+
+        conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
+        cursor = conn.cursor()
+
+        cursor.execute(
+                'update empleado '
+                'set Curp=%s, RFC=%s, Nombre=%s, Domicilio=%s, Telefono=%s, E_Mail=%s, Sexo=%s, Edad=%s, NSS=%s, idEstadoCivil=%s,Conyuje_Concubino=%s,tel_emergencia=%s, nombre_emergencia=%s, no_infonavit=%s '
+                'where Curp=%s'
+        ,(aux_cur,aux_rfc,aux_nom,aux_dom,aux_tel,aux_cor,aux_sex,aux_eda,aux_nss,aux_eci,aux_nomc,aux_telaux,aux_nomcaux,aux_numinfonavit,Curp))
+        conn.commit()
+        conn.close()
+        return redirect(url_for('empleado'))
+
+@app.route('/bo_contrato/<string:Curp>')
+def bo_contrato(Curp):
+    conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
+    cursor = conn.cursor()
+    cursor.execute('delete from empleado_has_idioma where Curp = %s',(Curp))
+    conn.commit()
+    cursor.execute('delete from empleado_has_habilidad where Curp = %s',(Curp))
+    conn.commit()
+    cursor.execute('delete from empleado where Curp = %s',(Curp))
+    conn.commit()
+    conn.close()
+    return redirect(url_for('empleado'))
+
+    ##prueba 1 # version alernativa sin tablas #
+@app.route('/ed_empleado2/<string:Curp>')
+def ed_empleado2(Curp):
+        conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
+        cursor = conn.cursor()
+        cursor.execute(' select Curp, RFC, Nombre, Domicilio, Telefono, E_Mail, Sexo, Edad, NSS, idEstadoCivil, Conyuje_Concubino,tel_emergencia, nombre_emergencia, no_infonavit'
+                       ' from empleado where Curp=%s',(Curp))
+        datos=cursor.fetchall()
+
+
+        cursor.execute(' select a.Curp, b.idHabilidad, b.Descripcion, c.Curp, c.idHabilidad, c.Experiencia'
+                       ' from empleado a, habilidad b, empleado_has_habilidad c'
+                       ' where a.Curp=c.Curp and b.idHabilidad=c.idHabilidad and c.Curp=%s',(Curp))
+        datos1=cursor.fetchall()
+
+        cursor.execute(' select a.Curp, b.idIdioma, b.Lenguaje, c.Curp, c.idIdioma, c.Nivel'
+                       ' from empleado a, idioma b, empleado_has_idioma c'
+                       ' where a.Curp=c.Curp and b.idIdioma=c.idIdioma and c.Curp=%s',(Curp))
+        datos2 = cursor.fetchall()
+
+        cursor.execute(' select a.Curp, b.idNivelAcademico, b.Descripcion, c.idCarrera, c.Descripcion, d.Curp, d.idNivelAcademico, d.idCarrera, d.Institucion'
+                       ' from empleado a, nivelacademico b, carrera c, empleado_has_nivelacademico d'
+                       ' where a.Curp=d.Curp and b.idNivelAcademico=d.idNivelAcademico and c.idCarrera=d.idCarrera and d.Curp=%s',(Curp))
+        datos6 = cursor.fetchall()
+
+        cursor.execute(' select idhabilidad, Descripcion from habilidad order by Descripcion')
+        datos3 = cursor.fetchall()
+
+        cursor.execute(' select idIdioma, Lenguaje from idioma order by Lenguaje')
+        datos4 = cursor.fetchall()
+
+        cursor.execute(' select idNivelAcademico, Descripcion from nivelacademico order by Descripcion')
+        datos7 = cursor.fetchall()
+
+        cursor.execute(' select Curp,Sexo from empleado where Curp=%s',(Curp))
+        sexos = cursor.fetchall()
+
+        cursor.execute('select idCarrera, Descripcion from carrera order by Descripcion')
+        datos8=cursor.fetchall()
+
+        cursor.execute(' select idEstadoCivil, Descripcion from estadocivil')
+        datos5 = cursor.fetchall()
+        conn.close()
+        return render_template("ed_empleado2.html" ,sexo=sexos,carrera_can=datos8, empleados=datos, can_habs=datos1, can_idis=datos2,can_acas=datos6, habs=datos3, idiomas=datos4, nivel_academico=datos7, ecivil=datos5)
+
+@app.route('/puesto_solicitud')
+def puesto_solicitud():
+    conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
+    cursor = conn.cursor()
+    cursor.execute('select a.idSolicitud, a.FechaSolicitud, a.idArea, b.AreaNombre, '
+        'a.idPuesto, c.Descripcion, a.NumeroVacante, a.idEstatus_Solicitud, d.Descripcion '
+        'from solicitud a, area b, puesto c, estatus_solicitud d '
+        'where b.idArea=a.idArea and c.idPuesto=a.idPuesto and d.idEstatus_Solicitud=a.idEstatus_Solicitud '
+        'and (a.idEstatus_Solicitud=3 or a.idEstatus_Solicitud=4)')
+    datos=cursor.fetchall()
+    return render_template("mue_candidato_contratacion.html", solicitudes=datos)
+
+##
+
+
 
 
 

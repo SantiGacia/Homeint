@@ -1,11 +1,11 @@
-﻿-- phpMyAdmin SQL Dump
+-- phpMyAdmin SQL Dump
 -- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 08-10-2021 a las 00:39:16
--- Versión del servidor: 10.4.19-MariaDB
--- Versión de PHP: 8.0.7
+-- Tiempo de generación: 11-10-2021 a las 04:37:49
+-- Versión del servidor: 10.4.20-MariaDB
+-- Versión de PHP: 8.0.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `r_humanos`
+-- Base de datos: `re_humanos`
 --
 
 -- --------------------------------------------------------
@@ -220,6 +220,28 @@ CREATE TABLE `contacto` (
 INSERT INTO `contacto` (`idcontacto`, `Nombre`, `Domicilio`, `Razon_Social`, `Telefono`, `Email`, `Link`) VALUES
 (3, 'Contacto de contratación 1', 'conocido', 'SR', '4495566907', '', ''),
 (4, 'Contacto de contratación 2 ', 'conocido', 'SR', '2147483647', '', '');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `contrato`
+--
+
+CREATE TABLE `contrato` (
+  `IdContrato` int(18) NOT NULL,
+  `CURP` varchar(18) NOT NULL,
+  `idPuesto` int(11) NOT NULL,
+  `idArea` int(11) NOT NULL,
+  `fecha_inicio` date NOT NULL,
+  `fecha_fin` date NOT NULL,
+  `idJornada` int(11) NOT NULL,
+  `horas_semana` int(11) NOT NULL,
+  `horario` text NOT NULL,
+  `Salario` float NOT NULL,
+  `dias_de_pago` varchar(100) NOT NULL,
+  `lugar_firma` varchar(100) NOT NULL,
+  `fecha_firma` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -458,6 +480,17 @@ INSERT INTO `idioma` (`idIdioma`, `Lenguaje`) VALUES
 (7, 'Ingles'),
 (8, 'Frances'),
 (9, 'Japones');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `jornada`
+--
+
+CREATE TABLE `jornada` (
+  `IdJornada` int(11) NOT NULL,
+  `descripción` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -800,6 +833,16 @@ ALTER TABLE `contacto`
   ADD PRIMARY KEY (`idcontacto`);
 
 --
+-- Indices de la tabla `contrato`
+--
+ALTER TABLE `contrato`
+  ADD PRIMARY KEY (`IdContrato`),
+  ADD KEY `fk_Contrato_CURP` (`CURP`) USING BTREE,
+  ADD KEY `fk_Contrato_Puesto` (`idPuesto`) USING BTREE,
+  ADD KEY `fk_Contrato_Area` (`idArea`) USING BTREE,
+  ADD KEY `fk_Contrato_Jornada` (`idJornada`) USING BTREE;
+
+--
 -- Indices de la tabla `datos_de_empresa`
 --
 ALTER TABLE `datos_de_empresa`
@@ -862,6 +905,12 @@ ALTER TABLE `habilidad`
 --
 ALTER TABLE `idioma`
   ADD PRIMARY KEY (`idIdioma`);
+
+--
+-- Indices de la tabla `jornada`
+--
+ALTER TABLE `jornada`
+  ADD PRIMARY KEY (`IdJornada`);
 
 --
 -- Indices de la tabla `mediopublicidad`
@@ -1091,6 +1140,15 @@ ALTER TABLE `candidato_has_nivelacademico`
   ADD CONSTRAINT `fk_Candidato_has_NivelAcademico_Candidato1` FOREIGN KEY (`Curp`) REFERENCES `candidato` (`Curp`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_Candidato_has_NivelAcademico_Carrera1` FOREIGN KEY (`idCarrera`) REFERENCES `carrera` (`idCarrera`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_Candidato_has_NivelAcademico_NivelAcademico1` FOREIGN KEY (`idNivelAcademico`) REFERENCES `nivelacademico` (`idNivelAcademico`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `contrato`
+--
+ALTER TABLE `contrato`
+  ADD CONSTRAINT `contrato_ibfk_1` FOREIGN KEY (`idArea`) REFERENCES `area` (`idArea`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `contrato_ibfk_2` FOREIGN KEY (`idPuesto`) REFERENCES `puesto` (`idPuesto`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `contrato_ibfk_3` FOREIGN KEY (`idJornada`) REFERENCES `jornada` (`IdJornada`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `contrato_ibfk_4` FOREIGN KEY (`CURP`) REFERENCES `empleado` (`Curp`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `empleado_has_habilidad`

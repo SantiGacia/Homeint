@@ -124,34 +124,33 @@
     <div class="form-row">
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <label>Es apto:</label>&nbsp;
-        {% if can_seleccionados.0[8]=="No Apto"%}
+        {% if can_seleccionados.0[8]==0%}
         <div class="form-check rorm-check-inline">
-            <input class="form-check-input" type="radio" name="apto" id="apto1" value="No Apto" checked disabled>
-            <label class="form-check-label" for="apto1">No</label>
+            <input class="form-check-input" type="radio" name="apto" id="apto1" value="0" checked disabled>
+            <label class="form-check-label" for="apto1">Si</label>
         </div>
         &nbsp;&nbsp;&nbsp;
         <div class="form-check rorm-check-inline">
-            <input class="form-check-input" type="radio" name="apto" id="apto2" value="Apto" disabled>
-            <label class="form-check-label" for="apto2">Si</label>
+            <input class="form-check-input" type="radio" name="apto" id="apto2" value="1" disabled>
+            <label class="form-check-label" for="apto2">No</label>
         </div>
         {% else %}
 
         <div class="form-check rorm-check-inline">
-            <input class="form-check-input" type="radio" name="apto" id="apto1" value="No Apto" disabled>
-            <label class="form-check-label" for="apto1">No</label>
+            <input class="form-check-input" type="radio" name="apto" id="apto1" value="0" disabled>
+            <label class="form-check-label" for="apto1">Si</label>
         </div>
         &nbsp;&nbsp;&nbsp;
         <div class="form-check rorm-check-inline">
-            <input class="form-check-input" type="radio" name="apto" id="apto2" value="Apto" checked disabled>
-            <label class="form-check-label" for="apto2">Si</label>
+            <input class="form-check-input" type="radio" name="apto" id="apto2" value="1" checked disabled>
+            <label class="form-check-label" for="apto2">No</label>
         </div>
         {% endif %}
     </div>
     <br>
     &nbsp;&nbsp;&nbsp;
-    <a class="btn btn-primary" href="/sel_candidato_contratacion/{{sol.0}}" style="background:lightseagreen">Regresar</a>
+    <a class="btn btn-primary" href="/agr_candidato_contratacion" style="background:lightseagreen">Regresar</a>
 
     </body>
-    
 </form>
 {% endblock %}
