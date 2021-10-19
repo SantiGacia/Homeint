@@ -1835,7 +1835,12 @@ def usuario():
 
 @app.route('/nvo_usuario')
 def nvo_usuario():
-    return render_template("agrega_usuario.html")
+    conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
+    cursor = conn.cursor()
+    cursor.execute('select idPerfil, Descripcion from perfil_admo order by Descripcion')
+    datos2 = cursor.fetchall()
+    conn.close()
+    return render_template("agrega_usuario.html", pers=datos2)
 
 @app.route('/agrega_usuario', methods=['POST'])
 def agrega_usuario():
@@ -1843,10 +1848,11 @@ def agrega_usuario():
         aux_usuario = request.form['Usuario']
         aux_pass = request.form['Password']
         aux_nom = request.form['Nombre']
+        aux_perfil = request.form ['per']
         conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
         cursor = conn.cursor()
-        cursor.execute('insert into usuario (Usuario, Password, Nombre) '
-                       'values (%s,%s,%s)', (aux_usuario, aux_pass, aux_nom))
+        cursor.execute('insert into usuario (Usuario, Password, Nombre, Perfil) '
+                       'values (%s,%s,%s,%s)', (aux_usuario, aux_pass, aux_nom, aux_perfil))
         conn.commit()
 
         cursor.execute('select idUsuario, Usuario, Password, Nombre, Perfil '
@@ -1855,10 +1861,10 @@ def agrega_usuario():
 
         cursor.execute('select a.idUsuario, a.Perfil, b.Descripcion '
                        ' from usuario a, perfil_admo b '
-                       ' where a.Perfil=b.id_perfil and b.id_perfil=(select max(id_perfil) from perfil_admo)')
+                       ' where a.Perfil=b.idPerfil and b.idPerfil=(select max(idPerfil) from perfil_admo)')
         datos1=cursor.fetchall()
 
-        cursor.execute('select id_perfil, Descripcion from perfil_admo order by Descripcion')
+        cursor.execute('select idPerfil, Descripcion from perfil_admo order by Descripcion')
         datos2 = cursor.fetchall()
         conn.close()
         return render_template("edi_usuario2.html", usuarios = datos, usu_per=datos1, pers=datos2)

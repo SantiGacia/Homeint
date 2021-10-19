@@ -22,6 +22,21 @@
                 <input type="text" class="form-control" name="Nombre" id="Nombre" required>
             </div>
         </div>
+        <div class="form-group col-md-3">
+
+            <label for="per">Actualizar Perfil</label>
+            <select name="per" id="per" class="form-control" required>
+
+                <option value="" selected>Choose...</option>
+                {%
+                for per in pers
+                %}
+                    <option value="{{ per.0 }}">{{ per.1 }}</option>{% endfor %}
+            </select>
+        </div>
+        <br>
+
+
     <button type="submit" class="btn btn-primary" style="background:lightseagreen">Agregar</button>
     <a class="btn btn-primary" href="/usuario" align="right" style="background:lightseagreen">Cancelar</a>
 <br>
