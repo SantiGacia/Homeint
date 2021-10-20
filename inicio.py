@@ -396,39 +396,54 @@ def datos_empresa_agr():
         conn.close()
         return redirect(url_for('agr_datos_empresa'))
 
+
 @app.route('/agr_datos_empresa')
 def agr_datos_empresa():
     conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
     cursor = conn.cursor()
     cursor.execute('select Nombre_de_empresa, Descripcion, Telefono, Domicilio, E_Mail, RazonSocial, '
                    'Estructura_Juridica, Encargado, CIF_Empresa from datos_de_empresa order by Nombre_de_empresa')
-    datos=cursor.fetchall()
+    datos = cursor.fetchall()
     conn.close()
-    return render_template("tabla_datos_empresa.html", niveles = datos )
+    return render_template("tabla_datos_empresa.html", niveles=datos)
+
 
 @app.route('/modificar_datos_empresa/<string:id>', methods=['POST'])
 def modificar_datos_empresa(id):
-   if request.method == 'POST':
-      aux_nombre = request.form['nom_empresa']
-      aux_descripcion = request.form['descripcion']
-      aux_estructura = request.form['estructura_juridica']
-      aux_razon = request.form['razon_social']
-      aux_correo = request.form['correo']
-      aux_domicilio = request.form['domicilio']
-      aux_telefono = request.form['tel']
-      aux_encargado = request.form['encargado']
-      aux_CIF = request.form['CIF']
+    if request.method == 'POST':
+        aux_nombre = request.form['nom_empresa']
+        aux_descripcion = request.form['descripcion']
+        aux_estructura = request.form['estructura_juridica']
+        aux_razon = request.form['razon_social']
+        aux_correo = request.form['correo']
 
-      conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
-      cursor = conn.cursor()
-      cursor.execute('update datos_de_empresa set Nombre_de_empresa=%s, '
-                     'Descripcion=%s, Telefono=%s, Domicilio=%s, E_Mail=%s, RazonSocial=%s, Estructura_Juridica=%s, '
-                     'Encargado=%s, CIF_Empresa=%s where Nombre_de_empresa=%s', (aux_nombre, aux_descripcion, aux_estructura,
-                                                                        aux_razon, aux_correo, aux_domicilio,
-                                                                        aux_telefono, aux_encargado, aux_CIF, id))
-      conn.commit()
-      conn.close()
-   return redirect(url_for('agr_datos_empresa'))
+        aux_acta = request.form['acta_consti']
+
+        aux_domicilio = request.form['domicilio']
+        aux_telefono = request.form['tel']
+        aux_encargado = request.form['encargado']
+
+        aux_noescpub = request.form['no_esct_publica']
+        aux_libroescpub = request.form['libro_esct_publica']
+        aux_fechaescpub = request.form['fecha_esct_publica']
+        aux_feescpub = request.form['fe_esct_publica']
+        aux_npescpub = request.form['np_esct_publica']
+        aux_ciuescpub = request.form['ciu_escpub']
+
+        aux_CIF = request.form['CIF']
+
+        conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
+        cursor = conn.cursor()
+        cursor.execute(
+            'update datos_de_empresa set Nombre_de_empresa=%s,Descripcion=%s, Telefono=%s, Domicilio=%s, E_Mail=%s, Acta_constitutiva=%s,RazonSocial=%s, Estructura_Juridica=%s, Encargado=%s, CIF_Empresa=%s,No_Escriturapub=%s, Libro_Escriturapub=%s, Fecha_Escriturapub=%s, Fe_Escriturapub=%s, NP_Escriturapub=%s, Ciu_Escriturapub=%s'
+            'where Nombre_de_empresa=%s', (
+            aux_nombre, aux_descripcion, aux_telefono, aux_domicilio, aux_correo, aux_acta, aux_razon, aux_estructura,
+            aux_encargado, aux_CIF, aux_noescpub, aux_libroescpub, aux_fechaescpub, aux_feescpub, aux_npescpub,
+            aux_ciuescpub, id))
+        conn.commit()
+        conn.close()
+    return redirect(url_for('agr_datos_empresa'))
+
 
 @app.route('/bo_datos_empresa/<string:id>')
 def bo_datos_empresa(id):
@@ -439,14 +454,15 @@ def bo_datos_empresa(id):
     conn.close()
     return redirect(url_for('agr_datos_empresa'))
 
+
 @app.route('/ed_datos_empresa/<string:id>')
 def ed_datos_empresa(id):
     conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
     cursor = conn.cursor()
     cursor.execute('select Nombre_de_empresa, Descripcion, Telefono, Domicilio, E_Mail, RazonSocial, '
-                   'Estructura_Juridica, Encargado, CIF_Empresa '
+                   'Estructura_Juridica, Encargado, CIF_Empresa,`Acta_constitutiva`,`No_Escriturapub`,`Libro_Escriturapub`,`Fecha_Escriturapub`,`Fe_Escriturapub`,`NP_Escriturapub`,`Ciu_Escriturapub`'
                    'from datos_de_empresa where Nombre_de_empresa = %s', (id))
-    dato=cursor.fetchall()
+    dato = cursor.fetchall()
     conn.close()
     return render_template('edi_datos_empresa.html', nivel=dato[0])
 

@@ -27,7 +27,7 @@
     </div>
     <div class="form-row">
         <div class="col">
-            <input type="text" class="form-control" name="estructura_juridica" id="estructura_juridica" placeholder="Estructura Juridica" value="{{nivel.2}}" required>
+            <input type="text" class="form-control" name="estructura_juridica" id="estructura_juridica" placeholder="Estructura Juridica" value="{{nivel.6}}" >
         </div>
     </div>
 
@@ -36,30 +36,65 @@
     </div>
     <div class="form-row">
         <div class="col">
-            <input type="text" class="form-control" name="razon_social" id="razon_social" placeholder="Razon Social" value="{{nivel.3}}"required>
+            <input type="text" class="form-control" name="razon_social" id="razon_social" placeholder="Razon Social" value="{{nivel.5}}"required>
         </div>
     </div>
 <div class="form-row">
     <div class="form-group col-md-2">
             <label for="correo">Correo Electronico</label>
-            <input type="email" class="form-control" name="correo" id="correo" placeholder="nombre@ejemplo.com" value="{{nivel.4}}"required>
+            <input type="email" class="form-control" name="correo" id="correo" placeholder="nombre@ejemplo.com" value="{{nivel.4}}">
         </div>
+    <!--Agregar nivel de cada dato-->
+        <div class="form-group col-md-2">
+            <label for="acta_consti">Acta constitutiva</label>
+            <input type="text" class="form-control" name="acta_consti" id="acta_consti" placeholder="Acta constitutiva" value="{{nivel.9}}">
+        </div>
+    <!----------------------------->
 
     <div class="form-group col-md-2">
         <label for="domicilio">Domicilio</label>
-        <input type="text" class="form-control" name="domicilio" id="domicilio" placeholder="Domicilio" value="{{nivel.5}}" required>
+        <input type="text" class="form-control" name="domicilio" id="domicilio" placeholder="Domicilio" value="{{nivel.3}}">
     </div>
     <div class="form-group col-md-2">
         <label for="tel">Telefono</label>
-        <input type="tel" class="form-control" name="tel" id="tel" placeholder="495-999-9999" value="{{nivel.6}}"required>
+        <input type="tel" class="form-control" name="tel" id="tel" placeholder="4999999999" value="{{nivel.2}}">
     </div>
 </div>
 
     <div class="form-group col-md-11">
         <label for="encargado">Encargado</label>
-        <input type="text" class="form-control" name="encargado" id="encargado" placeholder="Encargado" value="{{nivel.7}}" required>
+        <input type="text" class="form-control" name="encargado" id="encargado" placeholder="Encargado" value="{{nivel.7}}" >
     </div>
-
+    <!-- Agregar nivel del dato  -->
+    <grup>
+        <div class="form-group col-md-11">
+            <label for="no_esct_publica">No. Escritura publica</label>
+            <input type="tel" class="form-control" name="no_esct_publica" id="no_esct_publica" placeholder="0000S" value="{{nivel.10}}">
+        </div>
+        <div class="form-group col-md-11">
+            <label for="libro_esct_publica">Libro Escritura publica</label>
+            <input type="text" class="form-control" name="libro_esct_publica" id="libro_esct_publica" placeholder="Libro" value="{{nivel.11}}">
+        </div>
+        <div>
+            <div class="form-group col-md-2">
+                <label for="fecha_esct_publica">Fecha Escritura publica</label>
+                <input type="date" class="form-control" name="fecha_esct_publica" id="fecha_esct_publica" placeholder="00/00/00" value="{{nivel.12}}">
+            </div>
+            <div class="form-group col-md-2">
+                <label for="fe_esct_publica">Fe. Escritura publica</label>
+                <input type="text" class="form-control" name="fe_esct_publica" id="fe_esct_publica" placeholder="fé" value="{{nivel.13}}">
+            </div>
+            <div class="form-group col-md-2">
+                <label for="np_esct_publica">NP Escritura publica</label>
+                <input type="tel" class="form-control" name="np_esct_publica" id="np_esct_publica" placeholder="NP escritura publica" value="{{nivel.14}}">
+            </div>
+            <div class="form-group col-md-2">
+                <label for="ciu_escpub">Ciu Escritura publica</label>
+                <input type="text" class="form-control" name="ciu_escpub" id="ciu_escpub" placeholder="Ciu Escritura publica" value="{{nivel.15}}">
+            </div>
+        </div>
+    </grup>
+    <!-------------------->
     <div class="form-group col-md-11">
         <label for="CIF">CIF de Empresa</label>
         <input type="text" class="form-control" name="CIF" id="CIF" placeholder="CIF de Empresa" value="{{nivel.8}}" required>
