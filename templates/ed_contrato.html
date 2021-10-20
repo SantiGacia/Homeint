@@ -124,8 +124,8 @@
     </form>
     {% for empleado in empleados %}
     
-      <a href="/puesto_solicitud" class="btn btn-success" style="background:lightseagreen;">Puesto/solicitud</a></center>
-      <a href="/ed_empleado/{{ empleado.0 }}" class="btn btn-success" style="background:lightseagreen;">Perfil</a></center>
+      <a href="/puesto_solicitud/{{empleado.0}}" class="btn btn-success" style="background:lightseagreen;">Editar Puesto/Area</a></center>
+      <a href="/ed_empleado/{{ empleado.0 }}" class="btn btn-success" style="background:lightseagreen;">Editar Perfil</a></center>
       <a href="/contrato" class="btn btn-success" style="background:lightseagreen;">Regresar</a></center>
     </td>
   </tr>
@@ -133,35 +133,22 @@
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   <br>
   <br>
-  <form>      
+  <form>
+          
     <div class=form-row>
-        <div class="form-group col-md-2">
+        
+        <div class="form-group col-md-4">
             <label for="puesto">Puesto</label>
-            <select name="puesto" id="puesto" class="form-control">
-                {% if empleados.0[14] == "puesto" %}
-                  <option value="1"> {{ empleados.0[14] }}  </option>
-                  <option value="2"> {{ empleados.0[14] }}  </option>
-                {% else %}
-                <option value="1"> {{ empleados.0[14] }}  </option>
-                <option value="2"> {{ empleados.0[14] }}  </option>
-                {% endif %}
-            </select>
+            <input type="text" class="form-control" name="puesto" id="puesto" placeholder="" value="" disabled>
         </div>
         <div class="form-group col-md-2">
             <label for="area">Área</label>
-            <select name="area" id="area" class="form-control">
-                {% if empleados.0[14] == "area" %}
-                  <option value="1"> {{ empleados.0[14] }}  </option>
-                  <option value="2"> {{ empleados.0[14] }}  </option>
-                {% else %}
-                <option value="1"> {{ empleados.0[14] }}  </option>
-                <option value="2"> {{ empleados.0[14] }}  </option>
-                {% endif %}
-            </select>
+            <input type="text" class="form-control" name="area" id="area" placeholder="" value="" disabled>
         </div>
         <div class="form-group col-md-2">
             <label for="turno">Turno</label>
-            <select name="turno" id="turno" class="form-control">
+            <select name="turno" id="turno" class="form-control" disabled>
+                <option value="" selected>Choose...</option>
                 {% if empleados.0[14] == "area" %}
                   <option value="1"> {{ empleados.0[14] }}  </option>
                   <option value="2"> {{ empleados.0[14] }}  </option>
@@ -172,18 +159,12 @@
             </select>
         </div>
         <div class="form-group col-md-2">
-            <label for="fecha_inicio">Turno</label>
-            <select name="fecha_inicio" id="fecha_inicio" class="form-control">
-                {% if empleados.0[14] == "area" %}
-                  <option value="1"> {{ empleados.0[14] }}  </option>
-                  <option value="2"> {{ empleados.0[14] }}  </option>
-                {% else %}
-                <option value="1"> {{ empleados.0[14] }}  </option>
-                <option value="2"> {{ empleados.0[14] }}  </option>
-                {% endif %}
-            </select>
+            <label for="fecha_inicio">Fecha de inicio</label>
+            <input type="date" class="form-control" name="fecha_inicio" id="fecha_inicio"  disabled>
         </div>
+
     </div>
+    
   </form>
 
 </body>

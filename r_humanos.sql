@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 11-10-2021 a las 04:37:49
--- Versión del servidor: 10.4.20-MariaDB
--- Versión de PHP: 8.0.9
+-- Tiempo de generación: 20-10-2021 a las 21:41:11
+-- Versión del servidor: 10.4.19-MariaDB
+-- Versión de PHP: 8.0.7
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `re_humanos`
+-- Base de datos: `r_humanos`
 --
 
 -- --------------------------------------------------------
@@ -75,7 +75,8 @@ CREATE TABLE `area` (
 
 INSERT INTO `area` (`idArea`, `AreaDescripcion`, `AreaNombre`) VALUES
 (5, 'Desarrollo de sistemas WEB y móviles para Android..', 'Desarrollo de sistemas web'),
-(6, 'Integración de sistemas electrónicos ', 'Integración de electrónica');
+(6, 'Integración de sistemas electrónicos ', 'Integración de electrónica'),
+(8, 'Mantenimiento del sistema', 'Mantenimiento');
 
 -- --------------------------------------------------------
 
@@ -102,7 +103,7 @@ CREATE TABLE `candidato` (
 --
 
 INSERT INTO `candidato` (`Curp`, `RFC`, `Nombre`, `Domicilio`, `Telefono`, `E_Mail`, `Sexo`, `Edad`, `NSS`, `Fotografia`, `idEstadoCivil`) VALUES
-('COCR800325HASDD03', 'COCR80032', 'CORONA CORONA ROBERTO', 'conocido', '99999999', 'COC@GMAIL.COM', 'M', 40, 155545445, NULL, 2),
+('COCR800328HASRRB47', 'COCR800325B29', 'CORONA CORONA ROBERTO', 'conocido', '99999999', 'COC@GMAIL.COM', 'M', 40, 155545445, NULL, 2),
 ('FEEA770826MPLRSL72', 'FEEA770828SE5', 'Fernandez Espinoza Alejandra', 'conocido', '9999999999', 'COC@GMAIL.com', 'F', 20, 3124125, NULL, 1),
 ('GOML900330MASDD03', 'GOML900330', 'GONZALEZ MARTINEZ LAURA', 'conocido', '999999999', 'GOML@GMAIL.COM', 'F', 30, 15544545, NULL, 2),
 ('MAMA770826HSLRRI22', 'MAMA770826JVP', 'MARTINEZ MORENO ALEJANDRO', 'Conocido', '4491915799', 'sgamer.garcia@gmail.com', 'M', 20, 1234567, NULL, 3);
@@ -125,8 +126,8 @@ CREATE TABLE `candidato_has_habilidad` (
 --
 
 INSERT INTO `candidato_has_habilidad` (`Curp`, `idHabilidad`, `Experiencia`, `valida`) VALUES
-('COCR800325HASDD03', 9, '5 años ', 'Si'),
-('COCR800325HASDD03', 10, '5 años ', 'Si'),
+('COCR800328HASRRB47', 9, '5 años ', 'Si'),
+('COCR800328HASRRB47', 10, '5 años ', 'Si'),
 ('GOML900330MASDD03', 9, '2 años ', 'Si'),
 ('GOML900330MASDD03', 10, '2 años ', 'Si'),
 ('MAMA770826HSLRRI22', 9, '1 year', 'Si');
@@ -149,8 +150,8 @@ CREATE TABLE `candidato_has_idioma` (
 --
 
 INSERT INTO `candidato_has_idioma` (`Curp`, `idIdioma`, `NIvel`, `valida`) VALUES
-('COCR800325HASDD03', 7, 'Experto', 'Si'),
-('COCR800325HASDD03', 9, 'Medio', ''),
+('COCR800328HASRRB47', 7, 'Experto', 'Si'),
+('COCR800328HASRRB47', 9, 'Medio', 'Si'),
 ('GOML900330MASDD03', 7, 'Experto', 'Si'),
 ('GOML900330MASDD03', 8, 'Básico', 'No'),
 ('MAMA770826HSLRRI22', 7, '1 year', 'No');
@@ -174,7 +175,7 @@ CREATE TABLE `candidato_has_nivelacademico` (
 --
 
 INSERT INTO `candidato_has_nivelacademico` (`Curp`, `idNivelAcademico`, `idCarrera`, `Institucion`, `valida`) VALUES
-('COCR800325HASDD03', 11, 8, 'UAA', 'No'),
+('COCR800328HASRRB47', 11, 8, 'UAA', 'Si'),
 ('GOML900330MASDD03', 11, 8, 'UAA', 'Si'),
 ('MAMA770826HSLRRI22', 11, 8, 'abc', 'Si');
 
@@ -236,7 +237,7 @@ CREATE TABLE `contrato` (
   `fecha_fin` date NOT NULL,
   `idJornada` int(11) NOT NULL,
   `horas_semana` int(11) NOT NULL,
-  `horario` text NOT NULL,
+  `Turno` varchar(10) NOT NULL,
   `Salario` float NOT NULL,
   `dias_de_pago` varchar(100) NOT NULL,
   `lugar_firma` varchar(100) NOT NULL,
@@ -297,18 +298,19 @@ CREATE TABLE `empleado` (
   `tel_emergencia` varchar(10) NOT NULL,
   `nombre_emergencia` varchar(45) NOT NULL,
   `no_infonavit` varchar(20) NOT NULL,
-  `idArea` int(11) NOT NULL,
-  `idPuesto` int(11) NOT NULL
+  `No_contrato` int(11) NOT NULL,
+  `Contrato_Definitivo` varchar(100) NOT NULL,
+  `Contrato_Temporal` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `empleado`
 --
 
-INSERT INTO `empleado` (`Curp`, `RFC`, `Nombre`, `Domicilio`, `Telefono`, `E_mail`, `Sexo`, `Edad`, `NSS`, `idEstadoCivil`, `Conyuje_Concubino`, `tel_emergencia`, `nombre_emergencia`, `no_infonavit`, `idArea`, `idPuesto`) VALUES
-('COCR800328HASRRB47', 'COCR800325B29', 'CORONA CORONA ROBERTO', 'conocido', '99999999', 'COC@GMAIL.COM', 'F', 40, '155545445', 2, '', '', '', '', 5, 20),
-('FEEA770826MPLRSL72', 'FEEA770828SE5', 'Fernandez Espinoza Alejandra', 'Conocido', '4492123453', 'correo@gmail.com', 'F', 30, '12341234124', 1, '...', '449234765', 'Fernandez Espinoza Alejandro', '...', 0, 0),
-('GGJJ770826HZSRTS68', 'JJGG770827UR2', 'Garza Guitierrez Jose de Jesus', 'conocido', '9999999999', 'Garzagjose12@gmail.com', 'M', 35, '1424532', 2, 'Señora Garza', '4449931212', 'María José ', '12414142315', 0, 0);
+INSERT INTO `empleado` (`Curp`, `RFC`, `Nombre`, `Domicilio`, `Telefono`, `E_mail`, `Sexo`, `Edad`, `NSS`, `idEstadoCivil`, `Conyuje_Concubino`, `tel_emergencia`, `nombre_emergencia`, `no_infonavit`, `No_contrato`, `Contrato_Definitivo`, `Contrato_Temporal`) VALUES
+('COCR800328HASRRB47', 'COCR800325B29', 'CORONA CORONA ROBERTO', 'conocido', '99999999', 'COC@GMAIL.COM', 'M', 40, '155545445', 2, '', '', '', '', 0, '', ''),
+('FEEA770826MPLRSL72', 'FEEA770828SE5', 'Fernandez Espinoza Alejandra', 'Conocido', '4492123453', 'correo@gmail.com', 'F', 30, '12341234124', 1, '...', '449234765', 'Fernandez Espinoza Alejandro', '...', 0, '', ''),
+('GGJJ770826HZSRTS68', 'JJGG770827UR2', 'Garza Guitierrez Jose de Jesus', 'conocido', '9999999999', 'Garzagjose12@gmail.com', 'M', 35, '1424532', 2, 'Señora Garza', '4449931212', 'María José ', '12414142315', 0, '', '');
 
 -- --------------------------------------------------------
 
@@ -489,8 +491,18 @@ INSERT INTO `idioma` (`idIdioma`, `Lenguaje`) VALUES
 
 CREATE TABLE `jornada` (
   `IdJornada` int(11) NOT NULL,
-  `descripción` varchar(100) NOT NULL
+  `jornombre` varchar(100) NOT NULL,
+  `Descripcion` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `jornada`
+--
+
+INSERT INTO `jornada` (`IdJornada`, `jornombre`, `Descripcion`) VALUES
+(1, 'Diurna', '8hs diarias o 48hs semanales.'),
+(2, 'Nocturna', '7hs diarias o 42hs semanales.'),
+(3, 'Mixta', 'Siete horas y media');
 
 -- --------------------------------------------------------
 
@@ -723,7 +735,8 @@ INSERT INTO `resultadocandidato` (`EstatusProceso`, `Comentarios_area`, `Comenta
 ('3', '', '', '', 'Si', 31, 'COCR800325HASDD03', 0, 100, 'Bueno', 0, 'Si', 'No Apto', 'Si', 'No Apto', 'bueno'),
 ('3', '', '', '', 'No', 31, 'GOML900330MASDD03', 0, 50, 'Regular', 0, 'Si', 'Apto', 'No', 'No Apto', '75'),
 ('3', '', '', '', 'Si', 31, 'MAMA770826HSLRRI22', 0, 100, 'si', 0, 'Si', 'Apto', 'Si', 'Apto', '100'),
-('2', '', '', '', 'Pendiente', 32, 'MAMA770826HSLRRI22', 0, 1000, 'Bueno', 0, 'Pendiente', 'Pendiente', 'Pendiente', 'Apto', '10');
+('2', '', '', '', 'Pendiente', 32, 'MAMA770826HSLRRI22', 0, 1000, 'Bueno', 0, 'Pendiente', 'Pendiente', 'Pendiente', 'Apto', '10'),
+('3', '', '', '', 'Si', 31, 'COCR800328HASRRB47', 0, 10, 'Bueno', 0, 'Si', 'Apto', 'Si', 'Apto', '10');
 
 -- --------------------------------------------------------
 
@@ -749,6 +762,26 @@ CREATE TABLE `solicitud` (
 INSERT INTO `solicitud` (`idSolicitud`, `FechaSolicitud`, `NumeroVacante`, `idArea`, `idPuesto`, `idNivelAcademico`, `idCarrera`, `idEstatus_Solicitud`) VALUES
 (31, '2021-04-06', 3, 5, 20, 11, 8, 3),
 (32, '2021-10-05', 2, 6, 21, 10, 9, 3);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `turno`
+--
+
+CREATE TABLE `turno` (
+  `idTurno` int(2) NOT NULL,
+  `Tipo` varchar(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `turno`
+--
+
+INSERT INTO `turno` (`idTurno`, `Tipo`) VALUES
+(1, 'Matutino'),
+(2, 'Vespertino'),
+(3, 'Nocturno');
 
 -- --------------------------------------------------------
 
@@ -982,6 +1015,12 @@ ALTER TABLE `solicitud`
   ADD KEY `fk_Solicitud_Estatus_Solicitud1` (`idEstatus_Solicitud`);
 
 --
+-- Indices de la tabla `turno`
+--
+ALTER TABLE `turno`
+  ADD PRIMARY KEY (`idTurno`);
+
+--
 -- Indices de la tabla `usuario`
 --
 ALTER TABLE `usuario`
@@ -1002,7 +1041,7 @@ ALTER TABLE `anuncio`
 -- AUTO_INCREMENT de la tabla `area`
 --
 ALTER TABLE `area`
-  MODIFY `idArea` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `idArea` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `carrera`
@@ -1051,6 +1090,12 @@ ALTER TABLE `habilidad`
 --
 ALTER TABLE `idioma`
   MODIFY `idIdioma` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT de la tabla `jornada`
+--
+ALTER TABLE `jornada`
+  MODIFY `IdJornada` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `mediopublicidad`
@@ -1130,14 +1175,14 @@ ALTER TABLE `candidato_has_habilidad`
 -- Filtros para la tabla `candidato_has_idioma`
 --
 ALTER TABLE `candidato_has_idioma`
-  ADD CONSTRAINT `fk_Candidato_has_Idioma_Candidato1` FOREIGN KEY (`Curp`) REFERENCES `candidato` (`Curp`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_Candidato_has_Idioma_Candidato1` FOREIGN KEY (`Curp`) REFERENCES `candidato` (`Curp`) ON DELETE NO ACTION ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_Candidato_has_Idioma_Idioma1` FOREIGN KEY (`idIdioma`) REFERENCES `idioma` (`idIdioma`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `candidato_has_nivelacademico`
 --
 ALTER TABLE `candidato_has_nivelacademico`
-  ADD CONSTRAINT `fk_Candidato_has_NivelAcademico_Candidato1` FOREIGN KEY (`Curp`) REFERENCES `candidato` (`Curp`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_Candidato_has_NivelAcademico_Candidato1` FOREIGN KEY (`Curp`) REFERENCES `candidato` (`Curp`) ON DELETE NO ACTION ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_Candidato_has_NivelAcademico_Carrera1` FOREIGN KEY (`idCarrera`) REFERENCES `carrera` (`idCarrera`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_Candidato_has_NivelAcademico_NivelAcademico1` FOREIGN KEY (`idNivelAcademico`) REFERENCES `nivelacademico` (`idNivelAcademico`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
