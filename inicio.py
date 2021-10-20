@@ -857,6 +857,84 @@ def bo_area(id):
         conn.close()
         return redirect(url_for('agr_datos_area'))
 
+
+
+#Jornada
+@app.route('/jornada')
+def jornada():
+    return render_template("jornada.html")
+
+@app.route('/jor_agr', methods=['POST'])
+def jor_agr():
+    if request.method == 'POST':
+        aux_area = request.form['nom_area']
+        aux_descripcion = request.form['desc']
+        conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
+        cursor = conn.cursor()
+        cursor.execute('select count(*) from jornada where jorNombre = %s', (aux_area))
+        areas = cursor.fetchone()
+        if (areas[0] != 0):
+            error = "La jornada ya se encuentra agregada."
+            return render_template("error.html", des_error=error, paginaant="/agr_datos_jor")
+        else:
+            cursor.execute('insert into jornada (jorNombre, Descripcion) values (%s, %s)',(aux_area, aux_descripcion))
+            conn.commit()
+            conn.close()
+            return redirect(url_for('agr_datos_jor'))
+
+@app.route("/agr_datos_jor")
+def agr_datos_jor():
+    conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
+    cursor = conn.cursor()
+    cursor.execute('select idJornada, jorNombre, Descripcion from jornada ')
+    datos=cursor.fetchall()
+    conn.close()
+    return render_template("tabla_jor.html", areas = datos )
+
+@app.route('/ed_jor/<string:id>')
+def ed_jor(id):
+    conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
+    cursor = conn.cursor()
+    cursor.execute('select idJornada, jorNombre, Descripcion from jornada where idJornada = %s', (id))
+    dato=cursor.fetchall()
+    conn.close()
+    return render_template("edi_jor.html", tarea = dato[0])
+
+@app.route('/modifica_jor/<string:id>', methods=['POST'])
+def modifica_jor(id):
+    if request.method == 'POST':
+        aux_area = request.form['nom_area']
+        aux_descripcion = request.form['desc']
+        conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
+        cursor = conn.cursor()
+        cursor.execute('select count(*) from jornada where jorNombre = %s', (aux_area))
+        areasnom = cursor.fetchone()
+        cursor.execute('select count(*) from jornada where Descripcion = %s', (aux_descripcion))
+        areasdesc = cursor.fetchone()
+        if (areasnom[0] != 0):
+            if (areasdesc[0] != 0):
+                error = "La jornada ya se encuentra agregada."
+                return render_template("error.html", des_error=error, paginaant="/agr_datos_area")
+            else:
+                cursor.execute('update jornada set jorNombre=%s, Descripcion=%s where idJornada=%s',(aux_area,aux_descripcion, id))
+            conn.commit()
+            conn.close()
+            return redirect(url_for('agr_datos_jor'))
+        else:
+            cursor.execute('update jornada set jorNombre=%s, Descripcion=%s where idJornada=%s',(aux_area,aux_descripcion, id))
+            conn.commit()
+            conn.close()
+            return redirect(url_for('agr_datos_jor'))
+
+@app.route('/bo_jor/<string:id>')
+def bo_jor(id):
+    conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
+    cursor = conn.cursor()
+    cursor.execute('delete from jornada where idJornada = {0}'.format(id))
+    conn.commit()
+    conn.close()
+    return redirect(url_for('agr_datos_area'))
+
 # Contacto
 @app.route('/contacto')
 def contacto():
@@ -3327,11 +3405,78 @@ def ed_contrato(Curp):
 
         cursor.execute(' select idEstadoCivil, Descripcion from estadocivil')
         datos5 = cursor.fetchall()
-
         
 
         conn.close()
         return render_template("ed_contrato.html" ,sexo=sexos,carrera_can=datos8, empleados=datos, can_habs=datos1, can_idis=datos2,can_acas=datos6, habs=datos3, idiomas=datos4, nivel_academico=datos7, ecivil=datos5)
+
+
+@app.route('/puesto_solicitud/<string:Curp>')
+def puesto_solicitud(Curp):
+    conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
+    cursor = conn.cursor()
+    cursor.execute(' select Curp, RFC, Nombre, Domicilio, Telefono, E_Mail, Sexo, Edad, NSS, idEstadoCivil, Conyuje_Concubino,tel_emergencia, nombre_emergencia, no_infonavit'
+                   ' from empleado where Curp=%s',(Curp))
+    datos=cursor.fetchall()
+
+
+    cursor.execute(' select a.Curp, b.idHabilidad, b.Descripcion, c.Curp, c.idHabilidad, c.Experiencia'
+                   ' from empleado a, habilidad b, empleado_has_habilidad c'
+                   ' where a.Curp=c.Curp and b.idHabilidad=c.idHabilidad and c.Curp=%s',(Curp))
+    datos1=cursor.fetchall()
+
+    cursor.execute(' select a.Curp, b.idIdioma, b.Lenguaje, c.Curp, c.idIdioma, c.Nivel'
+                   ' from empleado a, idioma b, empleado_has_idioma c'
+                   ' where a.Curp=c.Curp and b.idIdioma=c.idIdioma and c.Curp=%s',(Curp))
+    datos2 = cursor.fetchall()
+
+    cursor.execute(' select a.Curp, b.idNivelAcademico, b.Descripcion, c.idCarrera, c.Descripcion, d.Curp, d.idNivelAcademico, d.idCarrera, d.Institucion'
+                   ' from empleado a, nivelacademico b, carrera c, empleado_has_nivelacademico d'
+                   ' where a.Curp=d.Curp and b.idNivelAcademico=d.idNivelAcademico and c.idCarrera=d.idCarrera and d.Curp=%s',(Curp))
+    datos6 = cursor.fetchall()
+
+
+    cursor.execute(' select idhabilidad, Descripcion from habilidad order by Descripcion')
+    datos3 = cursor.fetchall()
+
+    cursor.execute(' select idIdioma, Lenguaje from idioma order by Lenguaje')
+    datos4 = cursor.fetchall()
+
+    cursor.execute(' select idNivelAcademico, Descripcion from nivelacademico order by Descripcion')
+    datos7 = cursor.fetchall()
+
+    cursor.execute(' select Curp,Sexo from empleado where Curp=%s',(Curp))
+    sexos = cursor.fetchall()
+
+    cursor.execute('select idCarrera, Descripcion from carrera order by Descripcion')
+    datos8=cursor.fetchall()
+
+    cursor.execute(' select idEstadoCivil, Descripcion from estadocivil')
+    datos5 = cursor.fetchall()
+
+    cursor.execute('select a.idsolicitud, b.idarea,c.areanombre, b.idpuesto, d.descripcion '
+                   ' from resultadocandidato a, solicitud b, area c, puesto d '
+                   'where b.idsolicitud=a.idsolicitud and c.idarea=b.idarea and d.idpuesto=b.idpuesto and a.curp=%s' , (Curp))
+    datos9=cursor.fetchall()
+
+    cursor.execute('SELECT idTurno, Tipo FROM turno')
+    datos10=cursor.fetchall()
+
+    cursor.execute('SELECT idJornada, jorNombre ,Descripcion FROM jornada')
+    datos11=cursor.fetchall()
+
+    
+
+    
+
+        
+
+    conn.close()
+    return render_template("puesto_solicitud.html", impor=datos9,turnos=datos10,jornada=datos11, sexo=sexos,carrera_can=datos8, empleados=datos, can_habs=datos1, can_idis=datos2,can_acas=datos6, habs=datos3, idiomas=datos4, nivel_academico=datos7, ecivil=datos5)
+    
+
+
+
 
 @app.route('/modifica_contrato/<string:Curp>', methods=['POST'])
 def modifica_contrato(Curp):
@@ -3377,65 +3522,6 @@ def bo_contrato(Curp):
     conn.commit()
     conn.close()
     return redirect(url_for('empleado'))
-
-    ##prueba 1 # version alernativa sin tablas #
-@app.route('/ed_empleado2/<string:Curp>')
-def ed_empleado2(Curp):
-        conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
-        cursor = conn.cursor()
-        cursor.execute(' select Curp, RFC, Nombre, Domicilio, Telefono, E_Mail, Sexo, Edad, NSS, idEstadoCivil, Conyuje_Concubino,tel_emergencia, nombre_emergencia, no_infonavit'
-                       ' from empleado where Curp=%s',(Curp))
-        datos=cursor.fetchall()
-
-
-        cursor.execute(' select a.Curp, b.idHabilidad, b.Descripcion, c.Curp, c.idHabilidad, c.Experiencia'
-                       ' from empleado a, habilidad b, empleado_has_habilidad c'
-                       ' where a.Curp=c.Curp and b.idHabilidad=c.idHabilidad and c.Curp=%s',(Curp))
-        datos1=cursor.fetchall()
-
-        cursor.execute(' select a.Curp, b.idIdioma, b.Lenguaje, c.Curp, c.idIdioma, c.Nivel'
-                       ' from empleado a, idioma b, empleado_has_idioma c'
-                       ' where a.Curp=c.Curp and b.idIdioma=c.idIdioma and c.Curp=%s',(Curp))
-        datos2 = cursor.fetchall()
-
-        cursor.execute(' select a.Curp, b.idNivelAcademico, b.Descripcion, c.idCarrera, c.Descripcion, d.Curp, d.idNivelAcademico, d.idCarrera, d.Institucion'
-                       ' from empleado a, nivelacademico b, carrera c, empleado_has_nivelacademico d'
-                       ' where a.Curp=d.Curp and b.idNivelAcademico=d.idNivelAcademico and c.idCarrera=d.idCarrera and d.Curp=%s',(Curp))
-        datos6 = cursor.fetchall()
-
-        cursor.execute(' select idhabilidad, Descripcion from habilidad order by Descripcion')
-        datos3 = cursor.fetchall()
-
-        cursor.execute(' select idIdioma, Lenguaje from idioma order by Lenguaje')
-        datos4 = cursor.fetchall()
-
-        cursor.execute(' select idNivelAcademico, Descripcion from nivelacademico order by Descripcion')
-        datos7 = cursor.fetchall()
-
-        cursor.execute(' select Curp,Sexo from empleado where Curp=%s',(Curp))
-        sexos = cursor.fetchall()
-
-        cursor.execute('select idCarrera, Descripcion from carrera order by Descripcion')
-        datos8=cursor.fetchall()
-
-        cursor.execute(' select idEstadoCivil, Descripcion from estadocivil')
-        datos5 = cursor.fetchall()
-        conn.close()
-        return render_template("ed_empleado2.html" ,sexo=sexos,carrera_can=datos8, empleados=datos, can_habs=datos1, can_idis=datos2,can_acas=datos6, habs=datos3, idiomas=datos4, nivel_academico=datos7, ecivil=datos5)
-
-@app.route('/puesto_solicitud')
-def puesto_solicitud():
-    conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
-    cursor = conn.cursor()
-    cursor.execute('select a.idSolicitud, a.FechaSolicitud, a.idArea, b.AreaNombre, '
-        'a.idPuesto, c.Descripcion, a.NumeroVacante, a.idEstatus_Solicitud, d.Descripcion '
-        'from solicitud a, area b, puesto c, estatus_solicitud d '
-        'where b.idArea=a.idArea and c.idPuesto=a.idPuesto and d.idEstatus_Solicitud=a.idEstatus_Solicitud '
-        'and (a.idEstatus_Solicitud=3 or a.idEstatus_Solicitud=4)')
-    datos=cursor.fetchall()
-    return render_template("mue_candidato_contratacion.html", solicitudes=datos)
-
-##
 
 
 
