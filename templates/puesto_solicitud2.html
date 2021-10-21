@@ -11,9 +11,8 @@
     <script type="text/javascript" src="/static/js/jquery-3.2.1.slim.min.js"></script>
     <script type="text/javascript" src="/static/js/popper.min.js"></script>
     <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
-    
 
-
+<form action="/modifica_contrato/{{empleados.0[0]}}" method="post">
     <div class="form-row">
         <div class="form-group col-md-2">
             <label for="curp">CURP</label>
@@ -125,7 +124,7 @@
     </form>
     {% for empleado in empleados %}
     
-      <a href="/puesto_solicitud/{{empleado.0}}" class="btn btn-success" style="background:lightseagreen;">Puesto/solicitud</a></center>
+      <a href="/puesto_solicitud" class="btn btn-success" style="background:lightseagreen;">Puesto/solicitud</a></center>
       <a href="/ed_empleado/{{ empleado.0 }}" class="btn btn-success" style="background:lightseagreen;">Perfil</a></center>
       <a href="/contrato" class="btn btn-success" style="background:lightseagreen;">Regresar</a></center>
     </td>
@@ -134,19 +133,30 @@
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   <br>
   <br>
-<form>
-          
+  <form>      
     <div class=form-row>
-        
+
         <div class="form-group col-md-4">
             <label for="puesto">Puesto</label>
-            <input type="text" class="form-control" name="idpuesto" id="idpuesto" placeholder="" value="{{impor.0[3]}}" hidden>
-            <input type="text" class="form-control" name="puesto" id="puesto" placeholder="" value="{{impor.0[4]}}" >
+            <select name="puesto" id="puesto" class="form-control">
+                 <option value="" selected>Choose...</option>
+                    {%
+                         for puesto in puestos
+                    %}
+                        <option value="{{ puesto.0 }}">{{ puesto.1 }}</option>
+                    {%   endfor %}
+            </select>
         </div>
         <div class="form-group col-md-4">
             <label for="area">Área</label>
-            <input type="text" class="form-control" name="idarea" id="idarea" placeholder="" value="{{impor.0[1]}}" hidden>
-            <input type="text" class="form-control" name="area" id="area" placeholder="" value="{{impor.0[2]}}" >
+            <select name="area" id="area" class="form-control">
+                <option value="" selected>Choose...</option>
+                    {%
+                        for area in areas
+                    %}
+                        <option value="{{ area.0 }}">{{ area.1 }}</option>
+                    {%   endfor %}
+            </select>
         </div>
         <div class="form-group col-md-2">
             <label for="turno">Turno</label>
@@ -157,22 +167,22 @@
                 {% endfor %}
             </select>
         </div>
-
-    </div>
-
-    <div class=form-row>
         
+         
+    </div>
+  </form>
+  <form>
+  <div class=form-row>
         <div class="form-group col-md-2">
             <label for="fecha_inicio">Fecha de inicio</label>
-            <input type="date" class="form-control" name="fecha_inicio" id="fecha_inicio">
-            
+            <input type="date" name="fecha_inicio" id="fecha_inicio" class="form-control">
+            </input>
         </div>
         <div class="form-group col-md-2">
-            <label for="fecha_fin">Fecha de conclusion</label>
-            <input type="date" class="form-control" name="fecha_fin" id="fecha_fin">
-            
+            <label for="fecha_fin">Fecha de conclusión</label>
+            <input type="date" name="fecha_fin" id="fecha_fin" class="form-control">
+            </input>
         </div>
-
         <div class="form-group col-md-2">
             <label for="jornada">Jornada</label>
             <select required name="jornada" id="jornada" class="form-control" > 
