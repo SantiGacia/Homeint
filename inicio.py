@@ -3415,100 +3415,116 @@ def ed_contrato(Curp):
 def puesto_solicitud(Curp):
     conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
     cursor = conn.cursor()
-    cursor.execute(' select Curp, RFC, Nombre, Domicilio, Telefono, E_Mail, Sexo, Edad, NSS, idEstadoCivil, Conyuje_Concubino,tel_emergencia, nombre_emergencia, no_infonavit'
-                   ' from empleado where Curp=%s',(Curp))
-    datos=cursor.fetchall()
-
-
-    cursor.execute(' select a.Curp, b.idHabilidad, b.Descripcion, c.Curp, c.idHabilidad, c.Experiencia'
-                   ' from empleado a, habilidad b, empleado_has_habilidad c'
-                   ' where a.Curp=c.Curp and b.idHabilidad=c.idHabilidad and c.Curp=%s',(Curp))
-    datos1=cursor.fetchall()
-
-    cursor.execute(' select a.Curp, b.idIdioma, b.Lenguaje, c.Curp, c.idIdioma, c.Nivel'
-                   ' from empleado a, idioma b, empleado_has_idioma c'
-                   ' where a.Curp=c.Curp and b.idIdioma=c.idIdioma and c.Curp=%s',(Curp))
-    datos2 = cursor.fetchall()
-
-    cursor.execute(' select a.Curp, b.idNivelAcademico, b.Descripcion, c.idCarrera, c.Descripcion, d.Curp, d.idNivelAcademico, d.idCarrera, d.Institucion'
-                   ' from empleado a, nivelacademico b, carrera c, empleado_has_nivelacademico d'
-                   ' where a.Curp=d.Curp and b.idNivelAcademico=d.idNivelAcademico and c.idCarrera=d.idCarrera and d.Curp=%s',(Curp))
-    datos6 = cursor.fetchall()
-
-
-    cursor.execute(' select idhabilidad, Descripcion from habilidad order by Descripcion')
-    datos3 = cursor.fetchall()
-
-    cursor.execute(' select idIdioma, Lenguaje from idioma order by Lenguaje')
-    datos4 = cursor.fetchall()
-
-    cursor.execute(' select idNivelAcademico, Descripcion from nivelacademico order by Descripcion')
-    datos7 = cursor.fetchall()
-
-    cursor.execute(' select Curp,Sexo from empleado where Curp=%s',(Curp))
-    sexos = cursor.fetchall()
-
-    cursor.execute('select idCarrera, Descripcion from carrera order by Descripcion')
-    datos8=cursor.fetchall()
-
-    cursor.execute(' select idEstadoCivil, Descripcion from estadocivil')
-    datos5 = cursor.fetchall()
-
-    cursor.execute('select a.idsolicitud, b.idarea,c.areanombre, b.idpuesto, d.descripcion '
-                   ' from resultadocandidato a, solicitud b, area c, puesto d '
-                   'where b.idsolicitud=a.idsolicitud and c.idarea=b.idarea and d.idpuesto=b.idpuesto and a.curp=%s' , (Curp))
-    datos9=cursor.fetchall()
-
-    cursor.execute('SELECT idTurno, Tipo FROM turno')
-    datos10=cursor.fetchall()
-
-    cursor.execute('SELECT idJornada, jorNombre ,Descripcion FROM jornada')
-    datos11=cursor.fetchall()
-
-    
-
-    
-
+    cursor.execute('select count(*) from resultadocandidato where Curp = %s',(Curp))
+    existe = cursor.fetchone()
+    if (existe[0] == 0):
+        cursor.execute(' select Curp, RFC, Nombre, Domicilio, Telefono, E_Mail, Sexo, Edad, NSS, idEstadoCivil, Conyuje_Concubino,tel_emergencia, nombre_emergencia, no_infonavit'
+                       ' from empleado where Curp=%s',(Curp))
+        datos=cursor.fetchall()
         
+        cursor.execute(' select a.Curp, b.idHabilidad, b.Descripcion, c.Curp, c.idHabilidad, c.Experiencia'
+                       ' from empleado a, habilidad b, empleado_has_habilidad c'
+                       ' where a.Curp=c.Curp and b.idHabilidad=c.idHabilidad and c.Curp=%s',(Curp))
+        datos1=cursor.fetchall()
 
-    conn.close()
+        cursor.execute(' select a.Curp, b.idIdioma, b.Lenguaje, c.Curp, c.idIdioma, c.Nivel'
+                       ' from empleado a, idioma b, empleado_has_idioma c'
+                       ' where a.Curp=c.Curp and b.idIdioma=c.idIdioma and c.Curp=%s',(Curp))
+        datos2 = cursor.fetchall()
+
+        cursor.execute(' select a.Curp, b.idNivelAcademico, b.Descripcion, c.idCarrera, c.Descripcion, d.Curp, d.idNivelAcademico, d.idCarrera, d.Institucion'
+                       ' from empleado a, nivelacademico b, carrera c, empleado_has_nivelacademico d'
+                       ' where a.Curp=d.Curp and b.idNivelAcademico=d.idNivelAcademico and c.idCarrera=d.idCarrera and d.Curp=%s',(Curp))
+        datos6 = cursor.fetchall()
+
+        cursor.execute(' select idhabilidad, Descripcion from habilidad order by Descripcion')
+        datos3 = cursor.fetchall()
+
+        cursor.execute(' select idIdioma, Lenguaje from idioma order by Lenguaje')
+        datos4 = cursor.fetchall()
+
+        cursor.execute(' select idNivelAcademico, Descripcion from nivelacademico order by Descripcion')
+        datos7 = cursor.fetchall()
+
+        cursor.execute(' select Curp,Sexo from empleado where Curp=%s',(Curp))
+        sexos = cursor.fetchall()
+
+        cursor.execute('select idCarrera, Descripcion from carrera order by Descripcion')
+        datos8=cursor.fetchall()
+
+        cursor.execute(' select idEstadoCivil, Descripcion from estadocivil')
+        datos5 = cursor.fetchall()
+
+        cursor.execute('select idArea, AreaNombre, AreaDescripcion from area ')
+        datos9 = cursor.fetchall()
+
+        cursor.execute('select idPuesto, Descripcion, SalarioAnual, Beneficios, Bonos, Aprobacion from puesto '
+                       'order by Descripcion')
+        datos10 = cursor.fetchall()        
+
+        cursor.execute('SELECT idJornada, jorNombre ,Descripcion FROM jornada')
+        datos11=cursor.fetchall()
+
+        cursor.execute('SELECT idTurno, Tipo FROM turno')
+        datos12=cursor.fetchall()
+
+        conn.close()
+        return render_template("puesto_solicitud2.html" ,turnos=datos12,jornada=datos11,sexo=sexos,carrera_can=datos8, empleados=datos, can_habs=datos1, can_idis=datos2,can_acas=datos6, habs=datos3, idiomas=datos4, nivel_academico=datos7, ecivil=datos5, areas=datos9, puestos=datos10)
+    else:
+        cursor.execute(' select Curp, RFC, Nombre, Domicilio, Telefono, E_Mail, Sexo, Edad, NSS, idEstadoCivil, Conyuje_Concubino,tel_emergencia, nombre_emergencia, no_infonavit'
+                    ' from empleado where Curp=%s',(Curp))
+        datos=cursor.fetchall()
+
+
+        cursor.execute(' select a.Curp, b.idHabilidad, b.Descripcion, c.Curp, c.idHabilidad, c.Experiencia'
+                    ' from empleado a, habilidad b, empleado_has_habilidad c'
+                    ' where a.Curp=c.Curp and b.idHabilidad=c.idHabilidad and c.Curp=%s',(Curp))
+        datos1=cursor.fetchall()
+
+        cursor.execute(' select a.Curp, b.idIdioma, b.Lenguaje, c.Curp, c.idIdioma, c.Nivel'
+                    ' from empleado a, idioma b, empleado_has_idioma c'
+                    ' where a.Curp=c.Curp and b.idIdioma=c.idIdioma and c.Curp=%s',(Curp))
+        datos2 = cursor.fetchall()
+
+        cursor.execute(' select a.Curp, b.idNivelAcademico, b.Descripcion, c.idCarrera, c.Descripcion, d.Curp, d.idNivelAcademico, d.idCarrera, d.Institucion'
+                    ' from empleado a, nivelacademico b, carrera c, empleado_has_nivelacademico d'
+                    ' where a.Curp=d.Curp and b.idNivelAcademico=d.idNivelAcademico and c.idCarrera=d.idCarrera and d.Curp=%s',(Curp))
+        datos6 = cursor.fetchall()
+
+
+        cursor.execute(' select idhabilidad, Descripcion from habilidad order by Descripcion')
+        datos3 = cursor.fetchall()
+
+        cursor.execute(' select idIdioma, Lenguaje from idioma order by Lenguaje')
+        datos4 = cursor.fetchall()
+
+        cursor.execute(' select idNivelAcademico, Descripcion from nivelacademico order by Descripcion')
+        datos7 = cursor.fetchall()
+
+        cursor.execute(' select Curp,Sexo from empleado where Curp=%s',(Curp))
+        sexos = cursor.fetchall()
+
+        cursor.execute('select idCarrera, Descripcion from carrera order by Descripcion')
+        datos8=cursor.fetchall()
+
+        cursor.execute(' select idEstadoCivil, Descripcion from estadocivil')
+        datos5 = cursor.fetchall()
+
+        cursor.execute('select a.idsolicitud, b.idarea,c.areanombre, b.idpuesto, d.descripcion '
+                    ' from resultadocandidato a, solicitud b, area c, puesto d '
+                    'where b.idsolicitud=a.idsolicitud and c.idarea=b.idarea and d.idpuesto=b.idpuesto and a.curp=%s' , (Curp))
+        datos9=cursor.fetchall()
+
+        cursor.execute('SELECT idTurno, Tipo FROM turno')
+        datos10=cursor.fetchall()
+
+        cursor.execute('SELECT idJornada, jorNombre ,Descripcion FROM jornada')
+        datos11=cursor.fetchall()
+
+        conn.close()
     return render_template("puesto_solicitud.html", impor=datos9,turnos=datos10,jornada=datos11, sexo=sexos,carrera_can=datos8, empleados=datos, can_habs=datos1, can_idis=datos2,can_acas=datos6, habs=datos3, idiomas=datos4, nivel_academico=datos7, ecivil=datos5)
     
 
-
-
-
-@app.route('/modifica_contrato/<string:Curp>', methods=['POST'])
-def modifica_contrato(Curp):
-    if request.method == 'POST':
-        aux_cur = request.form['curp']
-        aux_rfc = request.form['rfc']
-        aux_nom = request.form['nombre']
-        aux_dom = request.form['domicilio']
-        aux_tel = request.form['telefono']
-        aux_cor = request.form['correoe']
-        aux_sex = request.form['sexo']
-        aux_eda = request.form['edad']
-        aux_nss = request.form['nss']
-
-        aux_eci = request.form['edociv']
-
-        aux_nomc = request.form['nomcoy']
-        aux_nomcaux = request.form['nomcaux']
-        aux_telaux= request.form['telaux']
-        aux_numinfonavit =request.form['numinfonavit']
-
-        conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
-        cursor = conn.cursor()
-
-        cursor.execute(
-                'update empleado '
-                'set Curp=%s, RFC=%s, Nombre=%s, Domicilio=%s, Telefono=%s, E_Mail=%s, Sexo=%s, Edad=%s, NSS=%s, idEstadoCivil=%s,Conyuje_Concubino=%s,tel_emergencia=%s, nombre_emergencia=%s, no_infonavit=%s '
-                'where Curp=%s'
-        ,(aux_cur,aux_rfc,aux_nom,aux_dom,aux_tel,aux_cor,aux_sex,aux_eda,aux_nss,aux_eci,aux_nomc,aux_telaux,aux_nomcaux,aux_numinfonavit,Curp))
-        conn.commit()
-        conn.close()
-        return redirect(url_for('empleado'))
 
 @app.route('/bo_contrato/<string:Curp>')
 def bo_contrato(Curp):
