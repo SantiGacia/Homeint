@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 20-10-2021 a las 21:41:11
+-- Tiempo de generación: 22-10-2021 a las 09:37:02
 -- Versión del servidor: 10.4.19-MariaDB
 -- Versión de PHP: 8.0.7
 
@@ -230,19 +230,26 @@ INSERT INTO `contacto` (`idcontacto`, `Nombre`, `Domicilio`, `Razon_Social`, `Te
 
 CREATE TABLE `contrato` (
   `IdContrato` int(18) NOT NULL,
-  `CURP` varchar(18) NOT NULL,
+  `Curp` varchar(18) NOT NULL,
   `idPuesto` int(11) NOT NULL,
   `idArea` int(11) NOT NULL,
   `fecha_inicio` date NOT NULL,
   `fecha_fin` date NOT NULL,
   `idJornada` int(11) NOT NULL,
-  `horas_semana` int(11) NOT NULL,
-  `Turno` varchar(10) NOT NULL,
+  `horas_semana` varchar(100) NOT NULL,
+  `idTurno` int(10) NOT NULL,
   `Salario` float NOT NULL,
   `dias_de_pago` varchar(100) NOT NULL,
   `lugar_firma` varchar(100) NOT NULL,
   `fecha_firma` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `contrato`
+--
+
+INSERT INTO `contrato` (`IdContrato`, `Curp`, `idPuesto`, `idArea`, `fecha_inicio`, `fecha_fin`, `idJornada`, `horas_semana`, `idTurno`, `Salario`, `dias_de_pago`, `lugar_firma`, `fecha_firma`) VALUES
+(22, 'GGJJ770826HZSRTS68', 20, 8, '2021-10-21', '2022-01-21', 2, '7hs diarias o 42hs semanales.', 3, 0, '', '', '0000-00-00');
 
 -- --------------------------------------------------------
 
@@ -300,17 +307,18 @@ CREATE TABLE `empleado` (
   `no_infonavit` varchar(20) NOT NULL,
   `No_contrato` int(11) NOT NULL,
   `Contrato_Definitivo` varchar(100) NOT NULL,
-  `Contrato_Temporal` varchar(100) NOT NULL
+  `Contrato_Temporal` varchar(100) NOT NULL,
+  `ContratoTemporal_Val` varchar(2) NOT NULL DEFAULT 'No'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `empleado`
 --
 
-INSERT INTO `empleado` (`Curp`, `RFC`, `Nombre`, `Domicilio`, `Telefono`, `E_mail`, `Sexo`, `Edad`, `NSS`, `idEstadoCivil`, `Conyuje_Concubino`, `tel_emergencia`, `nombre_emergencia`, `no_infonavit`, `No_contrato`, `Contrato_Definitivo`, `Contrato_Temporal`) VALUES
-('COCR800328HASRRB47', 'COCR800325B29', 'CORONA CORONA ROBERTO', 'conocido', '99999999', 'COC@GMAIL.COM', 'M', 40, '155545445', 2, '', '', '', '', 0, '', ''),
-('FEEA770826MPLRSL72', 'FEEA770828SE5', 'Fernandez Espinoza Alejandra', 'Conocido', '4492123453', 'correo@gmail.com', 'F', 30, '12341234124', 1, '...', '449234765', 'Fernandez Espinoza Alejandro', '...', 0, '', ''),
-('GGJJ770826HZSRTS68', 'JJGG770827UR2', 'Garza Guitierrez Jose de Jesus', 'conocido', '9999999999', 'Garzagjose12@gmail.com', 'M', 35, '1424532', 2, 'Señora Garza', '4449931212', 'María José ', '12414142315', 0, '', '');
+INSERT INTO `empleado` (`Curp`, `RFC`, `Nombre`, `Domicilio`, `Telefono`, `E_mail`, `Sexo`, `Edad`, `NSS`, `idEstadoCivil`, `Conyuje_Concubino`, `tel_emergencia`, `nombre_emergencia`, `no_infonavit`, `No_contrato`, `Contrato_Definitivo`, `Contrato_Temporal`, `ContratoTemporal_Val`) VALUES
+('COCR800328HASRRB47', 'COCR800325B29', 'CORONA CORONA ROBERTO', 'conocido', '99999999', 'COC@GMAIL.COM', 'M', 40, '155545445', 2, '', '', '', '', 0, '', '', 'No'),
+('FEEA770826MPLRSL72', 'FEEA770828SE5', 'Fernandez Espinoza Alejandra', 'Conocido', '4492123453', 'correo@gmail.com', 'F', 30, '12341234124', 1, '...', '449234765', 'Fernandez Espinoza Alejandro', '...', 0, '', '', 'No'),
+('MAMA770826HSLRRI22', 'MAMA770826JVP', 'MARTINEZ MORENO ALEJANDRO', 'Conocido', '4491915799', 'sgamer.garcia@gmail.com', 'M', 20, '1234567', 3, '', '', '', '', 0, '', '', 'No');
 
 -- --------------------------------------------------------
 
@@ -332,7 +340,8 @@ CREATE TABLE `empleado_has_habilidad` (
 INSERT INTO `empleado_has_habilidad` (`Curp`, `idHabilidad`, `Experiencia`, `valida`) VALUES
 ('COCR800328HASRRB47', 9, '5 años ', 'Si'),
 ('COCR800328HASRRB47', 10, '5 años ', 'Si'),
-('FEEA770826MPLRSL72', 9, '5 años', '');
+('FEEA770826MPLRSL72', 9, '5 años', ''),
+('MAMA770826HSLRRI22', 9, '1 year', 'Si');
 
 -- --------------------------------------------------------
 
@@ -354,7 +363,8 @@ CREATE TABLE `empleado_has_idioma` (
 INSERT INTO `empleado_has_idioma` (`Curp`, `idIdioma`, `Nivel`, `valida`) VALUES
 ('COCR800328HASRRB47', 7, 'Experto', 'Si'),
 ('COCR800328HASRRB47', 9, 'Medio', ''),
-('FEEA770826MPLRSL72', 7, 'Medio', '');
+('FEEA770826MPLRSL72', 7, 'Medio', ''),
+('MAMA770826HSLRRI22', 7, '1 year', 'No');
 
 -- --------------------------------------------------------
 
@@ -376,7 +386,8 @@ CREATE TABLE `empleado_has_nivelacademico` (
 
 INSERT INTO `empleado_has_nivelacademico` (`Curp`, `idNivelAcademico`, `idCarrera`, `Institucion`, `valida`) VALUES
 ('COCR800328HASRRB47', 11, 8, 'UAA', 'No'),
-('FEEA770826MPLRSL72', 11, 8, 'UAA', '');
+('FEEA770826MPLRSL72', 11, 8, 'UAA', ''),
+('MAMA770826HSLRRI22', 11, 8, 'abc', 'Si');
 
 -- --------------------------------------------------------
 
@@ -732,7 +743,6 @@ CREATE TABLE `resultadocandidato` (
 --
 
 INSERT INTO `resultadocandidato` (`EstatusProceso`, `Comentarios_area`, `Comentarios_ofertas_salario`, `Comentarios_area_seleccion`, `estatus`, `idSolicitud`, `Curp`, `id_actitud`, `Coeficiente_Intelectual`, `Personalidad`, `apto_psico`, `Validar_ref`, `Calificacion_Medica`, `validacion`, `Calificacion`, `Califica_el_Perfil`) VALUES
-('3', '', '', '', 'Si', 31, 'COCR800325HASDD03', 0, 100, 'Bueno', 0, 'Si', 'No Apto', 'Si', 'No Apto', 'bueno'),
 ('3', '', '', '', 'No', 31, 'GOML900330MASDD03', 0, 50, 'Regular', 0, 'Si', 'Apto', 'No', 'No Apto', '75'),
 ('3', '', '', '', 'Si', 31, 'MAMA770826HSLRRI22', 0, 100, 'si', 0, 'Si', 'Apto', 'Si', 'Apto', '100'),
 ('2', '', '', '', 'Pendiente', 32, 'MAMA770826HSLRRI22', 0, 1000, 'Bueno', 0, 'Pendiente', 'Pendiente', 'Pendiente', 'Apto', '10'),
@@ -869,11 +879,7 @@ ALTER TABLE `contacto`
 -- Indices de la tabla `contrato`
 --
 ALTER TABLE `contrato`
-  ADD PRIMARY KEY (`IdContrato`),
-  ADD KEY `fk_Contrato_CURP` (`CURP`) USING BTREE,
-  ADD KEY `fk_Contrato_Puesto` (`idPuesto`) USING BTREE,
-  ADD KEY `fk_Contrato_Area` (`idArea`) USING BTREE,
-  ADD KEY `fk_Contrato_Jornada` (`idJornada`) USING BTREE;
+  ADD PRIMARY KEY (`IdContrato`);
 
 --
 -- Indices de la tabla `datos_de_empresa`
@@ -1056,6 +1062,12 @@ ALTER TABLE `contacto`
   MODIFY `idcontacto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT de la tabla `contrato`
+--
+ALTER TABLE `contrato`
+  MODIFY `IdContrato` int(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+
+--
 -- AUTO_INCREMENT de la tabla `datos_de_empresa`
 --
 ALTER TABLE `datos_de_empresa`
@@ -1095,13 +1107,13 @@ ALTER TABLE `idioma`
 -- AUTO_INCREMENT de la tabla `jornada`
 --
 ALTER TABLE `jornada`
-  MODIFY `IdJornada` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `IdJornada` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `mediopublicidad`
 --
 ALTER TABLE `mediopublicidad`
-  MODIFY `idMedioPublicidad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `idMedioPublicidad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `nivelacademico`
@@ -1185,15 +1197,6 @@ ALTER TABLE `candidato_has_nivelacademico`
   ADD CONSTRAINT `fk_Candidato_has_NivelAcademico_Candidato1` FOREIGN KEY (`Curp`) REFERENCES `candidato` (`Curp`) ON DELETE NO ACTION ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_Candidato_has_NivelAcademico_Carrera1` FOREIGN KEY (`idCarrera`) REFERENCES `carrera` (`idCarrera`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_Candidato_has_NivelAcademico_NivelAcademico1` FOREIGN KEY (`idNivelAcademico`) REFERENCES `nivelacademico` (`idNivelAcademico`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Filtros para la tabla `contrato`
---
-ALTER TABLE `contrato`
-  ADD CONSTRAINT `contrato_ibfk_1` FOREIGN KEY (`idArea`) REFERENCES `area` (`idArea`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `contrato_ibfk_2` FOREIGN KEY (`idPuesto`) REFERENCES `puesto` (`idPuesto`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `contrato_ibfk_3` FOREIGN KEY (`idJornada`) REFERENCES `jornada` (`IdJornada`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `contrato_ibfk_4` FOREIGN KEY (`CURP`) REFERENCES `empleado` (`Curp`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `empleado_has_habilidad`

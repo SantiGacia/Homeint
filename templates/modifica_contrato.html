@@ -12,7 +12,7 @@
     <script type="text/javascript" src="/static/js/popper.min.js"></script>
     <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
 
-<form action="/modifica_contrato/{{empleados.0[0]}}" method="post">
+<form action="/agr_nvo_contrato/{{empleados.0[0]}}" method="post">
     <div class="form-row">
         <div class="form-group col-md-2">
             <label for="curp">CURP</label>
@@ -123,23 +123,22 @@
     </div>
     </form>
     {% for empleado in empleados %}
-    
-      <a href="/puesto_solicitud" class="btn btn-success" style="background:lightseagreen;">Puesto/solicitud</a></center>
-      <a href="/ed_empleado/{{ empleado.0 }}" class="btn btn-success" style="background:lightseagreen;">Perfil</a></center>
-      <a href="/contrato" class="btn btn-success" style="background:lightseagreen;">Regresar</a></center>
+      <a href="/ed_empleado/{{ empleado.0 }}" class="btn btn-success" style="background:lightseagreen;">Editar Perfil</a></center>
+      
     </td>
   </tr>
   {% endfor %}
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   <br>
   <br>
-  <form>      
+  <form action="/editar_contrato/{{datoscontrato.0[0]}}" method="POST">   
     <div class=form-row>
-
+        <input minlength="18" maxlength="18" type="text" class="form-control" name="curp" id="curp" value="{{empleados.0[0]}}" hidden>
         <div class="form-group col-md-4">
-            <label for="puesto">Puesto</label>
+            <label for="idpuesto">Puesto</label>
+            <input type="text" class="form-control" name="idpuesto" id="idpuesto" placeholder="" value="{{datoscontrato.0[2]}}" hidden> 
             <select name="puesto" id="puesto" class="form-control">
-                 <option value="" selected>Choose...</option>
+                 <option value="{{datoscontrato.0[3]}}" selected>{{datoscontrato.0[3]}}</option>
                     {%
                          for puesto in puestos
                     %}
@@ -148,9 +147,10 @@
             </select>
         </div>
         <div class="form-group col-md-4">
-            <label for="area">Área</label>
-            <select name="area" id="area" class="form-control">
-                <option value="" selected>Choose...</option>
+            <label for="id_area">Área</label>
+            <input type="text" class="form-control" name="id_area" id="id_area" placeholder="" value="{{datoscontrato.0[4]}}" hidden> 
+            <select name="idarea" id="idarea" class="form-control">
+                <option value="{{datoscontrato.0[5]}}" selected>{{datoscontrato.0[5]}}</option>
                     {%
                         for area in areas
                     %}
@@ -160,8 +160,10 @@
         </div>
         <div class="form-group col-md-2">
             <label for="turno">Turno</label>
-            <select required name="turno" id="turno" class="form-control" >
-                <option value="" selected>Choose...</option>
+            
+            <select required name="turno" id="turno" class="form-control"
+             >
+                <option value="{{datoscontrato.0[13]}}" selected>{{datoscontrato.0[13]}}</option>
                 {% for turno in turnos %}
                     <option value="{{ turno.0 }}">{{ turno.1 }}</option>
                 {% endfor %}
@@ -170,48 +172,49 @@
         
          
     </div>
-  </form>
-  <form>
-  <div class=form-row>
+
+   <div class=form-row>
         <div class="form-group col-md-2">
             <label for="fecha_inicio">Fecha de inicio</label>
-            <input type="date" name="fecha_inicio" id="fecha_inicio" class="form-control">
+            <input type="date" name="fecha_inicio" id="fecha_inicio" class="form-control" value="{{datoscontrato.0[6]}}">
             </input>
         </div>
         <div class="form-group col-md-2">
             <label for="fecha_fin">Fecha de conclusión</label>
-            <input type="date" name="fecha_fin" id="fecha_fin" class="form-control">
+            <input type="date" name="fecha_fin" id="fecha_fin" class="form-control" value="{{datoscontrato.0[7]}}">
             </input>
         </div>
+
         <div class="form-group col-md-2">
             <label for="jornada">Jornada</label>
-            <select required name="jornada" id="jornada" class="form-control" > 
+            <select required name="jornada" id="jornada" class="form-control" value="{{datoscontrato.0[10]}}"> 
             </select>
         </div>
         <div class="form-group col-md-2">
             <label for="hsemana">Horas a la semana</label>
-            <select class="form-control" name="hsemana" id="hsemana">
+            <select class="form-control" name="hsemana" id="hsemana"  value="{{datoscontrato.0[11]}}">
             </select>
         </div>
-        
+
 
     </div>
 
-    
+
 
     <button type="submit" class="btn btn-primary" style="background-color:lightseagreen!important"><font color="white">Guardar cambios</font></button>  
-  
 </form>
+<br>
+<a href="/contrato" class="btn btn-success" style="background:lightseagreen;">Regresar</a></center>
     <script>
         let $jornada = document.getElementById('jornada')
         let $horas = document.getElementById('hsemana')
 
-        let jornada = ['Diurna','Nocturna','Mixta']
+        let jornada = ['1 Diurna','2 Nocturna','3 Mixta']
         let horas = ['8hs diarias o 48hs semanales.', '7hs diarias o 42hs semanales.', '7hs diarias']
 
 
         function mostrarCosas(arreglo, cosa) {
-            let elementos = '<option selected disables>Choose...</option>'
+            let elementos = '<option selected disables>--Seleccione--</option>'
 
             for(let i = 0; i < arreglo.length; i++) {
                 elementos += '<option value="' + arreglo[i] +'">' + arreglo[i] +'</option>'
@@ -226,21 +229,21 @@
             let valor = $jornada.value
 
             switch(valor){
-                case 'Diurna':
+                case '1 Diurna':
                     let recortar =horas.slice(0,1)
                     mostrarCosas(recortar,$horas)
                 break
-                case 'Nocturna':
+                case '2 Nocturna':
                     let recortar1 =horas.slice(1,2)
                     mostrarCosas(recortar1,$horas)
                 break
 
-                case 'Mixta':
+                case '3 Mixta':
                     let recortar2 =horas.slice(2,3)
                     mostrarCosas(recortar2,$horas)
                 break
             }
-            
+
         })
     </script>
 </body>
