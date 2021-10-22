@@ -94,7 +94,7 @@
         </div>
     </div>
     <button type="submit" class="btn btn-primary" style="background:lightseagreen">Enviar Cambios</button>
-    <a href="/candidato" class="btn btn-success" style="background:lightseagreen;">Candidato</a>
+    <a href="/candidato" class="btn btn-success" style="background:lightseagreen;">Regresar</a>
 </form>
 <br>
 
@@ -232,19 +232,11 @@
                                 {% for carr in carrera_can %}
                                      <option value="{{ carr.0 }}">{{ carr.1 }}</option>
                                 {%   endfor %}
-                            </select>
+                            </select>&nbsp;&nbsp;&nbsp;
                             <label for="nive">Institucion</label>&nbsp;&nbsp;&nbsp;
                             <input type="text" class="form-control" name="insti" id="insti" placeholder="Institucion" required="">&nbsp;&nbsp;&nbsp;
                         </div>
-                        <br>
-                        <br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
+                        &nbsp;&nbsp;&nbsp;
                       <center><button type="submit" class="btn btn-primary" style="background:lightseagreen">Agrega Nivel Academico</button></center>
                     </form>
                   </div>

@@ -5,47 +5,6 @@
     <title>HOME-INT</title>
 </head>
 <link rel="stylesheet" href="\static\css\tabla2.css">
-<center><h3>Datos de la solicitud</h3></center>
-<table width="100%" border="1" cellpadding="0" cellspacing="0" bordercolor="#000000">
-    <tbody>
-    <tr>
-        <td color="FFFFFF" bgcolor="#465F5A" valign="top">
-            <table width="100%" border="1" cellpadding="0" cellspacing="0" bordercolor="#000000">
-                <thead>
-                <tr>
-                    <td color="white" bgcolor="006666"><font color="white">Fecha</font></td>
-                    <td color="white" bgcolor="006666"><font color="white">Area</font></td>
-                    <td color="white" bgcolor="006666"><font color="white">Puesto</font></td>
-                    <td color="white" bgcolor="006666"><font color="white">Vacantes</font></td>
-                    <td color="white" bgcolor="006666"><font color="white">Estado</font></td>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>
-                        {{ sol.1 }}
-                    </td>
-                    <td>
-                        {{ sol.3 }}
-                    </td>
-                    <td>
-                        {{ sol.5 }}
-                    </td>
-                    <td>
-                        {{ sol.6 }}
-                    </td>
-                    <td>
-                        {{ sol.8 }}
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </td>
-    </tr>
-    </tbody>
-</table>
-
-<br><br>
 <center><h3>Datos del solicitante</h3></center>
 <table width="100%" border="1" cellpadding="0" cellspacing="0" bordercolor="#000000">
        <tbody>
@@ -148,7 +107,7 @@
     &nbsp;&nbsp;&nbsp;
     <button type="submit" class="btn btn-primary" style="background:lightseagreen">Agrega Calificacion Psicologica</button>
     
-    <a class="btn btn-primary" href="/cal_sel_candidato/31" align="right" style="background:lightseagreen">Cancelar</a>
+    <a class="btn btn-primary" href="/cal_sel_candidato/{{sol.0}}" align="right" style="background:lightseagreen">Regresar</a>
 
     </body>
 </form>
