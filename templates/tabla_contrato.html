@@ -14,6 +14,7 @@
                 <tr>
                     <td color="white" bgcolor="006666"><font color="white">CURP</font></td>
                     <td color="white" bgcolor="006666"><font color="white">Nombre</font></td>
+                    <td color="white" bgcolor="006666"><font color="white">¿Tiene contrato temporal?</font></td>
                     <td color="white" bgcolor="006666"><font color="white"></font></td>
                     <td color="white" bgcolor="006666"><font color="white"></font></td>
 
@@ -28,11 +29,14 @@
                     <td>
                         {{ empleado.1 }}
                     </td >
+                    <td>
+                      {{ empleado.2 }}
+                  </td >
                       <td bgcolor="#9C9C9C" width="60">
-                      <center><a href="/ed_contrato/{{empleado.0}}" class="btn btn-success" style="background:lightseagreen">Contrato</a></center>
+                      <center><a href="/nvo_contrato/{{empleado.0}}" class="btn btn-success" style="background:lightseagreen">Agregar nuevo contrato</a></center>
                     </td>
-                    <td  bgcolor="#BFBFBF" width="60">
-                        <center><a href="bo_contrato/{{empleado.0}}" class="btn btn-success" style="background:lightseagreen">Borrar</a></center>
+                    <td bgcolor="#9C9C9C" width="60">
+                      <center><a href="/ed_contrato/{{empleado.0}}" class="btn btn-success" style="background:lightseagreen">Ver/Editar contrato</a></center>
                     </td>
                   </tr>
                 {% endfor %}
