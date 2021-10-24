@@ -29,7 +29,7 @@
         </div>
         <div class="form-group col-md-4">
             <label for="rfc">RFC</label>
-            <input minlength="13" maxlength="13" type="text" class="form-control" name="rfc" id="rfc" placeholder="0101010101" required="" pattern="[a-zA-Z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}">
+            <input minlength="13" maxlength="13" type="text" class="form-control" name="rfc" id="rfc" placeholder="0101010101" required  pattern="([A-Z]{4,})+([0-9]{6,})+([A-Z0-9]{3,})"> 
         </div>
     </div>
     <div class="form-row">
@@ -39,7 +39,7 @@
         </div>
         <div class="form-group col-md-3">
             <label for="correoe">Correo Electronico</label>
-            <input type="email" class="form-control" name="correoe" id="correoe" placeholder="correo@gmail.com" required>
+            <input type="email" class="form-control" name="correoe" id="correoe" placeholder="correo@gmail.com" required pattern="[a-zA-Z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}">
         </div>
 
         <div class="form-group col-md-1">

@@ -18,7 +18,7 @@
         </div>
         <div class="form-group col-md-9">
             <label for="nombre">AP. Paterno    Ap.Materno    Nombre(s)</label>
-            <input type="text" class="form-control" name="nombre" id="nombre" value="{{empleados.0[2]}}" required>
+            <input type="text" class="form-control" name="nombre" id="nombre" value="{{empleados.0[1]}}" required>
         </div>
     </div>
     <div class="form-row">
@@ -28,7 +28,7 @@
         </div>
         <div class="form-group col-md-4">
             <label for="rfc">RFC</label>
-            <input type="text" class="form-control" name="rfc" id="rfc" placeholder="0101010101" value="{{empleados.0[1]}}" required>
+            <input type="text" class="form-control" name="rfc" id="rfc" placeholder="0101010101" value="{{empleados.0[2]}}" required>
         </div>
     </div>
     <div class="form-row">
@@ -52,7 +52,7 @@
         <div class="form-group col-md-2">
             <label for="sexo">Sexo</label>
             <select name="sexo" id="sexo" class="form-control" required>
-                {% if empleados.0[5]== "M" %}
+                {% if empleados.0[6]== "M" %}
                   <option value="M">Masculino</option>
                 {% else %}
                    <option value="F">Femenino</option>
@@ -241,14 +241,11 @@
                                 {% for carr in carrera_can %}
                                      <option value="{{ carr.0 }}">{{ carr.1 }}</option>
                                 {%   endfor %}
-                            </select>
+                            </select>&nbsp;&nbsp;&nbsp;
                             <label for="nive">Institucion</label>&nbsp;&nbsp;&nbsp;
-                            <input type="text" class="form-control" name="insti" id="insti" placeholder="Institucion" required>&nbsp;&nbsp;&nbsp;
+                            <input type="text" class="form-control" name="insti" id="insti" placeholder="Institucion" required>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         </div>
-                        <br>
-                        <br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
                       <button type="submit" class="btn btn-primary" style="background:lightseagreen">Agrega Nivel Academico</button>
                     </form>
                   </div>
