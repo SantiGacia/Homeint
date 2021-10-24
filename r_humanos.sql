@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 22-10-2021 a las 09:37:02
+-- Tiempo de generación: 23-10-2021 a las 21:03:28
 -- Versión del servidor: 10.4.19-MariaDB
 -- Versión de PHP: 8.0.7
 
@@ -238,6 +238,7 @@ CREATE TABLE `contrato` (
   `idJornada` int(11) NOT NULL,
   `horas_semana` varchar(100) NOT NULL,
   `idTurno` int(10) NOT NULL,
+  `horario` text NOT NULL,
   `Salario` float NOT NULL,
   `dias_de_pago` varchar(100) NOT NULL,
   `lugar_firma` varchar(100) NOT NULL,
@@ -248,8 +249,8 @@ CREATE TABLE `contrato` (
 -- Volcado de datos para la tabla `contrato`
 --
 
-INSERT INTO `contrato` (`IdContrato`, `Curp`, `idPuesto`, `idArea`, `fecha_inicio`, `fecha_fin`, `idJornada`, `horas_semana`, `idTurno`, `Salario`, `dias_de_pago`, `lugar_firma`, `fecha_firma`) VALUES
-(22, 'GGJJ770826HZSRTS68', 20, 8, '2021-10-21', '2022-01-21', 2, '7hs diarias o 42hs semanales.', 3, 0, '', '', '0000-00-00');
+INSERT INTO `contrato` (`IdContrato`, `Curp`, `idPuesto`, `idArea`, `fecha_inicio`, `fecha_fin`, `idJornada`, `horas_semana`, `idTurno`, `horario`, `Salario`, `dias_de_pago`, `lugar_firma`, `fecha_firma`) VALUES
+(28, 'MAMA770826HSLRRI22', 20, 5, '2021-10-29', '2021-10-30', 1, '8hs diarias o 48hs semanales.', 1, '', 0, '', '', '0000-00-00');
 
 -- --------------------------------------------------------
 
@@ -318,7 +319,7 @@ CREATE TABLE `empleado` (
 INSERT INTO `empleado` (`Curp`, `RFC`, `Nombre`, `Domicilio`, `Telefono`, `E_mail`, `Sexo`, `Edad`, `NSS`, `idEstadoCivil`, `Conyuje_Concubino`, `tel_emergencia`, `nombre_emergencia`, `no_infonavit`, `No_contrato`, `Contrato_Definitivo`, `Contrato_Temporal`, `ContratoTemporal_Val`) VALUES
 ('COCR800328HASRRB47', 'COCR800325B29', 'CORONA CORONA ROBERTO', 'conocido', '99999999', 'COC@GMAIL.COM', 'M', 40, '155545445', 2, '', '', '', '', 0, '', '', 'No'),
 ('FEEA770826MPLRSL72', 'FEEA770828SE5', 'Fernandez Espinoza Alejandra', 'Conocido', '4492123453', 'correo@gmail.com', 'F', 30, '12341234124', 1, '...', '449234765', 'Fernandez Espinoza Alejandro', '...', 0, '', '', 'No'),
-('MAMA770826HSLRRI22', 'MAMA770826JVP', 'MARTINEZ MORENO ALEJANDRO', 'Conocido', '4491915799', 'sgamer.garcia@gmail.com', 'M', 20, '1234567', 3, '', '', '', '', 0, '', '', 'No');
+('MAMA770826HSLRRI22', 'MAMA770826JVP', 'MARTINEZ MORENO ALEJANDRO', 'Conocido', '4491915799', 'sgamer.garcia@gmail.com', 'M', 20, '1234567', 3, '', '', '', '', 0, '', '', 'Si');
 
 -- --------------------------------------------------------
 
@@ -879,7 +880,11 @@ ALTER TABLE `contacto`
 -- Indices de la tabla `contrato`
 --
 ALTER TABLE `contrato`
-  ADD PRIMARY KEY (`IdContrato`);
+  ADD PRIMARY KEY (`IdContrato`),
+  ADD KEY `fk_Contrato_CURP` (`Curp`) USING BTREE,
+  ADD KEY `fk_Contrato_Jornada` (`idJornada`) USING BTREE,
+  ADD KEY `fk_Contrato_Area` (`idArea`) USING BTREE,
+  ADD KEY `fk_Contrato_Puesto` (`idPuesto`) USING BTREE;
 
 --
 -- Indices de la tabla `datos_de_empresa`
@@ -1065,7 +1070,7 @@ ALTER TABLE `contacto`
 -- AUTO_INCREMENT de la tabla `contrato`
 --
 ALTER TABLE `contrato`
-  MODIFY `IdContrato` int(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `IdContrato` int(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT de la tabla `datos_de_empresa`
@@ -1197,6 +1202,15 @@ ALTER TABLE `candidato_has_nivelacademico`
   ADD CONSTRAINT `fk_Candidato_has_NivelAcademico_Candidato1` FOREIGN KEY (`Curp`) REFERENCES `candidato` (`Curp`) ON DELETE NO ACTION ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_Candidato_has_NivelAcademico_Carrera1` FOREIGN KEY (`idCarrera`) REFERENCES `carrera` (`idCarrera`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_Candidato_has_NivelAcademico_NivelAcademico1` FOREIGN KEY (`idNivelAcademico`) REFERENCES `nivelacademico` (`idNivelAcademico`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `contrato`
+--
+ALTER TABLE `contrato`
+  ADD CONSTRAINT `contrato_ibfk_1` FOREIGN KEY (`idArea`) REFERENCES `area` (`idArea`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `contrato_ibfk_2` FOREIGN KEY (`idPuesto`) REFERENCES `puesto` (`idPuesto`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `contrato_ibfk_3` FOREIGN KEY (`idJornada`) REFERENCES `jornada` (`IdJornada`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `contrato_ibfk_4` FOREIGN KEY (`Curp`) REFERENCES `empleado` (`Curp`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `empleado_has_habilidad`

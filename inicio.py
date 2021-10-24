@@ -1961,7 +1961,7 @@ def agrega_usuario():
         cursor.execute('select idPerfil, Descripcion from perfil_admo order by Descripcion')
         datos2 = cursor.fetchall()
         conn.close()
-        return render_template("edi_usuario2.html", usuarios = datos, usu_per=datos1, pers=datos2)
+        return redirect(url_for('usuario'))
 
 @app.route('/agrega_per_usu/<string:id>', methods=['POST'])
 def agrega_per_usu(id):
