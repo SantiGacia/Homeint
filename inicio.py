@@ -2461,7 +2461,7 @@ def cal_hab_cdto(Curp,idH,co,id):
                        ' where a.Curp=c.Curp and b.idIdioma=c.idIdioma and c.Curp=%s',(Curp))
         datos2 = cursor.fetchall()
 
-        cursor.execute(' select a.Curp, b.idNivelAcademico, b.Descripcion, c.idCarrera, c.Descripcion, d.Curp, d.idNivelAcademico, d.idCarrera, d.Institucion'
+        cursor.execute(' select a.Curp, b.idNivelAcademico, b.Descripcion, c.idCarrera, c.Descripcion, d.Curp, d.idNivelAcademico, d.idCarrera, d.Institucion, d.valida'
                        ' from candidato a, nivelacademico b, carrera c, candidato_has_nivelacademico d'
                        ' where a.Curp=d.Curp and b.idNivelAcademico=d.idNivelAcademico and c.idCarrera=d.idCarrera and d.Curp=%s',(Curp))
         datos6 = cursor.fetchall()
@@ -2507,7 +2507,7 @@ def cal_idio_cdto(Curp,idI,ca,id):
                        ' where a.Curp=c.Curp and b.idIdioma=c.idIdioma and c.Curp=%s',(Curp))
         datos2 = cursor.fetchall()
 
-        cursor.execute(' select a.Curp, b.idNivelAcademico, b.Descripcion, c.idCarrera, c.Descripcion, d.Curp, d.idNivelAcademico, d.idCarrera, d.Institucion'
+        cursor.execute(' select a.Curp, b.idNivelAcademico, b.Descripcion, c.idCarrera, c.Descripcion, d.Curp, d.idNivelAcademico, d.idCarrera, d.Institucion, d.valida'
                        ' from candidato a, nivelacademico b, carrera c, candidato_has_nivelacademico d'
                        ' where a.Curp=d.Curp and b.idNivelAcademico=d.idNivelAcademico and c.idCarrera=d.idCarrera and d.Curp=%s',(Curp))
         datos6 = cursor.fetchall()
