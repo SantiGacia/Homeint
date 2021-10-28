@@ -40,7 +40,7 @@
         </div>
         <div class="form-group col-md-3">
             <label for="correoe">Correo Electronico</label>
-            <input type="email" class="form-control" name="correoe" id="correoe" value="{{empleados.0[5]}}" required pattern="[a-zA-Z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}">>
+            <input type="email" class="form-control" name="correoe" id="correoe" value="{{empleados.0[5]}}" required pattern="[a-zA-Z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}">
         </div>
 
         <div class="form-group col-md-1">
@@ -264,15 +264,13 @@
                                 {% for carr in carrera_can %}
                                      <option value="{{ carr.0 }}">{{ carr.1 }}</option>
                                 {%   endfor %}
-                            </select>
+                            </select>&nbsp;&nbsp;&nbsp;
                             <label for="nive">Institucion</label>&nbsp;&nbsp;&nbsp;
                             <input type="text" class="form-control" name="insti" id="insti" placeholder="Institucion" required>&nbsp;&nbsp;&nbsp;
                         </div>
-                        <br>
-                        <br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      &nbsp;&nbsp;&nbsp;
                       <button type="submit" class="btn btn-primary" style="background:lightseagreen">Agrega Nivel Academico</button>
+                    </div>
                     </form>
                   </div>
                   <br>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 23-10-2021 a las 21:03:28
+-- Tiempo de generación: 28-10-2021 a las 08:15:04
 -- Versión del servidor: 10.4.19-MariaDB
 -- Versión de PHP: 8.0.7
 
@@ -20,17 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `r_humanos`
 --
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `actitud`
---
-
-CREATE TABLE `actitud` (
-  `idActitud` int(11) NOT NULL,
-  `Descripcion` varchar(45) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -53,9 +42,7 @@ CREATE TABLE `anuncio` (
 --
 
 INSERT INTO `anuncio` (`idAnuncio`, `idSolicitud`, `Num_Solicitantes`, `FechaPublicacion`, `FechaCierre`, `idcontacto`, `idMedioPublicidad`) VALUES
-(21, 31, 3, '2021-04-08', '2021-04-09', 3, 8),
-(22, 31, 3, '2021-04-08', '2021-04-09', 4, 6),
-(23, 32, 2, '2021-10-05', '2021-10-06', 3, 7);
+(1, 1, 3, '2021-11-01', '2021-11-06', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -74,9 +61,9 @@ CREATE TABLE `area` (
 --
 
 INSERT INTO `area` (`idArea`, `AreaDescripcion`, `AreaNombre`) VALUES
-(5, 'Desarrollo de sistemas WEB y móviles para Android..', 'Desarrollo de sistemas web'),
-(6, 'Integración de sistemas electrónicos ', 'Integración de electrónica'),
-(8, 'Mantenimiento del sistema', 'Mantenimiento');
+(1, 'Desarrollo BackEnd', 'Desarrollo de sistemas web'),
+(2, 'Diseñadores de elementos necesarios para web', 'Diseño de creativos'),
+(3, 'Mantenimiento del equipo de computo', 'Soporte de equipo de computo');
 
 -- --------------------------------------------------------
 
@@ -103,10 +90,7 @@ CREATE TABLE `candidato` (
 --
 
 INSERT INTO `candidato` (`Curp`, `RFC`, `Nombre`, `Domicilio`, `Telefono`, `E_Mail`, `Sexo`, `Edad`, `NSS`, `Fotografia`, `idEstadoCivil`) VALUES
-('COCR800328HASRRB47', 'COCR800325B29', 'CORONA CORONA ROBERTO', 'conocido', '99999999', 'COC@GMAIL.COM', 'M', 40, 155545445, NULL, 2),
-('FEEA770826MPLRSL72', 'FEEA770828SE5', 'Fernandez Espinoza Alejandra', 'conocido', '9999999999', 'COC@GMAIL.com', 'F', 20, 3124125, NULL, 1),
-('GOML900330MASDD03', 'GOML900330', 'GONZALEZ MARTINEZ LAURA', 'conocido', '999999999', 'GOML@GMAIL.COM', 'F', 30, 15544545, NULL, 2),
-('MAMA770826HSLRRI22', 'MAMA770826JVP', 'MARTINEZ MORENO ALEJANDRO', 'Conocido', '4491915799', 'sgamer.garcia@gmail.com', 'M', 20, 1234567, NULL, 3);
+('GAMS040407HASRRNA5', 'COCR800325B29', 'Garcia Martinez Santiago ', 'conocido', '4491115555', 'ssantig07@gmail.com', 'M', 20, 2147483647, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -126,11 +110,7 @@ CREATE TABLE `candidato_has_habilidad` (
 --
 
 INSERT INTO `candidato_has_habilidad` (`Curp`, `idHabilidad`, `Experiencia`, `valida`) VALUES
-('COCR800328HASRRB47', 9, '5 años ', 'Si'),
-('COCR800328HASRRB47', 10, '5 años ', 'Si'),
-('GOML900330MASDD03', 9, '2 años ', 'Si'),
-('GOML900330MASDD03', 10, '2 años ', 'Si'),
-('MAMA770826HSLRRI22', 9, '1 year', 'Si');
+('GAMS040407HASRRNA5', 1, '3 años', 'Si');
 
 -- --------------------------------------------------------
 
@@ -150,11 +130,7 @@ CREATE TABLE `candidato_has_idioma` (
 --
 
 INSERT INTO `candidato_has_idioma` (`Curp`, `idIdioma`, `NIvel`, `valida`) VALUES
-('COCR800328HASRRB47', 7, 'Experto', 'Si'),
-('COCR800328HASRRB47', 9, 'Medio', 'Si'),
-('GOML900330MASDD03', 7, 'Experto', 'Si'),
-('GOML900330MASDD03', 8, 'Básico', 'No'),
-('MAMA770826HSLRRI22', 7, '1 year', 'No');
+('GAMS040407HASRRNA5', 1, 'Medio', 'Si');
 
 -- --------------------------------------------------------
 
@@ -175,9 +151,7 @@ CREATE TABLE `candidato_has_nivelacademico` (
 --
 
 INSERT INTO `candidato_has_nivelacademico` (`Curp`, `idNivelAcademico`, `idCarrera`, `Institucion`, `valida`) VALUES
-('COCR800328HASRRB47', 11, 8, 'UAA', 'Si'),
-('GOML900330MASDD03', 11, 8, 'UAA', 'Si'),
-('MAMA770826HSLRRI22', 11, 8, 'abc', 'Si');
+('GAMS040407HASRRNA5', 1, 3, 'DGETI', 'Si');
 
 -- --------------------------------------------------------
 
@@ -187,7 +161,7 @@ INSERT INTO `candidato_has_nivelacademico` (`Curp`, `idNivelAcademico`, `idCarre
 
 CREATE TABLE `carrera` (
   `idCarrera` int(11) NOT NULL,
-  `Descripcion` varchar(45) DEFAULT NULL
+  `Descripcion` varchar(200) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -195,8 +169,10 @@ CREATE TABLE `carrera` (
 --
 
 INSERT INTO `carrera` (`idCarrera`, `Descripcion`) VALUES
-(8, 'Ingeniería en sistemas computacionales'),
-(9, 'Técnico en electrónica');
+(1, 'Técnico en electrónica'),
+(2, 'Diseño Gráfico.'),
+(3, 'Ingeniería en Tecnologías de la Información y Comunicaciones.'),
+(4, 'Animación digital');
 
 -- --------------------------------------------------------
 
@@ -219,8 +195,8 @@ CREATE TABLE `contacto` (
 --
 
 INSERT INTO `contacto` (`idcontacto`, `Nombre`, `Domicilio`, `Razon_Social`, `Telefono`, `Email`, `Link`) VALUES
-(3, 'Contacto de contratación 1', 'conocido', 'SR', '4495566907', '', ''),
-(4, 'Contacto de contratación 2 ', 'conocido', 'SR', '2147483647', '', '');
+(1, 'Dana Moreno', 'Cetis155', 'Home-int S.A', '4499998888', 'homeint_contacto1@gmail', 'homeint_contacto1'),
+(2, 'Daniel ', 'Cetis155', 'Home-int S.A', '4499998888', 'homeint_contacto2@gmail', 'Empresa1_2');
 
 -- --------------------------------------------------------
 
@@ -237,9 +213,8 @@ CREATE TABLE `contrato` (
   `fecha_fin` date NOT NULL,
   `idJornada` int(11) NOT NULL,
   `horas_semana` varchar(100) NOT NULL,
-  `idTurno` int(10) NOT NULL,
   `horario` text NOT NULL,
-  `Salario` float NOT NULL,
+  `Salario` varchar(50) NOT NULL,
   `dias_de_pago` varchar(100) NOT NULL,
   `lugar_firma` varchar(100) NOT NULL,
   `fecha_firma` date NOT NULL
@@ -249,8 +224,9 @@ CREATE TABLE `contrato` (
 -- Volcado de datos para la tabla `contrato`
 --
 
-INSERT INTO `contrato` (`IdContrato`, `Curp`, `idPuesto`, `idArea`, `fecha_inicio`, `fecha_fin`, `idJornada`, `horas_semana`, `idTurno`, `horario`, `Salario`, `dias_de_pago`, `lugar_firma`, `fecha_firma`) VALUES
-(28, 'MAMA770826HSLRRI22', 20, 5, '2021-10-29', '2021-10-30', 1, '8hs diarias o 48hs semanales.', 1, '', 0, '', '', '0000-00-00');
+INSERT INTO `contrato` (`IdContrato`, `Curp`, `idPuesto`, `idArea`, `fecha_inicio`, `fecha_fin`, `idJornada`, `horas_semana`, `horario`, `Salario`, `dias_de_pago`, `lugar_firma`, `fecha_firma`) VALUES
+(1, 'GAME040217HASLXDA3', 1, 1, '2021-11-01', '2022-02-01', 2, '2', 'Lunes a Sabado', '100', 'Quincena y día 29 del mes', '', '2021-11-01'),
+(2, 'GAMS040407HASRRNA5', 1, 1, '2021-11-01', '2022-02-01', 2, '2', 'Lunes a Viernes', '1500000', 'Dia viernes', '', '2021-11-01');
 
 -- --------------------------------------------------------
 
@@ -317,9 +293,8 @@ CREATE TABLE `empleado` (
 --
 
 INSERT INTO `empleado` (`Curp`, `RFC`, `Nombre`, `Domicilio`, `Telefono`, `E_mail`, `Sexo`, `Edad`, `NSS`, `idEstadoCivil`, `Conyuje_Concubino`, `tel_emergencia`, `nombre_emergencia`, `no_infonavit`, `No_contrato`, `Contrato_Definitivo`, `Contrato_Temporal`, `ContratoTemporal_Val`) VALUES
-('COCR800328HASRRB47', 'COCR800325B29', 'CORONA CORONA ROBERTO', 'conocido', '99999999', 'COC@GMAIL.COM', 'M', 40, '155545445', 2, '', '', '', '', 0, '', '', 'No'),
-('FEEA770826MPLRSL72', 'FEEA770828SE5', 'Fernandez Espinoza Alejandra', 'Conocido', '4492123453', 'correo@gmail.com', 'F', 30, '12341234124', 1, '...', '449234765', 'Fernandez Espinoza Alejandro', '...', 0, '', '', 'No'),
-('MAMA770826HSLRRI22', 'MAMA770826JVP', 'MARTINEZ MORENO ALEJANDRO', 'Conocido', '4491915799', 'sgamer.garcia@gmail.com', 'M', 20, '1234567', 3, '', '', '', '', 0, '', '', 'Si');
+('GAME040217HASLXDA3', 'GAME040217DA3', 'GALLEGO MUÑOZ EDGAR MARIO', 'conocido', '4499915555', 'mariochikito11@gmail.com', 'M', 20, '44190407518', 4, 'A', '4491115555', 'Hermana de mario', '...', 0, '', '', 'Si'),
+('GAMS040407HASRRNA5', 'COCR800325B29', 'Garcia Martinez Santiago ', 'conocido', '4491115555', 'ssantig07@gmail.com', 'M', 20, '2147483647', 1, '', '4495691241', 'María José Garcia Martínez', '', 0, '', '', 'Si');
 
 -- --------------------------------------------------------
 
@@ -339,10 +314,8 @@ CREATE TABLE `empleado_has_habilidad` (
 --
 
 INSERT INTO `empleado_has_habilidad` (`Curp`, `idHabilidad`, `Experiencia`, `valida`) VALUES
-('COCR800328HASRRB47', 9, '5 años ', 'Si'),
-('COCR800328HASRRB47', 10, '5 años ', 'Si'),
-('FEEA770826MPLRSL72', 9, '5 años', ''),
-('MAMA770826HSLRRI22', 9, '1 year', 'Si');
+('GAME040217HASLXDA3', 4, '5 años', ''),
+('GAMS040407HASRRNA5', 1, '3 años', 'Si');
 
 -- --------------------------------------------------------
 
@@ -362,10 +335,8 @@ CREATE TABLE `empleado_has_idioma` (
 --
 
 INSERT INTO `empleado_has_idioma` (`Curp`, `idIdioma`, `Nivel`, `valida`) VALUES
-('COCR800328HASRRB47', 7, 'Experto', 'Si'),
-('COCR800328HASRRB47', 9, 'Medio', ''),
-('FEEA770826MPLRSL72', 7, 'Medio', ''),
-('MAMA770826HSLRRI22', 7, '1 year', 'No');
+('GAME040217HASLXDA3', 2, 'Medio', ''),
+('GAMS040407HASRRNA5', 1, 'Medio', 'Si');
 
 -- --------------------------------------------------------
 
@@ -386,9 +357,8 @@ CREATE TABLE `empleado_has_nivelacademico` (
 --
 
 INSERT INTO `empleado_has_nivelacademico` (`Curp`, `idNivelAcademico`, `idCarrera`, `Institucion`, `valida`) VALUES
-('COCR800328HASRRB47', 11, 8, 'UAA', 'No'),
-('FEEA770826MPLRSL72', 11, 8, 'UAA', ''),
-('MAMA770826HSLRRI22', 11, 8, 'abc', 'Si');
+('GAME040217HASLXDA3', 2, 2, 'UAA', ''),
+('GAMS040407HASRRNA5', 1, 3, 'DGETI', 'Si');
 
 -- --------------------------------------------------------
 
@@ -471,9 +441,12 @@ CREATE TABLE `habilidad` (
 --
 
 INSERT INTO `habilidad` (`idHabilidad`, `Descripcion`) VALUES
-(9, 'Desarrollo de sistemas WEB'),
-(10, 'Desarrollo de sistema Móviles Android '),
-(11, 'Instalación de tarjetas de control');
+(1, 'Desarrollador de Css'),
+(2, 'Desarrollador de Html'),
+(3, 'Desarrollador de JavaScript'),
+(4, 'Manejo de Adobe'),
+(5, 'Manejo de Blender 3D'),
+(6, 'Instalación de tarjetas de control');
 
 -- --------------------------------------------------------
 
@@ -491,9 +464,30 @@ CREATE TABLE `idioma` (
 --
 
 INSERT INTO `idioma` (`idIdioma`, `Lenguaje`) VALUES
-(7, 'Ingles'),
-(8, 'Frances'),
-(9, 'Japones');
+(1, 'Ingles'),
+(2, 'Español'),
+(3, 'Chino Mandarín');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `jordesc`
+--
+
+CREATE TABLE `jordesc` (
+  `iddesc` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `IdJornada` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `jordesc`
+--
+
+INSERT INTO `jordesc` (`iddesc`, `name`, `IdJornada`) VALUES
+(1, 'De 8 AM a 14 y 15 - 20', 1),
+(2, '12 - 16 y 18 - 2', 2),
+(3, '10-20', 3);
 
 -- --------------------------------------------------------
 
@@ -504,17 +498,18 @@ INSERT INTO `idioma` (`idIdioma`, `Lenguaje`) VALUES
 CREATE TABLE `jornada` (
   `IdJornada` int(11) NOT NULL,
   `jornombre` varchar(100) NOT NULL,
-  `Descripcion` varchar(100) NOT NULL
+  `Descripcion` varchar(100) NOT NULL,
+  `val` varchar(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `jornada`
 --
 
-INSERT INTO `jornada` (`IdJornada`, `jornombre`, `Descripcion`) VALUES
-(1, 'Diurna', '8hs diarias o 48hs semanales.'),
-(2, 'Nocturna', '7hs diarias o 42hs semanales.'),
-(3, 'Mixta', 'Siete horas y media');
+INSERT INTO `jornada` (`IdJornada`, `jornombre`, `Descripcion`, `val`) VALUES
+(1, '8 horas', 'De 8 AM a 14 y 15 - 20', '1'),
+(2, '9 horas', '12 - 16 y 18 - 2', '1'),
+(3, '10 horas', '10-20', '1');
 
 -- --------------------------------------------------------
 
@@ -532,9 +527,9 @@ CREATE TABLE `mediopublicidad` (
 --
 
 INSERT INTO `mediopublicidad` (`idMedioPublicidad`, `Descripcion`) VALUES
-(6, 'Radio'),
-(7, 'Televisión '),
-(8, 'Diarios locales ');
+(1, 'Facebook.'),
+(2, 'Radio'),
+(3, 'LinkedIn.');
 
 -- --------------------------------------------------------
 
@@ -552,9 +547,9 @@ CREATE TABLE `nivelacademico` (
 --
 
 INSERT INTO `nivelacademico` (`idNivelAcademico`, `Descripcion`) VALUES
-(10, 'Tecnico'),
-(11, 'Licenciatura'),
-(12, 'Maestría ');
+(1, 'Técnico'),
+(2, 'Licenciatura'),
+(3, 'Maestría.');
 
 -- --------------------------------------------------------
 
@@ -658,7 +653,7 @@ INSERT INTO `proceso` (`idProceso`, `Descripcion`) VALUES
 CREATE TABLE `puesto` (
   `idPuesto` int(11) NOT NULL,
   `Descripcion` varchar(45) DEFAULT NULL,
-  `SalarioAnual` int(11) DEFAULT NULL,
+  `SalarioMensual` int(11) DEFAULT NULL,
   `Beneficios` varchar(250) DEFAULT NULL,
   `Bonos` int(11) DEFAULT NULL,
   `Aprobacion` tinyint(1) DEFAULT NULL
@@ -668,9 +663,8 @@ CREATE TABLE `puesto` (
 -- Volcado de datos para la tabla `puesto`
 --
 
-INSERT INTO `puesto` (`idPuesto`, `Descripcion`, `SalarioAnual`, `Beneficios`, `Bonos`, `Aprobacion`) VALUES
-(20, 'Desarrollador de sistemas WEB y Móviles ', 1500000, 'de ley ', 0, 0),
-(21, 'Técnico en electrónica', 1500000, 'De ley', 30000, 0);
+INSERT INTO `puesto` (`idPuesto`, `Descripcion`, `SalarioMensual`, `Beneficios`, `Bonos`, `Aprobacion`) VALUES
+(1, 'Desarrollador de paginas web', 1500000, 'De ley', 50000, 0);
 
 -- --------------------------------------------------------
 
@@ -689,9 +683,9 @@ CREATE TABLE `puesto_has_habilidad` (
 --
 
 INSERT INTO `puesto_has_habilidad` (`idPuesto`, `idHabilidad`, `Experiencia`) VALUES
-(20, 9, '2 años '),
-(20, 10, '2 años '),
-(21, 11, '5 años');
+(1, 1, '5 años'),
+(1, 2, '5 años'),
+(1, 3, '5 años');
 
 -- --------------------------------------------------------
 
@@ -710,9 +704,7 @@ CREATE TABLE `puesto_has_idioma` (
 --
 
 INSERT INTO `puesto_has_idioma` (`idPuesto`, `idIdioma`, `Nivel`) VALUES
-(20, 7, 'Experto'),
-(20, 8, 'Básico'),
-(21, 7, 'Medio');
+(1, 1, 'Avanzado');
 
 -- --------------------------------------------------------
 
@@ -744,10 +736,7 @@ CREATE TABLE `resultadocandidato` (
 --
 
 INSERT INTO `resultadocandidato` (`EstatusProceso`, `Comentarios_area`, `Comentarios_ofertas_salario`, `Comentarios_area_seleccion`, `estatus`, `idSolicitud`, `Curp`, `id_actitud`, `Coeficiente_Intelectual`, `Personalidad`, `apto_psico`, `Validar_ref`, `Calificacion_Medica`, `validacion`, `Calificacion`, `Califica_el_Perfil`) VALUES
-('3', '', '', '', 'No', 31, 'GOML900330MASDD03', 0, 50, 'Regular', 0, 'Si', 'Apto', 'No', 'No Apto', '75'),
-('3', '', '', '', 'Si', 31, 'MAMA770826HSLRRI22', 0, 100, 'si', 0, 'Si', 'Apto', 'Si', 'Apto', '100'),
-('2', '', '', '', 'Pendiente', 32, 'MAMA770826HSLRRI22', 0, 1000, 'Bueno', 0, 'Pendiente', 'Pendiente', 'Pendiente', 'Apto', '10'),
-('3', '', '', '', 'Si', 31, 'COCR800328HASRRB47', 0, 10, 'Bueno', 0, 'Si', 'Apto', 'Si', 'Apto', '10');
+('3', '', '', '', 'Si', 1, 'GAMS040407HASRRNA5', 0, 100, 'Bueno', 0, 'Si', 'Apto', 'Si', 'Apto', '10');
 
 -- --------------------------------------------------------
 
@@ -771,8 +760,7 @@ CREATE TABLE `solicitud` (
 --
 
 INSERT INTO `solicitud` (`idSolicitud`, `FechaSolicitud`, `NumeroVacante`, `idArea`, `idPuesto`, `idNivelAcademico`, `idCarrera`, `idEstatus_Solicitud`) VALUES
-(31, '2021-04-06', 3, 5, 20, 11, 8, 3),
-(32, '2021-10-05', 2, 6, 21, 10, 9, 3);
+(1, '2021-10-27', 3, 1, 1, 2, 3, 3);
 
 -- --------------------------------------------------------
 
@@ -951,6 +939,13 @@ ALTER TABLE `idioma`
   ADD PRIMARY KEY (`idIdioma`);
 
 --
+-- Indices de la tabla `jordesc`
+--
+ALTER TABLE `jordesc`
+  ADD PRIMARY KEY (`iddesc`),
+  ADD KEY `jornada id` (`IdJornada`);
+
+--
 -- Indices de la tabla `jornada`
 --
 ALTER TABLE `jornada`
@@ -1046,31 +1041,31 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `anuncio`
 --
 ALTER TABLE `anuncio`
-  MODIFY `idAnuncio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `idAnuncio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `area`
 --
 ALTER TABLE `area`
-  MODIFY `idArea` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `idArea` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `carrera`
 --
 ALTER TABLE `carrera`
-  MODIFY `idCarrera` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `idCarrera` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `contacto`
 --
 ALTER TABLE `contacto`
-  MODIFY `idcontacto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idcontacto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `contrato`
 --
 ALTER TABLE `contrato`
-  MODIFY `IdContrato` int(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `IdContrato` int(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `datos_de_empresa`
@@ -1100,31 +1095,37 @@ ALTER TABLE `estatus_solicitud`
 -- AUTO_INCREMENT de la tabla `habilidad`
 --
 ALTER TABLE `habilidad`
-  MODIFY `idHabilidad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `idHabilidad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `idioma`
 --
 ALTER TABLE `idioma`
-  MODIFY `idIdioma` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `idIdioma` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT de la tabla `jordesc`
+--
+ALTER TABLE `jordesc`
+  MODIFY `iddesc` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `jornada`
 --
 ALTER TABLE `jornada`
-  MODIFY `IdJornada` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `IdJornada` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `mediopublicidad`
 --
 ALTER TABLE `mediopublicidad`
-  MODIFY `idMedioPublicidad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `idMedioPublicidad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `nivelacademico`
 --
 ALTER TABLE `nivelacademico`
-  MODIFY `idNivelAcademico` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `idNivelAcademico` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `perfil_admo`
@@ -1148,13 +1149,13 @@ ALTER TABLE `proceso`
 -- AUTO_INCREMENT de la tabla `puesto`
 --
 ALTER TABLE `puesto`
-  MODIFY `idPuesto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `idPuesto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `solicitud`
 --
 ALTER TABLE `solicitud`
-  MODIFY `idSolicitud` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `idSolicitud` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
@@ -1233,6 +1234,12 @@ ALTER TABLE `empleado_has_nivelacademico`
   ADD CONSTRAINT `empleado_has_nivelacademico_ibfk_1` FOREIGN KEY (`idNivelAcademico`) REFERENCES `nivelacademico` (`idNivelAcademico`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `empleado_has_nivelacademico_ibfk_2` FOREIGN KEY (`idCarrera`) REFERENCES `carrera` (`idCarrera`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `empleado_has_nivelacademico_ibfk_3` FOREIGN KEY (`Curp`) REFERENCES `empleado` (`Curp`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `jordesc`
+--
+ALTER TABLE `jordesc`
+  ADD CONSTRAINT `jornada id` FOREIGN KEY (`IdJornada`) REFERENCES `jornada` (`IdJornada`) ON DELETE CASCADE;
 
 --
 -- Filtros para la tabla `perfil_has_proceso`

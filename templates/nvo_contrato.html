@@ -133,27 +133,25 @@
 
 <form action="/agr_nvo_contrato/{{'Si'}}" method="POST">  
       <div class=form-row>
-        <input minlength="18" maxlength="18" type="text" class="form-control" name="curp" id="curp" value="{{empleados.0[0]}}" hidden pattern="([A-Z]{4,})+([0-9]{6,})+([A-Z]{6,})+([0-9]{2,})">
+        <input minlength="18" maxlength="18" type="text" class="form-control" name="curp" id="curp" value="{{empleados.0[0]}}" hidden>
         <div class="form-group col-md-4">
             <label for="puesto">Puesto</label>
             <input type="text" class="form-control" name="idpuesto" id="idpuesto" placeholder="" value="{{impor.0[3]}}" hidden>
-            <input type="text" class="form-control" name="puesto" id="puesto" placeholder="" value="{{impor.0[4]}}" >
+            <input type="text" class="form-control" name="puesto" id="puesto" placeholder="" value="{{impor.0[4]}}" required>
         </div>
         <div class="form-group col-md-4">
             <label for="area">Área</label>
             <input type="text" class="form-control" name="id_area" id="id_area" placeholder="" value="{{impor.0[1]}}" hidden >
-            <input type="text" class="form-control" name="area" id="area" placeholder="" value="{{impor.0[2]}}" >
+            <input type="text" class="form-control" name="area" id="area" placeholder="" value="{{impor.0[2]}}" required>
         </div>
         <div class="form-group col-md-2">
-            <label for="turno">Turno</label>
-            <select required name="turno" id="turno" class="form-control" >
-                <option value="" selected>Choose...</option>
-                {% for turno in turnos %}
-                    <option value="{{ turno.0 }}">{{ turno.1 }}</option>
-                {% endfor %}
-            </select>
+            <label for="salario">Salario Mensual</label>
+            <input type="text" class="form-control" name="salario" id="salario" placeholder="" value="{{impor.0[5]}}" required>
         </div>
-
+        <div class="form-group col-md-2">
+            <label for="diapaga">Dias de paga</label>
+            <input type="text" class="form-control" name="diapaga" id="diapaga" required>
+        </div>
 
     </div>
    
@@ -161,74 +159,57 @@
 
         <div class="form-group col-md-2">
             <label for="fecha_inicio">Fecha de inicio</label>
-            <input type="date" class="form-control" name="fecha_inicio" id="fecha_inicio">
+            <input type="date" class="form-control" name="fecha_inicio" id="fecha_inicio" required>
             
         </div>
 
         <div class="form-group col-md-2">
             <label for="fecha_fin">Fecha de conclusion</label>
-            <input type="date" class="form-control" name="fecha_fin" id="fecha_fin">
+            <input type="date" class="form-control" name="fecha_fin" id="fecha_fin" required>
         </div>
 
         <div class="form-group col-md-2">
             <label for="jornada">Jornada</label>
-            <select required name="jornada" id="jornada" class="form-control" > 
+            <select class="form-control" id="country" name="country" required>
+                <option selected>Chosse...</option>
+                {% for row in jornada %}
+                <option value="{{row.IdJornada}}">{{row.jornombre}}</option>
+                {% endfor %}
             </select>
         </div>
         <div class="form-group col-md-2">
-            <label for="hsemana">Horas a la semana</label>
-            <select class="form-control" name="hsemana" id="hsemana">
-            </select>
+                <label for="hsemana">Horas a la semana</label>
+                <select class="form-control" id="state" name="state" required></select>
+            
+        </div>
+        <div class="form-group col-md-2">
+            <label for="dias">Horario</label>
+            <input type="text" class="form-control" name="dias" id="dias" required>
+
+            
         </div>
 
-
     </div>
-
-
-
-    <button type="submit" class="btn btn-primary" style="background-color:lightseagreen!important"><font color="white">Guardar cambios</font></button>  
-
+    <input type="submit" class="btn btn-primary" style="background-color:lightseagreen!important"> 
 </form>
     <script>
-        let $jornada = document.getElementById('jornada')
-        let $horas = document.getElementById('hsemana')
-
-        let jornada = ['1 Diurna','2 Nocturna','3 Mixta']
-        let horas = ['8hs diarias o 48hs semanales.', '7hs diarias o 42hs semanales.', '7hs diarias']
-
-
-        function mostrarCosas(arreglo, cosa) {
-            let elementos = '<option selected disables>--Seleccione--</option>'
-
-            for(let i = 0; i < arreglo.length; i++) {
-                elementos += '<option value="' + arreglo[i] +'">' + arreglo[i] +'</option>'
-            }
-
-            cosa.innerHTML = elementos
+    country_select = document.getElementById('country');
+    state_select = document.getElementById('state');
+    
+    
+    country_select.onchange = function(){
+        country = country_select.value;
+        alert(country);
+        fetch('state/' + country).then(function(response){
+        response.json().then(function(data) {
+        optionHTML = '';
+        for (state of data.statecountry) {
+            optionHTML += '<option value="' + state.iddesc +'">' + state.name + '</option>'
         }
-
-        mostrarCosas(jornada, $jornada)
-
-        $jornada.addEventListener('change', function() {
-            let valor = $jornada.value
-
-            switch(valor){
-                case '1 Diurna':
-                    let recortar =horas.slice(0,1)
-                    mostrarCosas(recortar,$horas)
-                break
-                case '2 Nocturna':
-                    let recortar1 =horas.slice(1,2)
-                    mostrarCosas(recortar1,$horas)
-                break
-
-                case '3 Mixta':
-                    let recortar2 =horas.slice(2,3)
-                    mostrarCosas(recortar2,$horas)
-                break
-            }
-
-        })
+        state_select.innerHTML = optionHTML;
+        });
+        });
+    }
     </script>
 </body>
 {% endblock %}
