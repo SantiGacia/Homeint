@@ -1,5 +1,6 @@
-from flask import Flask, g, render_template, request, redirect, url_for, session
+from flask import Flask, g, render_template, request, redirect, url_for, session, json, jsonify
 import pymysql
+from flask_mysqldb import MySQL,MySQLdb
 #import os
 #from werkzeug.utils import secure_filename
 
@@ -8,6 +9,15 @@ app = Flask(__name__)
 app.secret_key = 'mysecretkey'
 #carpeta de subida
 #app.config['UPLOAD_FOLDER'] = './pdfs'
+
+#definir la base de datos para flask_mysqldb
+app.config['MYSQL_HOST'] = 'localhost'
+app.config['MYSQL_USER'] = 'root'
+app.config['MYSQL_PASSWORD'] = ''
+app.config['MYSQL_DB'] = 'r_humanos'
+app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
+mysql = MySQL(app)
+
 
 # Clase de usuarios
 class user:
@@ -474,7 +484,7 @@ def ed_datos_empresa(id):
 def puesto():
     conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
     cursor = conn.cursor()
-    cursor.execute('select idPuesto, Descripcion, SalarioAnual, Beneficios, Bonos, Aprobacion from puesto '
+    cursor.execute('select idPuesto, Descripcion, SalarioMensual, Beneficios, Bonos, Aprobacion from puesto '
                    'order by Descripcion')
     datos = cursor.fetchall()
     conn.close()
@@ -496,10 +506,10 @@ def agrega_puesto():
             error = "El Puesto ya se encuentra agregado."
             return render_template("error.html", des_error=error, paginaant="/puesto")
         else:
-            cursor.execute('insert into puesto (Descripcion, SalarioAnual, Beneficios, Bonos, Aprobacion) '
+            cursor.execute('insert into puesto (Descripcion, SalarioMensual, Beneficios, Bonos, Aprobacion) '
                            'values (%s,%s,%s,%s,%s)',(aux_des, aux_sal,aux_ben, aux_bon, aux_aut))
             conn.commit()
-            cursor.execute('select idPuesto, Descripcion, SalarioAnual, Beneficios, Bonos, Aprobacion '
+            cursor.execute('select idPuesto, Descripcion, SalarioMensual, Beneficios, Bonos, Aprobacion '
                            'from puesto where idPuesto=(select max(idPuesto) from puesto)')
             datos = cursor.fetchall()
             cursor.execute('select a.idPuesto, b.idHabilidad,b.Descripcion,c.idPuesto,c.idHabilidad, c.Experiencia '
@@ -531,7 +541,7 @@ def modifica_puesto(id):
         aux_aut = request.form['autorizar']
         conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
         cursor = conn.cursor()
-        cursor.execute('update puesto set Descripcion=%s, SalarioAnual=%s, Beneficios=%s, Bonos=%s, Aprobacion=%s '
+        cursor.execute('update puesto set Descripcion=%s, SalarioMensual=%s, Beneficios=%s, Bonos=%s, Aprobacion=%s '
                        'where idpuesto=%s', (aux_des, aux_sal,aux_ben, aux_bon,aux_aut,id))
         conn.commit()
         conn.close()
@@ -542,7 +552,7 @@ def modifica_puesto(id):
 def ed_puesto(id):
     conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
     cursor = conn.cursor()
-    cursor.execute('select idPuesto, Descripcion, SalarioAnual, Beneficios, Bonos, Aprobacion '
+    cursor.execute('select idPuesto, Descripcion, SalarioMensual, Beneficios, Bonos, Aprobacion '
     'from puesto where idPuesto=%s', (id))
     datos=cursor.fetchall()
     cursor.execute('select a.idPuesto, b.idHabilidad,b.Descripcion,c.idPuesto, c.idHabilidad, c.Experiencia '
@@ -597,7 +607,7 @@ def agrega_hab_pto(id):
             cursor.execute('insert into puesto_has_habilidad (idPuesto, idHabilidad, Experiencia) '
                            'values (%s,%s,%s)',(aux_pto,aux_hab,aux_exp))
             conn.commit()
-            cursor.execute('select idPuesto, Descripcion, SalarioAnual, Beneficios, Bonos, Aprobacion '
+            cursor.execute('select idPuesto, Descripcion, SalarioMensual, Beneficios, Bonos, Aprobacion '
                            'from puesto where idPuesto=%s', (aux_pto))
             datos = cursor.fetchall()
             cursor.execute('select a.idPuesto, b.idHabilidad,b.Descripcion,c.idPuesto,c.idHabilidad, c.Experiencia '
@@ -633,7 +643,7 @@ def agrega_idio_pto(id):
             cursor.execute('insert into puesto_has_idioma (idPuesto, idIdioma, Nivel) '
                            'values (%s,%s,%s)',(aux_pto,aux_idi,aux_niv))
             conn.commit()
-            cursor.execute('select idPuesto, Descripcion, SalarioAnual, Beneficios, Bonos, Aprobacion '
+            cursor.execute('select idPuesto, Descripcion, SalarioMensual, Beneficios, Bonos, Aprobacion '
                            'from puesto where idPuesto=%s', (aux_pto))
             datos = cursor.fetchall()
             cursor.execute('select a.idPuesto, b.idHabilidad,b.Descripcion,c.idPuesto, c.idHabilidad, c.Experiencia '
@@ -657,7 +667,7 @@ def bo_hab_pto(idP,idH):
     cursor = conn.cursor()
     cursor.execute('delete from puesto_has_habilidad where idPuesto =%s and idHabilidad=%s',(idP,idH))
     conn.commit()
-    cursor.execute('select idPuesto, Descripcion, SalarioAnual, Beneficios, Bonos, Aprobacion '
+    cursor.execute('select idPuesto, Descripcion, SalarioMensual, Beneficios, Bonos, Aprobacion '
     'from puesto where idPuesto=%s', (idP))
     datos = cursor.fetchall()
     cursor.execute('select a.idPuesto, b.idHabilidad,b.Descripcion,c.idPuesto, c.idHabilidad, c.Experiencia '
@@ -681,7 +691,7 @@ def bo_idi_pto(idP,idI):
     cursor = conn.cursor()
     cursor.execute('delete from puesto_has_idioma where idPuesto =%s and idIdioma=%s',(idP,idI))
     conn.commit()
-    cursor.execute('select idPuesto, Descripcion, SalarioAnual, Beneficios, Bonos, Aprobacion '
+    cursor.execute('select idPuesto, Descripcion, SalarioMensual, Beneficios, Bonos, Aprobacion '
                    'from puesto where idPuesto=%s', (idP))
     datos = cursor.fetchall()
     cursor.execute('select a.idPuesto, b.idHabilidad,b.Descripcion,c.idPuesto, c.idHabilidad, c.Experiencia '
@@ -869,6 +879,7 @@ def jor_agr():
     if request.method == 'POST':
         aux_area = request.form['nom_area']
         aux_descripcion = request.form['desc']
+        aux_fino= request.form['find']
         conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
         cursor = conn.cursor()
         cursor.execute('select count(*) from jornada where jorNombre = %s', (aux_area))
@@ -878,6 +889,10 @@ def jor_agr():
             return render_template("error.html", des_error=error, paginaant="/agr_datos_jor")
         else:
             cursor.execute('insert into jornada (jorNombre, Descripcion) values (%s, %s)',(aux_area, aux_descripcion))
+            conn.commit()
+            cursor.execute('INSERT INTO jordesc (name, idJornada) SELECT Descripcion, IdJornada FROM jornada where val=%s',(aux_fino))             
+            conn.commit()
+            cursor.execute('update jornada set val = %s',(1))
             conn.commit()
             conn.close()
             return redirect(url_for('agr_datos_jor'))
@@ -933,7 +948,7 @@ def bo_jor(id):
     cursor.execute('delete from jornada where idJornada = {0}'.format(id))
     conn.commit()
     conn.close()
-    return redirect(url_for('agr_datos_area'))
+    return redirect(url_for('agr_datos_jor'))
 
 # Contacto
 @app.route('/contacto')
@@ -3360,6 +3375,10 @@ def bo_emp_aca_can(idC,idA,idCA):
 
 
 
+
+
+
+
 ##Contrato temporal
 @app.route('/contrato')
 def contrato():
@@ -3420,9 +3439,9 @@ def ed_contrato(Curp):
         cursor.execute(' select idEstadoCivil, Descripcion from estadocivil')
         datos5 = cursor.fetchall()
 
-        cursor.execute('  SELECT a.idContrato, a.Curp, a.idPuesto,b.Descripcion, a.idArea, c.AreaDescripcion , a.fecha_inicio, a.fecha_fin, a.idJornada, e.jornombre , a.horas_semana, e.Descripcion, a.idTurno , f.Tipo '
-                        ' FROM contrato a, puesto b, area c , jornada e, turno f'
-                        ' where a.idPuesto=b.idPuesto and a.idArea= c.idArea and a.idJornada= e.IdJornada and a.idTurno=f.idTurno and a.curp=%s',(Curp))
+        cursor.execute('  SELECT a.idContrato, a.Curp, a.idPuesto,b.Descripcion, a.idArea, c.AreaDescripcion ,a.Salario,a.dias_de_pago , a.fecha_inicio, a.fecha_fin, a.idJornada, e.jornombre , a.horas_semana, e.Descripcion, a.horario'
+                        ' FROM contrato a, puesto b, area c , jornada e'
+                        ' where a.idPuesto=b.idPuesto and a.idArea= c.idArea and a.idJornada= e.IdJornada and a.curp=%s',(Curp))
         datos9=cursor.fetchall()
 
         conn.close()
@@ -3432,7 +3451,7 @@ def ed_contrato(Curp):
 @app.route('/nvo_contrato/<string:Curp>')
 def nvo_contrato(Curp):
     conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
-    cursor = conn.cursor()
+    cursor = conn.cursor()  
     cursor.execute('select count(*) from contrato where Curp = %s',(Curp))
     existecontrato = cursor.fetchone()
     if (existecontrato[0]!= 0 ):
@@ -3483,18 +3502,21 @@ def nvo_contrato(Curp):
             cursor.execute('select idArea, AreaNombre, AreaDescripcion from area ')
             datos9 = cursor.fetchall()
 
-            cursor.execute('select idPuesto, Descripcion, SalarioAnual, Beneficios, Bonos, Aprobacion from puesto '
+            cursor.execute('select idPuesto, Descripcion, SalarioMensual, Beneficios, Bonos, Aprobacion from puesto '
                         'order by Descripcion')
             datos10 = cursor.fetchall()        
 
-            cursor.execute('SELECT idJornada, jorNombre ,Descripcion FROM jornada')
-            datos11=cursor.fetchall()
+            cursor = mysql.connection.cursor()
+            query = "select * from jornada"
+            cursor.execute(query)
+            jornada = cursor.fetchall()
+            message = ''  
 
             cursor.execute('SELECT idTurno, Tipo FROM turno')
             datos12=cursor.fetchall()
 
             conn.close()
-            return render_template("nvo_contrato2.html" ,turnos=datos12,jornada=datos11,sexo=sexos,carrera_can=datos8, empleados=datos, can_habs=datos1, can_idis=datos2,can_acas=datos6, habs=datos3, idiomas=datos4, nivel_academico=datos7, ecivil=datos5, areas=datos9, puestos=datos10)
+            return render_template("nvo_contrato2.html" , jornada=jornada, message=message,turnos=datos12,sexo=sexos,carrera_can=datos8, empleados=datos, can_habs=datos1, can_idis=datos2,can_acas=datos6, habs=datos3, idiomas=datos4, nivel_academico=datos7, ecivil=datos5, areas=datos9, puestos=datos10)
         else:
             cursor.execute(' select Curp, RFC, Nombre, Domicilio, Telefono, E_Mail, Sexo, Edad, NSS, idEstadoCivil, Conyuje_Concubino,tel_emergencia, nombre_emergencia, no_infonavit'
                         ' from empleado where Curp=%s',(Curp))
@@ -3535,7 +3557,7 @@ def nvo_contrato(Curp):
             cursor.execute(' select idEstadoCivil, Descripcion from estadocivil')
             datos5 = cursor.fetchall()
 
-            cursor.execute('select a.idsolicitud, b.idarea,c.areanombre, b.idpuesto, d.descripcion '
+            cursor.execute('select a.idsolicitud, b.idarea,c.areanombre, b.idpuesto, d.descripcion, d.SalarioMensual'
                         ' from resultadocandidato a, solicitud b, area c, puesto d '
                         'where b.idsolicitud=a.idsolicitud and c.idarea=b.idarea and d.idpuesto=b.idpuesto and a.curp=%s' , (Curp))
             datos9=cursor.fetchall()
@@ -3543,12 +3565,30 @@ def nvo_contrato(Curp):
             cursor.execute('SELECT idTurno, Tipo FROM turno')
             datos10=cursor.fetchall()
 
-            cursor.execute('SELECT idJornada, jorNombre ,Descripcion FROM jornada')
-            datos11=cursor.fetchall()
+            cursor = mysql.connection.cursor()
+            query = "select * from jornada"
+            cursor.execute(query)
+            jornada = cursor.fetchall()
+            message = ''  
 
             conn.close()
-        return render_template("nvo_contrato.html", impor=datos9,turnos=datos10,jornada=datos11, sexo=sexos,carrera_can=datos8, empleados=datos, can_habs=datos1, can_idis=datos2,can_acas=datos6, habs=datos3, idiomas=datos4, nivel_academico=datos7, ecivil=datos5)
+        return render_template("nvo_contrato.html", impor=datos9,turnos=datos10,jornada=jornada,message=message, sexo=sexos,carrera_can=datos8, empleados=datos, can_habs=datos1, can_idis=datos2,can_acas=datos6, habs=datos3, idiomas=datos4, nivel_academico=datos7, ecivil=datos5)
 
+@app.route('/nvo_contrato/state/<get_state>')
+def statebycountry(get_state):
+    cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    result = cur.execute("SELECT * FROM jordesc WHERE IdJornada = %s", [get_state])
+    state = cur.fetchall()  
+    stateArray = []
+    for row in state:
+        stateObj = {
+                'iddesc': row['iddesc'],
+                'name': row['name']}
+        stateArray.append(stateObj)
+    return jsonify({'statecountry' : stateArray})
+
+
+   
 
 @app.route('/modifica_contrato/<string:Curp>')
 def modifica_contrato(Curp):
@@ -3594,49 +3634,53 @@ def modifica_contrato(Curp):
     cursor.execute('select idArea, AreaNombre, AreaDescripcion from area ')
     datos9 = cursor.fetchall()
 
-    cursor.execute('select idPuesto, Descripcion, SalarioAnual, Beneficios, Bonos, Aprobacion from puesto '
+    cursor.execute('select idPuesto, Descripcion, SalarioMensual, Beneficios, Bonos, Aprobacion from puesto '
                    'order by Descripcion')
     datos10 = cursor.fetchall()        
 
-    cursor.execute('SELECT idJornada, jorNombre ,Descripcion FROM jornada')
-    datos11=cursor.fetchall()
+    cursor = mysql.connection.cursor()
+    query = "select * from jornada"
+    cursor.execute(query)
+    jornada = cursor.fetchall()
+    message = ''  
 
-    cursor.execute('SELECT idTurno, Tipo FROM turno')
-    datos12=cursor.fetchall()
-
-    cursor.execute('  SELECT a.idContrato, a.Curp, a.idPuesto,b.Descripcion, a.idArea, c.AreaDescripcion , a.fecha_inicio, a.fecha_fin, a.idJornada, e.jornombre , a.horas_semana, e.Descripcion, a.idTurno , f.Tipo '
-                        ' FROM contrato a, puesto b, area c , jornada e, turno f'
-                        ' where a.idPuesto=b.idPuesto and a.idArea= c.idArea and a.idJornada= e.IdJornada and a.idTurno=f.idTurno and a.curp=%s',(Curp))
+    cursor.execute('  SELECT a.idContrato, a.Curp, a.idPuesto,b.Descripcion, a.idArea, c.AreaDescripcion , a.fecha_inicio, a.fecha_fin, a.idJornada, e.jornombre , a.horas_semana, e.Descripcion'
+                        ' FROM contrato a, puesto b, area c , jornada e'
+                        ' where a.idPuesto=b.idPuesto and a.idArea= c.idArea and a.idJornada= e.IdJornada  and a.curp=%s',(Curp))
     datos13=cursor.fetchall()
 
     conn.close()
-    return render_template("modifica_contrato.html" ,datoscontrato=datos13, turnos=datos12,jornada=datos11,sexo=sexos,carrera_can=datos8, empleados=datos, can_habs=datos1, can_idis=datos2,can_acas=datos6, habs=datos3, idiomas=datos4, nivel_academico=datos7, ecivil=datos5, areas=datos9, puestos=datos10)
+    return render_template("modifica_contrato.html" ,datoscontrato=datos13,jornada=jornada,sexo=sexos,carrera_can=datos8, empleados=datos, can_habs=datos1, can_idis=datos2,can_acas=datos6, habs=datos3, idiomas=datos4, nivel_academico=datos7, ecivil=datos5, areas=datos9, puestos=datos10)
 
-@app.route('/agr_nvo_contrato/<string:val>', methods=['POST'])
+@app.route('/agr_nvo_contrato/<string:val>', methods=['GET', 'POST'])
 def agr_nvo_contrato(val):
     if request.method == 'POST':
         aux_curp = request.form['curp']
         aux_puesto= request.form['idpuesto']
         aux_area= request.form['id_area']
+        aux_salario=request.form['salario']
+        aux_diapaga = request.form['diapaga']
         aux_dateini = request.form['fecha_inicio']
         aux_dateend = request.form['fecha_fin']
-        aux_jor = request.form['jornada']
-        aux_hsemana= request.form['hsemana']
-        aux_turno=request.form ['turno']
+        aux_jor = request.form['country']
+        aux_hsemana= request.form['state']
+        aux_horario = request.form['dias']
+        aux_diafirma=request.form['fecha_inicio']
 
-        conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
-        cursor=conn.cursor()
-        cursor.execute(
-                'INSERT INTO contrato (Curp, idPuesto, idArea, fecha_inicio, fecha_fin, idJornada, horas_semana, idTurno)'
-		'Values (%s,%s,%s,%s,%s,%s,%s,%s)'
-        ,(aux_curp,aux_puesto,aux_area,aux_dateini,aux_dateend,aux_jor,aux_hsemana,aux_turno))
-        conn.commit()
+        cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cur.execute(
+                "INSERT INTO contrato (Curp, idPuesto, idArea, fecha_inicio, fecha_fin, idJornada, horas_semana, horario,Salario,dias_de_pago,fecha_firma) Values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+        ,(aux_curp,aux_puesto,aux_area,aux_dateini,aux_dateend,aux_jor,aux_hsemana,aux_horario,aux_salario,aux_diapaga,aux_diafirma))
+        mysql.connection.commit()
 
-        cursor.execute('UPDATE `empleado` SET `ContratoTemporal_Val` = %s'
-            'WHERE  Curp = %s',(val,aux_curp)
+        cur.execute('UPDATE `empleado` SET `ContratoTemporal_Val` = %s'
+                    'WHERE  Curp = %s',(val,aux_curp)
+
         )
-        conn.commit()
-        conn.close()
+        mysql.connection.commit()
+        cur.close()
+
+       
         return redirect(url_for('contrato'))
         
 @app.route('/editar_contrato/<string:id>', methods=['POST'])

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Python Flask Dynamic Select Box and Sign Up using Mysql jsonify and javascript</title>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+</head>
+<body>
+    
+<div class="container">
+ <div class="row">
+    <div class="col-md-12">
+    <p><h2>Python Flask Dynamic Select Box and Sign Up using Mysql jsonify and javascript</h2></p>
+    {% if message %}
+          <div class="alert alert-success">{{message}}</div>
+    {% endif %}
+    <form method="POST">
+
+    <div class="form-group">
+        <label for="email">Country:</label>
+        <select class="form-control" id="country" name="country">
+            <option selected>Chosse...</option>
+            {% for row in jornada %}
+            <option value="{{row.IdJornada}}">{{row.jornombre}}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="email">State:</label>
+        <select class="form-control" id="state" name="state"></select>
+    </div>
+
+    <input type="submit" class="btn btn-success btn-lg">
+  </form> 
+   </div>
+ </div>
+</div> 
+<script>
+    country_select = document.getElementById('country');
+    state_select = document.getElementById('state');
+    
+    
+    country_select.onchange = function(){
+        country = country_select.value;
+        alert(country);
+        fetch('state/' + country).then(function(response){
+        response.json().then(function(data) {
+        optionHTML = '';
+        for (state of data.statecountry) {
+            optionHTML += '<option value="' + state.id +'">' + state.name + '</option>'
+        }
+        state_select.innerHTML = optionHTML;
+        });
+        });
+    }
+        
+</script>
+</body>
+</html>
