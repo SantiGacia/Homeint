@@ -3597,7 +3597,6 @@ def statebycountry(get_state):
         stateArray.append(stateObj)
     return jsonify({'statecountry' : stateArray})
 
-
    
 
 @app.route('/modifica_contrato/<string:Curp>')
@@ -3648,19 +3647,36 @@ def modifica_contrato(Curp):
                    'order by Descripcion')
     datos10 = cursor.fetchall()        
 
+    cursor.execute('  SELECT a.idContrato, a.Curp, a.idPuesto,b.Descripcion, a.idArea, c.AreaDescripcion ,a.Salario,a.dias_de_pago , a.fecha_inicio, a.fecha_fin, a.idJornada, a.horas_semana, a.horario '
+                   '  FROM contrato a, puesto b, area c '
+                   '  where a.idPuesto=b.idPuesto and a.idArea= c.idArea and a.curp=%s',(Curp))
+    datos13=cursor.fetchall()
+
     cursor = mysql.connection.cursor()
     query = "select * from jornada"
     cursor.execute(query)
     jornada = cursor.fetchall()
-    message = ''  
-
-    cursor.execute('  SELECT a.idContrato, a.Curp, a.idPuesto,b.Descripcion, a.idArea, c.AreaDescripcion , a.fecha_inicio, a.fecha_fin, a.idJornada, e.jornombre , a.horas_semana, e.Descripcion'
-                        ' FROM contrato a, puesto b, area c , jornada e'
-                        ' where a.idPuesto=b.idPuesto and a.idArea= c.idArea and a.idJornada= e.IdJornada  and a.curp=%s',(Curp))
-    datos13=cursor.fetchall()
+    message = '' 
 
     conn.close()
-    return render_template("modifica_contrato.html" ,datoscontrato=datos13,jornada=jornada,sexo=sexos,carrera_can=datos8, empleados=datos, can_habs=datos1, can_idis=datos2,can_acas=datos6, habs=datos3, idiomas=datos4, nivel_academico=datos7, ecivil=datos5, areas=datos9, puestos=datos10)
+    return render_template("modifica_contrato.html" ,datoscontrato=datos13,jornada=jornada,message=message,sexo=sexos,carrera_can=datos8, empleados=datos, can_habs=datos1, can_idis=datos2,can_acas=datos6, habs=datos3, idiomas=datos4, nivel_academico=datos7, ecivil=datos5, areas=datos9, puestos=datos10)
+
+
+
+@app.route('/modifica_contrato/state/<get_state>')
+def statebycountrymod_contrato(get_state):
+    cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    result = cur.execute("SELECT * FROM jordesc WHERE IdJornada = %s", [get_state])
+    state = cur.fetchall()  
+    stateArray = []
+    for row in state:
+        stateObj = {
+                'iddesc': row['iddesc'],
+                'name': row['name']}
+        stateArray.append(stateObj)
+    return jsonify({'statecountry' : stateArray})
+
+
 
 @app.route('/agr_nvo_contrato/<string:val>', methods=['GET', 'POST'])
 def agr_nvo_contrato(val):
@@ -3699,18 +3715,20 @@ def editar_contrato(id):
         aux_curp = request.form['curp']
         aux_puesto= request.form['idpuesto']
         aux_area= request.form['id_area']
+        aux_salario=request.form['salario']
+        aux_diapaga = request.form['diapaga']
         aux_dateini = request.form['fecha_inicio']
         aux_dateend = request.form['fecha_fin']
-        aux_jor = request.form['jornada']
-        aux_hsemana= request.form['hsemana']
-        aux_turno=request.form ['turno']
+        aux_jor = request.form['country']
+        aux_hsemana= request.form['state']
+        aux_horario = request.form['dias']
+        aux_diafirma=request.form['fecha_inicio']
 
-        conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
-        cursor=conn.cursor()
-        cursor.execute( 'Update contrato set Curp=%s, idPuesto=%s, idArea=%s, fecha_inicio=%s, fecha_fin=%s, idJornada=%s, horas_semana=%s, idTurno=%s where idContrato=%s'
-                                            ,(aux_curp,aux_puesto,aux_area,aux_dateini,aux_dateend,aux_jor,aux_hsemana,aux_turno,id))
-        conn.commit()
-        conn.close()
+        cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cur.execute( 'Update contrato set Curp=%s, idPuesto=%s, idArea=%s, fecha_inicio=%s, fecha_fin=%s, idJornada=%s, horas_semana=%s, horario=%s, Salario= %s, dias_de_pago=%s, fecha_firma = %s where idContrato=%s'
+                                            ,(aux_curp,aux_puesto,aux_area,aux_dateini,aux_dateend,aux_jor,aux_hsemana,aux_horario,aux_salario,aux_diapaga,aux_diafirma,id))
+        mysql.connection.commit()
+        cur.close()
         return redirect(url_for('contrato'))
 
 @app.route('/bo_contrato/<string:Curp>/<string:val>/<string:id>')

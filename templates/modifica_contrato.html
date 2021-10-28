@@ -158,6 +158,14 @@
                     {%   endfor %}
             </select>
         </div>
+        <div class="form-group col-md-2">
+            <label for="salario">Salario</label>
+            <input type="number" class="form-control" name="salario" id="salario"  value="{{datoscontrato.0[6]}}" required >
+        </div>
+        <div class="form-group col-md-2">
+          <label for="diapaga">Dias de paga</label>
+          <input type="text" class="form-control" name="diapaga" id="diapaga" value="{{datoscontrato.0[7]}}" required>
+        </div>
 
 
         
@@ -167,24 +175,34 @@
    <div class=form-row>
         <div class="form-group col-md-2">
             <label for="fecha_inicio">Fecha de inicio</label>
-            <input type="date" name="fecha_inicio" id="fecha_inicio" class="form-control" value="{{datoscontrato.0[6]}}">
+            <input type="date" name="fecha_inicio" id="fecha_inicio" class="form-control" value="{{datoscontrato.0[8]}}">
             </input>
         </div>
         <div class="form-group col-md-2">
             <label for="fecha_fin">Fecha de conclusión</label>
-            <input type="date" name="fecha_fin" id="fecha_fin" class="form-control" value="{{datoscontrato.0[7]}}">
+            <input type="date" name="fecha_fin" id="fecha_fin" class="form-control" value="{{datoscontrato.0[9]}}">
             </input>
         </div>
 
         <div class="form-group col-md-2">
             <label for="jornada">Jornada</label>
-            <select required name="jornada" id="jornada" class="form-control" value="{{datoscontrato.0[10]}}"> 
+            <select class="form-control" id="country" name="country" required>
+                <option selected>Chosse...</option>
+                {% for row in jornada %}
+                <option value="{{row.IdJornada}}">{{row.jornombre}}</option>
+                {% endfor %}
             </select>
         </div>
         <div class="form-group col-md-2">
-            <label for="hsemana">Horas a la semana</label>
-            <select class="form-control" name="hsemana" id="hsemana"  value="{{datoscontrato.0[11]}}">
-            </select>
+                <label for="hsemana">Horas a la semana</label>
+                <select class="form-control" id="state" name="state" required></select>
+            
+        </div>
+        <div class="form-group col-md-2">
+            <label for="dias">Horario</label>
+            <input type="text" class="form-control" name="dias" id="dias" required>
+
+            
         </div>
 
 
@@ -196,6 +214,25 @@
 </form>
 <br>
 <a href="/contrato" class="btn btn-success" style="background:lightseagreen;">Regresar</a></center>
+<script>
+    country_select = document.getElementById('country');
+    state_select = document.getElementById('state');
+    
+    
+    country_select.onchange = function(){
+        country = country_select.value;
+        alert(country);
+        fetch('state/' + country).then(function(response){
+        response.json().then(function(data) {
+        optionHTML = '';
+        for (state of data.statecountry) {
+            optionHTML += '<option value="' + state.iddesc +'">' + state.name + '</option>'
+        }
+        state_select.innerHTML = optionHTML;
+        });
+        });
+    }
+    </script>
 
 </body>
 {% endblock %}
