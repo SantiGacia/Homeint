@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 28-10-2021 a las 08:15:04
--- Versión del servidor: 10.4.19-MariaDB
--- Versión de PHP: 8.0.7
+-- Tiempo de generación: 28-10-2021 a las 20:51:56
+-- Versión del servidor: 10.4.21-MariaDB
+-- Versión de PHP: 8.0.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -75,6 +75,7 @@ CREATE TABLE `candidato` (
   `Curp` varchar(18) NOT NULL,
   `RFC` varchar(13) DEFAULT NULL,
   `Nombre` varchar(45) DEFAULT NULL,
+  `nacionalidad` text NOT NULL,
   `Domicilio` varchar(45) DEFAULT NULL,
   `Telefono` varchar(10) DEFAULT NULL,
   `E_Mail` varchar(45) DEFAULT NULL,
@@ -89,8 +90,8 @@ CREATE TABLE `candidato` (
 -- Volcado de datos para la tabla `candidato`
 --
 
-INSERT INTO `candidato` (`Curp`, `RFC`, `Nombre`, `Domicilio`, `Telefono`, `E_Mail`, `Sexo`, `Edad`, `NSS`, `Fotografia`, `idEstadoCivil`) VALUES
-('GAMS040407HASRRNA5', 'COCR800325B29', 'Garcia Martinez Santiago ', 'conocido', '4491115555', 'ssantig07@gmail.com', 'M', 20, 2147483647, NULL, 1);
+INSERT INTO `candidato` (`Curp`, `RFC`, `Nombre`, `nacionalidad`, `Domicilio`, `Telefono`, `E_Mail`, `Sexo`, `Edad`, `NSS`, `Fotografia`, `idEstadoCivil`) VALUES
+('GAMS040407HASRRNA5', 'COCR800325B29', 'Garcia Martinez Santiago ', 'Mexicana', 'conocido', '4491115555', 'ssantig07@gmail.com', 'M', 20, 2147483647, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -271,6 +272,7 @@ CREATE TABLE `empleado` (
   `Curp` varchar(18) NOT NULL,
   `RFC` varchar(13) NOT NULL,
   `Nombre` varchar(45) NOT NULL,
+  `nacionalidad` text NOT NULL,
   `Domicilio` varchar(45) NOT NULL,
   `Telefono` varchar(10) NOT NULL,
   `E_mail` varchar(45) NOT NULL,
@@ -292,9 +294,9 @@ CREATE TABLE `empleado` (
 -- Volcado de datos para la tabla `empleado`
 --
 
-INSERT INTO `empleado` (`Curp`, `RFC`, `Nombre`, `Domicilio`, `Telefono`, `E_mail`, `Sexo`, `Edad`, `NSS`, `idEstadoCivil`, `Conyuje_Concubino`, `tel_emergencia`, `nombre_emergencia`, `no_infonavit`, `No_contrato`, `Contrato_Definitivo`, `Contrato_Temporal`, `ContratoTemporal_Val`) VALUES
-('GAME040217HASLXDA3', 'GAME040217DA3', 'GALLEGO MUÑOZ EDGAR MARIO', 'conocido', '4499915555', 'mariochikito11@gmail.com', 'M', 20, '44190407518', 4, 'A', '4491115555', 'Hermana de mario', '...', 0, '', '', 'Si'),
-('GAMS040407HASRRNA5', 'COCR800325B29', 'Garcia Martinez Santiago ', 'conocido', '4491115555', 'ssantig07@gmail.com', 'M', 20, '2147483647', 1, '', '4495691241', 'María José Garcia Martínez', '', 0, '', '', 'Si');
+INSERT INTO `empleado` (`Curp`, `RFC`, `Nombre`, `nacionalidad`, `Domicilio`, `Telefono`, `E_mail`, `Sexo`, `Edad`, `NSS`, `idEstadoCivil`, `Conyuje_Concubino`, `tel_emergencia`, `nombre_emergencia`, `no_infonavit`, `No_contrato`, `Contrato_Definitivo`, `Contrato_Temporal`, `ContratoTemporal_Val`) VALUES
+('GAME040217HASLXDA3', 'GAME040217DA3', 'GALLEGO MUÑOZ EDGAR MARIO', '', 'conocido', '4499915555', 'mariochikito11@gmail.com', 'M', 20, '44190407518', 4, 'A', '4491115555', 'Hermana de mario', '...', 0, '', '', 'Si'),
+('GAMS040407HASRRNA5', 'COCR800325B29', 'Garcia Martinez Santiago ', '', 'conocido', '4491115555', 'ssantig07@gmail.com', 'M', 20, '2147483647', 1, '', '4495691241', 'María José Garcia Martínez', '', 0, '', '', 'Si');
 
 -- --------------------------------------------------------
 
