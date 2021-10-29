@@ -1344,7 +1344,6 @@ def agrega_candidato():
         aux_nss = request.form['nss']
         aux_sex = request.form['sexo']
         aux_eci = request.form['edociv']
-        aux_nac = request.form['nacionalidad']
         conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
         cursor = conn.cursor()
         cursor.execute('select count(*) from candidato where Curp = %s', (aux_cur))
@@ -1354,7 +1353,7 @@ def agrega_candidato():
             return render_template("error.html", des_error=error, paginaant="/candidato")
         else:
             cursor.execute('insert into candidato (Curp, RFC, Nombre, Domicilio, Telefono, E_Mail, Sexo, Edad, NSS, idEstadoCivil)'
-                           ' values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)',(aux_cur, aux_rfc, aux_nom, aux_dom, aux_tel, aux_cor, aux_sex, aux_eda, aux_nss, aux_eci, aux_nac))
+                           ' values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)',(aux_cur, aux_rfc, aux_nom, aux_dom, aux_tel, aux_cor, aux_sex, aux_eda, aux_nss, aux_eci))
             conn.commit()
 
             cursor.execute('select Curp, RFC, Nombre, Domicilio, Telefono, E_Mail, Sexo, Edad, NSS, idEstadoCivil'
@@ -1391,11 +1390,8 @@ def agrega_candidato():
 
             cursor.execute(' select idEstadoCivil, Descripcion from estadocivil')
             datos5 = cursor.fetchall()
-
-            cursor.execute(' select nacionalidad, Descripcion from nacionalidad')
-            datos9 = cursor.fetchall()
             conn.close()
-            return render_template("edi_candidato.html", carrera_can=datos8,candidatos=datos, can_habs=datos1, can_idis=datos2,can_acas=datos6, habs=datos3, idiomas=datos4,nivel_academico=datos7, ecivil=datos5, nacionalidad=datos9)
+            return render_template("edi_candidato.html", carrera_can=datos8,candidatos=datos, can_habs=datos1, can_idis=datos2,can_acas=datos6, habs=datos3, idiomas=datos4,nivel_academico=datos7, ecivil=datos5)
 
 @app.route('/nvo_candidato')
 def nvo_candidato():
@@ -1419,21 +1415,13 @@ def modifica_candidato(Curp):
         aux_nss = request.form['nss']
         aux_sex = request.form['sexo']
         aux_eci = request.form['edociv']
-        aux_nac = request.form['nacionalidad']
         conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
         cursor = conn.cursor()
 
-<<<<<<< Updated upstream
-        cursor.execute("""
-            UPDATE candidato
-            SET Curp=%s, RFC=%s, Nombre=%s, Domicilio=%s, Telefono=%s, E_Mail=%s, Sexo=%s, Edad=%s, NSS=%s, idEstadoCivil=%s, nacionalidad=%s
-            WHERE Curp=%s
-        """,(aux_cur,aux_rfc,aux_nom,aux_dom,aux_tel,aux_cor,aux_sex,aux_eda,aux_nss,aux_eci,aux_nac, Curp))
-=======
         cursor.execute(
             'UPDATE candidato SET Curp=%s, RFC=%s, Nombre=%s, Domicilio=%s, Telefono=%s, E_Mail=%s, Sexo=%s, Edad=%s, NSS=%s, idEstadoCivil=%s WHERE Curp=%s'
             ,(aux_cur,aux_rfc,aux_nom,aux_dom,aux_tel,aux_cor,aux_sex,aux_eda,aux_nss,aux_eci,Curp))
->>>>>>> Stashed changes
+
         conn.commit()
         conn.close()
         return redirect(url_for('candidato'))
@@ -2861,15 +2849,14 @@ def agrega_empleado():
         aux_cur = request.form['curp']
         aux_rfc = request.form['rfc']
         aux_nom = request.form['nombre']
+        aux_nac = request.form['nacionalidad']
         aux_dom = request.form['domicilio']
         aux_tel = request.form['telefono']
         aux_cor = request.form['correoe']
         aux_eda = request.form['edad']
         aux_nss = request.form['nss']
         aux_sex = request.form['sexo']
-        aux_eci = request.form['edociv']
-        aux_nac = request.form['nacionalidad']
-
+        aux_eci = request.form['edociv']        
         aux_nomc = request.form['nomcoy']
         aux_nomcaux = request.form['nomcaux']
         aux_telaux= request.form['telaux']
@@ -2883,8 +2870,8 @@ def agrega_empleado():
             error = "El Empleado ya se encuentra agregado."
             return render_template("error.html", des_error=error, paginaant="/empleado")
         else:
-            cursor.execute('insert into empleado (Curp, RFC, Nombre, Domicilio, Telefono, E_Mail, Sexo, Edad, NSS, idEstadoCivil, Conyuje_Concubino,tel_emergencia, nombre_emergencia, no_infonavit)'
-                           ' values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)',(aux_cur, aux_rfc, aux_nom, aux_dom, aux_tel, aux_cor, aux_sex, aux_eda, aux_nss, aux_eci,aux_nomc,aux_telaux,aux_nomcaux,aux_numinfonavit, aux_nac))
+            cursor.execute('insert into empleado (Curp, RFC, Nombre, nacionalidad, Domicilio, Telefono, E_Mail, Sexo, Edad, NSS, idEstadoCivil, Conyuje_Concubino,tel_emergencia, nombre_emergencia, no_infonavit )'
+                           ' values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)',(aux_cur, aux_rfc, aux_nom, aux_nac, aux_dom, aux_tel, aux_cor, aux_sex, aux_eda, aux_nss, aux_eci,aux_nomc,aux_telaux,aux_nomcaux,aux_numinfonavit))
             conn.commit()
 
             cursor.execute('select Curp, Nombre, RFC, Domicilio, Telefono, E_Mail, Sexo, Edad, NSS, idEstadoCivil,Conyuje_Concubino,tel_emergencia, nombre_emergencia, no_infonavit'
@@ -2921,11 +2908,8 @@ def agrega_empleado():
 
             cursor.execute(' select idEstadoCivil, Descripcion from estadocivil')
             datos5 = cursor.fetchall()
-
-            cursor.execute('slect nacionalidad, Descripcion from nacionalidad') 
-            datos9 = cursor.fetchall()
             conn.close()
-            return render_template("edi_empleado.html", carrera_can=datos8,empleados=datos, can_habs=datos1, can_idis=datos2,can_acas=datos6, habs=datos3, idiomas=datos4,nivel_academico=datos7, ecivil=datos5, nacionalidad=datos9)
+            return render_template("edi_empleado.html", carrera_can=datos8,empleados=datos, can_habs=datos1, can_idis=datos2,can_acas=datos6, habs=datos3, idiomas=datos4,nivel_academico=datos7, ecivil=datos5)
 
 
 
@@ -3013,7 +2997,7 @@ def import_empleado(val):
 def ed_empleado(Curp):
         conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
         cursor = conn.cursor()
-        cursor.execute(' select Curp, RFC, Nombre, Domicilio, nacionalidad,Telefono, E_Mail, Sexo, Edad, NSS, idEstadoCivil, Conyuje_Concubino,tel_emergencia, nombre_emergencia, no_infonavit'
+        cursor.execute(' select Curp, RFC, Nombre, Domicilio, Telefono, E_Mail, Sexo, Edad, NSS, idEstadoCivil, Conyuje_Concubino,tel_emergencia, nombre_emergencia, no_infonavit'
                        ' from empleado where Curp=%s',(Curp))
         datos=cursor.fetchall()
 
@@ -3050,7 +3034,6 @@ def ed_empleado(Curp):
 
         cursor.execute(' select idEstadoCivil, Descripcion from estadocivil')
         datos5 = cursor.fetchall()
-
         conn.close()
         return render_template("ed_empleado.html" ,sexo=sexos,carrera_can=datos8, empleados=datos, can_habs=datos1, can_idis=datos2,can_acas=datos6, habs=datos3, idiomas=datos4, nivel_academico=datos7, ecivil=datos5)
 
@@ -3068,7 +3051,7 @@ def modifica_empleado(Curp):
         aux_sex = request.form['sexo']
         aux_eda = request.form['edad']
         aux_nss = request.form['nss']
-        aux_nac = request.form['nacionalidad']
+
         aux_eci = request.form['edociv']
 
         aux_nomc = request.form['nomcoy']
@@ -3081,9 +3064,9 @@ def modifica_empleado(Curp):
 
         cursor.execute(
                 'update empleado '
-                'set Curp=%s, RFC=%s, Nombre=%s, Domicilio=%s, Telefono=%s, E_Mail=%s, Sexo=%s, Edad=%s, NSS=%s, idEstadoCivil=%s,Conyuje_Concubino=%s,tel_emergencia=%s, nombre_emergencia=%s, no_infonavit=%s, nacionalidad=%s '
+                'set Curp=%s, RFC=%s, Nombre=%s, Domicilio=%s, Telefono=%s, E_Mail=%s, Sexo=%s, Edad=%s, NSS=%s, idEstadoCivil=%s,Conyuje_Concubino=%s,tel_emergencia=%s, nombre_emergencia=%s, no_infonavit=%s '
                 'where Curp=%s'
-        ,(aux_cur,aux_rfc,aux_nom,aux_dom,aux_tel,aux_cor,aux_sex,aux_eda,aux_nss,aux_eci,aux_nomc,aux_telaux,aux_nomcaux,aux_numinfonavit,aux_nac,Curp))
+        ,(aux_cur,aux_rfc,aux_nom,aux_dom,aux_tel,aux_cor,aux_sex,aux_eda,aux_nss,aux_eci,aux_nomc,aux_telaux,aux_nomcaux,aux_numinfonavit,Curp))
         conn.commit()
         conn.close()
         return redirect(url_for('empleado'))
@@ -3603,6 +3586,7 @@ def statebycountry(get_state):
         stateArray.append(stateObj)
     return jsonify({'statecountry' : stateArray})
 
+
    
 
 @app.route('/modifica_contrato/<string:Curp>')
@@ -3653,36 +3637,19 @@ def modifica_contrato(Curp):
                    'order by Descripcion')
     datos10 = cursor.fetchall()        
 
-    cursor.execute('  SELECT a.idContrato, a.Curp, a.idPuesto,b.Descripcion, a.idArea, c.AreaDescripcion ,a.Salario,a.dias_de_pago , a.fecha_inicio, a.fecha_fin, a.idJornada, a.horas_semana, a.horario '
-                   '  FROM contrato a, puesto b, area c '
-                   '  where a.idPuesto=b.idPuesto and a.idArea= c.idArea and a.curp=%s',(Curp))
-    datos13=cursor.fetchall()
-
     cursor = mysql.connection.cursor()
     query = "select * from jornada"
     cursor.execute(query)
     jornada = cursor.fetchall()
-    message = '' 
+    message = ''  
+
+    cursor.execute('  SELECT a.idContrato, a.Curp, a.idPuesto,b.Descripcion, a.idArea, c.AreaDescripcion , a.fecha_inicio, a.fecha_fin'
+                        ' FROM contrato a, puesto b, area c '
+                        ' where a.idPuesto=b.idPuesto and a.idArea= c.idArea  and a.curp=%s',(Curp))
+    datos13=cursor.fetchall()
 
     conn.close()
-    return render_template("modifica_contrato.html" ,datoscontrato=datos13,jornada=jornada,message=message,sexo=sexos,carrera_can=datos8, empleados=datos, can_habs=datos1, can_idis=datos2,can_acas=datos6, habs=datos3, idiomas=datos4, nivel_academico=datos7, ecivil=datos5, areas=datos9, puestos=datos10)
-
-
-
-@app.route('/modifica_contrato/state/<get_state>')
-def statebycountrymod_contrato(get_state):
-    cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-    result = cur.execute("SELECT * FROM jordesc WHERE IdJornada = %s", [get_state])
-    state = cur.fetchall()  
-    stateArray = []
-    for row in state:
-        stateObj = {
-                'iddesc': row['iddesc'],
-                'name': row['name']}
-        stateArray.append(stateObj)
-    return jsonify({'statecountry' : stateArray})
-
-
+    return render_template("modifica_contrato.html" ,datoscontrato=datos13,jornada=jornada,sexo=sexos,carrera_can=datos8, empleados=datos, can_habs=datos1, can_idis=datos2,can_acas=datos6, habs=datos3, idiomas=datos4, nivel_academico=datos7, ecivil=datos5, areas=datos9, puestos=datos10)
 
 @app.route('/agr_nvo_contrato/<string:val>', methods=['GET', 'POST'])
 def agr_nvo_contrato(val):
@@ -3721,20 +3688,18 @@ def editar_contrato(id):
         aux_curp = request.form['curp']
         aux_puesto= request.form['idpuesto']
         aux_area= request.form['id_area']
-        aux_salario=request.form['salario']
-        aux_diapaga = request.form['diapaga']
         aux_dateini = request.form['fecha_inicio']
         aux_dateend = request.form['fecha_fin']
-        aux_jor = request.form['country']
-        aux_hsemana= request.form['state']
-        aux_horario = request.form['dias']
-        aux_diafirma=request.form['fecha_inicio']
+        aux_jor = request.form['jornada']
+        aux_hsemana= request.form['hsemana']
+        aux_turno=request.form ['turno']
 
-        cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cur.execute( 'Update contrato set Curp=%s, idPuesto=%s, idArea=%s, fecha_inicio=%s, fecha_fin=%s, idJornada=%s, horas_semana=%s, horario=%s, Salario= %s, dias_de_pago=%s, fecha_firma = %s where idContrato=%s'
-                                            ,(aux_curp,aux_puesto,aux_area,aux_dateini,aux_dateend,aux_jor,aux_hsemana,aux_horario,aux_salario,aux_diapaga,aux_diafirma,id))
-        mysql.connection.commit()
-        cur.close()
+        conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
+        cursor=conn.cursor()
+        cursor.execute( 'Update contrato set Curp=%s, idPuesto=%s, idArea=%s, fecha_inicio=%s, fecha_fin=%s, idJornada=%s, horas_semana=%s, idTurno=%s where idContrato=%s'
+                                            ,(aux_curp,aux_puesto,aux_area,aux_dateini,aux_dateend,aux_jor,aux_hsemana,aux_turno,id))
+        conn.commit()
+        conn.close()
         return redirect(url_for('contrato'))
 
 @app.route('/bo_contrato/<string:Curp>/<string:val>/<string:id>')
