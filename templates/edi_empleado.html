@@ -30,29 +30,33 @@
             <label for="rfc">RFC</label>
             <input type="text" class="form-control" name="rfc" id="rfc" placeholder="0101010101" value="{{empleados.0[2]}}" required>
         </div>
+        <div class="form-group col-md-7">
+          <label for="nacionalidad">Nacionalidad</label>
+          <input type="text" class="form-control" name="nacionalidad" id="nacionalidad" value="{{empleados.0[4]}}" required="">
+      </div>
     </div>
     <div class="form-row">
         <div class="form-group col-md-2">
             <label for="telefono">Telefono</label>
-        <input type="text" class="form-control" name="telefono" id="telefono" value="{{empleados.0[4]}}" placeholder="000000.00" pattern="[0-9.]+" required>
+        <input type="text" class="form-control" name="telefono" id="telefono" value="{{empleados.0[5]}}" placeholder="000000.00" pattern="[0-9.]+" required>
         </div>
         <div class="form-group col-md-3">
             <label for="correoe">Correo Electronico</label>
-            <input type="email" class="form-control" name="correoe" id="correoe" value="{{empleados.0[5]}}" required>
+            <input type="email" class="form-control" name="correoe" id="correoe" value="{{empleados.0[6]}}" required>
         </div>
 
         <div class="form-group col-md-1">
             <label for="edad">Edad</label>
-        <input type="text" class="form-control" name="edad" id="edad" value="{{empleados.0[7]}}" placeholder="000000.00" pattern="[0-9.]+" required>
+        <input type="text" class="form-control" name="edad" id="edad" value="{{empleados.0[8]}}" placeholder="000000.00" pattern="[0-9.]+" required>
         </div>
         <div class="form-group col-md-1">
             <label for="nss">N.S.S</label>
-            <input type="text" class="form-control" name="nss" id="nss" value="{{empleados.0[8]}}" placeholder="000000.00" pattern="[0-9.]+" required>
+            <input type="text" class="form-control" name="nss" id="nss" value="{{empleados.0[9]}}" placeholder="000000.00" pattern="[0-9.]+" required>
         </div>
         <div class="form-group col-md-2">
             <label for="sexo">Sexo</label>
             <select name="sexo" id="sexo" class="form-control" required>
-                {% if empleados.0[6]== "M" %}
+                {% if empleados.0[7]== "M" %}
                   <option value="M">Masculino</option>
                 {% else %}
                    <option value="F">Femenino</option>
@@ -64,7 +68,7 @@
         <div class="form-group col-md-2">
             <label for="edociv">E. Civil</label>
             <select name="edociv" id="edociv" class="form-control" required>
-                {% if empleados.0[9]==1 %}
+                {% if empleados.0[10]==1 %}
                   <option value="1">Soltero/a</option>
                 {% else %}
                   <option value="2">Casado/a</option>
@@ -78,24 +82,24 @@
     <div class="form-row">
             <div class="form-group col-md-9">
                     <label for="nomcoy">Conyugue_concubino(nombre de esposa)</label>
-                <input type="text" class="form-control" name="nomcoy" id="nomcoy" value="{{empleados.0[10]}}" required>
+                <input type="text" class="form-control" name="nomcoy" id="nomcoy" value="{{empleados.0[11]}}" required>
             </div>
 
 
             <div class="form-group col-md-9">
                 <label for="nomcaux">Nombre de contacto</label>
-                <input type="text" class="form-control" name="nomcaux" id="nomcaux" value="{{empleados.0[12]}}" required>
+                <input type="text" class="form-control" name="nomcaux" id="nomcaux" value="{{empleados.0[13]}}" required>
             </div>
 
             <div class="form-group col-md-2">
                 <label for="telaux">Telefono de contacto</label>
-            <input type="text" class="form-control" name="telaux" id="telaux" value="{{empleados.0[11]}}" required>
+            <input type="text" class="form-control" name="telaux" id="telaux" value="{{empleados.0[12]}}" required>
             </div>
 
 
         <div class="form-group col-md-4">
                 <label for="numinfonavit">Numero de infonavit</label>
-                <input type="text" class="form-control" name="numinfonavit" id="numinfonavit"  value="{{empleados.0[13]}}" required>
+                <input type="text" class="form-control" name="numinfonavit" id="numinfonavit"  value="{{empleados.0[14]}}" required>
         </div>
     </div>
     <button type="submit" class="btn btn-primary" style="background:lightseagreen">Enviar Cambios</button>
