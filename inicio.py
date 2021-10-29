@@ -1423,11 +1423,17 @@ def modifica_candidato(Curp):
         conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
         cursor = conn.cursor()
 
+<<<<<<< Updated upstream
         cursor.execute("""
             UPDATE candidato
             SET Curp=%s, RFC=%s, Nombre=%s, Domicilio=%s, Telefono=%s, E_Mail=%s, Sexo=%s, Edad=%s, NSS=%s, idEstadoCivil=%s, nacionalidad=%s
             WHERE Curp=%s
         """,(aux_cur,aux_rfc,aux_nom,aux_dom,aux_tel,aux_cor,aux_sex,aux_eda,aux_nss,aux_eci,aux_nac, Curp))
+=======
+        cursor.execute(
+            'UPDATE candidato SET Curp=%s, RFC=%s, Nombre=%s, Domicilio=%s, Telefono=%s, E_Mail=%s, Sexo=%s, Edad=%s, NSS=%s, idEstadoCivil=%s WHERE Curp=%s'
+            ,(aux_cur,aux_rfc,aux_nom,aux_dom,aux_tel,aux_cor,aux_sex,aux_eda,aux_nss,aux_eci,Curp))
+>>>>>>> Stashed changes
         conn.commit()
         conn.close()
         return redirect(url_for('candidato'))
@@ -3406,7 +3412,7 @@ def ed_contrato(Curp):
     cursor.execute('select count(*) from contrato where Curp = %s',(Curp))
     existe = cursor.fetchone()
     if (existe[0] == 0):
-        error = "Este empleado aun no tiene contrato."
+        error = "Este empleado aun no tiene datos de contrato."
         return render_template("error.html", des_error=error, paginaant="/contrato")
 
     else:
@@ -3465,7 +3471,7 @@ def nvo_contrato(Curp):
     cursor.execute('select count(*) from contrato where Curp = %s',(Curp))
     existecontrato = cursor.fetchone()
     if (existecontrato[0]!= 0 ):
-        error = "Este empleado ya tiene contrato."
+        error = "Este empleado ya tiene datos contrato."
         return render_template("error.html", des_error=error, paginaant="/contrato")
 
     else:
