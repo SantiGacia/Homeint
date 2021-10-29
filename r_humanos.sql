@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 28-10-2021 a las 20:51:56
--- Versión del servidor: 10.4.21-MariaDB
--- Versión de PHP: 8.0.12
+-- Tiempo de generación: 29-10-2021 a las 09:31:32
+-- Versión del servidor: 10.4.19-MariaDB
+-- Versión de PHP: 8.0.7
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -81,7 +81,7 @@ CREATE TABLE `candidato` (
   `E_Mail` varchar(45) DEFAULT NULL,
   `Sexo` varchar(45) DEFAULT NULL,
   `Edad` tinyint(2) DEFAULT NULL,
-  `NSS` int(11) DEFAULT NULL,
+  `NSS` varchar(11) NOT NULL,
   `Fotografia` blob DEFAULT NULL,
   `idEstadoCivil` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -91,7 +91,7 @@ CREATE TABLE `candidato` (
 --
 
 INSERT INTO `candidato` (`Curp`, `RFC`, `Nombre`, `nacionalidad`, `Domicilio`, `Telefono`, `E_Mail`, `Sexo`, `Edad`, `NSS`, `Fotografia`, `idEstadoCivil`) VALUES
-('GAMS040407HASRRNA5', 'COCR800325B29', 'Garcia Martinez Santiago ', 'Mexicana', 'conocido', '4491115555', 'ssantig07@gmail.com', 'M', 20, 2147483647, NULL, 1);
+('GAMS040407HASRRNA5', 'GAMS0404074T7', 'Garcia Martinez Santiago', 'Mexicana', 'Casiopea #408 ', '4491115555', 'ssantig07@gmail.com', 'M', 18, '44190407518', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -226,7 +226,6 @@ CREATE TABLE `contrato` (
 --
 
 INSERT INTO `contrato` (`IdContrato`, `Curp`, `idPuesto`, `idArea`, `fecha_inicio`, `fecha_fin`, `idJornada`, `horas_semana`, `horario`, `Salario`, `dias_de_pago`, `lugar_firma`, `fecha_firma`) VALUES
-(1, 'GAME040217HASLXDA3', 1, 1, '2021-11-01', '2022-02-01', 2, '2', 'Lunes a Sabado', '100', 'Quincena y día 29 del mes', '', '2021-11-01'),
 (2, 'GAMS040407HASRRNA5', 1, 1, '2021-11-01', '2022-02-01', 2, '2', 'Lunes a Viernes', '1500000', 'Dia viernes', '', '2021-11-01');
 
 -- --------------------------------------------------------
@@ -295,7 +294,7 @@ CREATE TABLE `empleado` (
 --
 
 INSERT INTO `empleado` (`Curp`, `RFC`, `Nombre`, `nacionalidad`, `Domicilio`, `Telefono`, `E_mail`, `Sexo`, `Edad`, `NSS`, `idEstadoCivil`, `Conyuje_Concubino`, `tel_emergencia`, `nombre_emergencia`, `no_infonavit`, `No_contrato`, `Contrato_Definitivo`, `Contrato_Temporal`, `ContratoTemporal_Val`) VALUES
-('GAME040217HASLXDA3', 'GAME040217DA3', 'GALLEGO MUÑOZ EDGAR MARIO', '', 'conocido', '4499915555', 'mariochikito11@gmail.com', 'M', 20, '44190407518', 4, 'A', '4491115555', 'Hermana de mario', '...', 0, '', '', 'Si'),
+('GAME040217HASLXDA3', 'GAME040217DA3', 'GALLEGO MUÑOZ EDGAR MARIO', '', 'conocido', '4499915555', 'mariochikito11@gmail.com', 'M', 20, '44190407518', 4, 'A', '4491115555', 'Hermana de mario', '...', 0, '', '', 'No'),
 ('GAMS040407HASRRNA5', 'COCR800325B29', 'Garcia Martinez Santiago ', '', 'conocido', '4491115555', 'ssantig07@gmail.com', 'M', 20, '2147483647', 1, '', '4495691241', 'María José Garcia Martínez', '', 0, '', '', 'Si');
 
 -- --------------------------------------------------------
@@ -489,7 +488,8 @@ CREATE TABLE `jordesc` (
 INSERT INTO `jordesc` (`iddesc`, `name`, `IdJornada`) VALUES
 (1, 'De 8 AM a 14 y 15 - 20', 1),
 (2, '12 - 16 y 18 - 2', 2),
-(3, '10-20', 3);
+(3, '10-20', 3),
+(4, '22 horas a 6 horas', 4);
 
 -- --------------------------------------------------------
 
@@ -511,7 +511,8 @@ CREATE TABLE `jornada` (
 INSERT INTO `jornada` (`IdJornada`, `jornombre`, `Descripcion`, `val`) VALUES
 (1, '8 horas', 'De 8 AM a 14 y 15 - 20', '1'),
 (2, '9 horas', '12 - 16 y 18 - 2', '1'),
-(3, '10 horas', '10-20', '1');
+(3, '10 horas', '10-20', '1'),
+(4, 'Nocturna', '22 horas a 6 horas', '1');
 
 -- --------------------------------------------------------
 
@@ -1109,13 +1110,13 @@ ALTER TABLE `idioma`
 -- AUTO_INCREMENT de la tabla `jordesc`
 --
 ALTER TABLE `jordesc`
-  MODIFY `iddesc` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `iddesc` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `jornada`
 --
 ALTER TABLE `jornada`
-  MODIFY `IdJornada` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `IdJornada` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `mediopublicidad`
@@ -1202,7 +1203,7 @@ ALTER TABLE `candidato_has_idioma`
 -- Filtros para la tabla `candidato_has_nivelacademico`
 --
 ALTER TABLE `candidato_has_nivelacademico`
-  ADD CONSTRAINT `fk_Candidato_has_NivelAcademico_Candidato1` FOREIGN KEY (`Curp`) REFERENCES `candidato` (`Curp`) ON DELETE NO ACTION ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_Candidato_has_NivelAcademico_Candidato1` FOREIGN KEY (`Curp`) REFERENCES `candidato` (`Curp`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_Candidato_has_NivelAcademico_Carrera1` FOREIGN KEY (`idCarrera`) REFERENCES `carrera` (`idCarrera`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_Candidato_has_NivelAcademico_NivelAcademico1` FOREIGN KEY (`idNivelAcademico`) REFERENCES `nivelacademico` (`idNivelAcademico`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
