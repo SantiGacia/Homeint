@@ -25,35 +25,39 @@
     <div class="form-row">
         <div class="form-group col-md-7">
             <label for="domicilio">Domicilio</label>
-            <input type="text" class="form-control" name="domicilio" id="domicilio" value="{{empleados.0[3]}}" disabled>
+            <input type="text" class="form-control" name="domicilio" id="domicilio" value="{{empleados.0[4]}}" disabled>
         </div>
         <div class="form-group col-md-4">
             <label for="rfc">RFC</label>
             <input  minlength="13" maxlength="13" type="text" class="form-control" name="rfc" id="rfc" placeholder="0101010101" value="{{empleados.0[1]}}" disabled pattern="([A-Z]{4,})+([0-9]{6,})+([A-Z0-9]{3,})">
         </div>
+        <div class="form-group col-md-7">
+            <label for="nacionalidad">Nacionalidad</label>
+            <input type="text" class="form-control" name="nacionalidad" id="nacionalidad" placeholder="nacionalidad" value="{{empleados.0{{[3]}}" disabled>
+        </div>
     </div>
     <div class="form-row">
         <div class="form-group col-md-2">
             <label for="telefono">Telefono</label>
-        <input minlength="10" maxlength="10" type="text" class="form-control" name="telefono" id="telefono" value="{{empleados.0[4]}}" placeholder="000000.00" pattern="[0-9.]+" disabled>
+        <input minlength="10" maxlength="10" type="text" class="form-control" name="telefono" id="telefono" value="{{empleados.0[5]}}" placeholder="000000.00" pattern="[0-9.]+" disabled>
         </div>
         <div class="form-group col-md-3">
             <label for="correoe">Correo Electronico</label>
-            <input type="email" class="form-control" name="correoe" id="correoe" value="{{empleados.0[5]}}" disabled>
+            <input type="email" class="form-control" name="correoe" id="correoe" value="{{empleados.0[6]}}" disabled>
         </div>
 
         <div class="form-group col-md-1">
             <label for="edad">Edad</label>
-        <input type="text" class="form-control" name="edad" id="edad" value="{{empleados.0[7]}}" placeholder="00" pattern="[0-9.]+" disabled>
+        <input type="text" class="form-control" name="edad" id="edad" value="{{empleados.0[8]}}" placeholder="00" pattern="[0-9.]+" disabled>
         </div>
         <div class="form-group col-md-1">
             <label for="nss">N.S.S</label>
-            <input type="text" class="form-control" name="nss" id="nss" value="{{empleados.0[8]}}" placeholder="000000.00" pattern="[0-9.]+" disabled>
+            <input type="text" class="form-control" name="nss" id="nss" value="{{empleados.0[9]}}" placeholder="000000.00" pattern="[0-9.]+" disabled>
         </div>
         <div class="form-group col-md-2">
             <label for="sexo">Sexo</label>
             <select name="sexo" id="sexo" class="form-control" disabled>
-                {% if empleados.0[6] == "M" %}
+                {% if empleados.0[7] == "M" %}
                   <option value="M">Masculino</option>
                   <option value="F">Femenino</option>
                 {% else %}
@@ -67,19 +71,19 @@
         <div class="form-group col-md-2">
             <label for="edociv">E. Civil</label>
             <select name="edociv" id="edociv" class="form-control" disabled>
-              {% if empleados.0[9]==1 %}
+              {% if empleados.0[10]==1 %}
                 <option value="1">Soltero/a</option>
                 <option value="2">Casado/a</option>
                 <option value="3">Union Libre</option>
                 <option value="4">Divorcio</option>
               {% else %}
-                {% if empleados.0[9]==2 %}
+                {% if empleados.0[10]==2 %}
                   <option value="2">Casado/a</option>
                   <option value="1">Soltero/a</option>
                   <option value="3">Union Libre</option>
                   <option value="4">Divorcio</option>
                 {% else %}
-                  {% if empleados.0[9]==3 %}
+                  {% if empleados.0[10]==3 %}
                     <option value="3">Union Libre</option>
                     <option value="1">Soltero/a</option>
                     <option value="2">Casado/a</option>
@@ -100,24 +104,24 @@
     <div class="form-row">
             <div class="form-group col-md-9">
                     <label for="nomcoy">Conyugue_concubino(nombre de esposa)</label>
-                <input type="text" class="form-control" name="nomcoy" id="nomcoy" value="{{empleados.0[10]}}" disabled>
+                <input type="text" class="form-control" name="nomcoy" id="nomcoy" value="{{empleados.0[11]}}" disabled>
             </div>
 
 
             <div class="form-group col-md-9">
                 <label for="nomcaux">Nombre de contacto</label>
-                <input type="text" class="form-control" name="nomcaux" id="nomcaux" value="{{empleados.0[12]}}" disabled>
+                <input type="text" class="form-control" name="nomcaux" id="nomcaux" value="{{empleados.0[13]}}" disabled>
             </div>
 
             <div class="form-group col-md-2">
                 <label for="telaux">Telefono de contacto</label>
-            <input type="text" class="form-control" name="telaux" id="telaux" value="{{empleados.0[11]}}" disabled>
+            <input type="text" class="form-control" name="telaux" id="telaux" value="{{empleados.0[12]}}" disabled>
             </div>
 
 
         <div class="form-group col-md-4">
                 <label for="numinfonavit">Numero de infonavit</label>
-                <input type="text" class="form-control" name="numinfonavit" id="numinfonavit"  value="{{empleados.0[13]}}" disabled>
+                <input type="text" class="form-control" name="numinfonavit" id="numinfonavit"  value="{{empleados.0[14]}}" disabled>
         </div>
     </div>
     {% for empleado in empleados %}
