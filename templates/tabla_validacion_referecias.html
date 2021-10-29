@@ -1,0 +1,106 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<body style="background-color:#D5DBDB;">
+<link rel="stylesheet" href="\static\css\tabla2.css">
+<center><h3>Datos de la solicitud</h3></center>
+<table width="100%" border="1" cellpadding="0" cellspacing="0" bordercolor="#000000">
+    <tbody>
+    <tr>
+        <td color="FFFFFF" bgcolor="#465F5A" valign="top">
+            <table width="100%" border="1" cellpadding="0" cellspacing="0" bordercolor="#000000">
+                <thead>
+                <tr>
+                    <td color="white" bgcolor="006666"><font color="white">Fecha</font></td>
+                    <td color="white" bgcolor="006666"><font color="white">Area</font></td>
+                    <td color="white" bgcolor="006666"><font color="white">Puesto</font></td>
+                    <td color="white" bgcolor="006666"><font color="white">Vacantes</font></td>
+                    <td color="white" bgcolor="006666"><font color="white">Estado</font></td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>
+                        {{ sol.1 }}
+                    </td>
+                    <td>
+                        {{ sol.3 }}
+                    </td>
+                    <td>
+                        {{ sol.5 }}
+                    </td>
+                    <td>
+                        {{ sol.6 }}
+                    </td>
+                    <td>
+                        {{ sol.8 }}
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<br><br><br><br>
+<center><h3>Candidatos Seleccionados</h3></center>
+<div id="main-container">
+    <table width="100%" border="1" cellpadding="0" cellspacing="0" bordercolor="#000000">
+        <tbody>
+        <tr>
+            <td color="FFFFFF" bgcolor="#465F5A" valign="top">
+                <table width="100%" border="1" cellpadding="0" cellspacing="0" bordercolor="#000000">
+                    <thead>
+                    <tr>
+                        <td color="white" bgcolor="006666"><font color="white">CURP</font></td>
+                        <td color="white" bgcolor="006666"><font color="white">Nombre</font></td>
+                        <td color="white" bgcolor="006666"><font color="white">Nivel Academico</font></td>
+                        <td color="white" bgcolor="006666"><font color="white">Carrera</font></td>
+                        <td color="white" bgcolor="006666"><font color="white">Validacion</font></td>
+                        <td color="white" bgcolor="006666"><font color="white">Tiene las</font></td>
+                        <td color="white" bgcolor="006666"><font color="white">Referencias?</font></td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {% for candidato in can_seleccionados %}
+                        <tr>
+                            <td>
+                                {{ candidato.0 }}
+                            </td>
+                            <td>
+                                {{ candidato.1 }}
+                            </td>
+                            <td>
+                                {{ candidato.4 }}
+                            </td>
+                            <td>
+                                {{ candidato.5 }}
+                            </td>
+                            <td>
+                                {{ candidato.6 }}
+                            </td>
+                            <td bgcolor="#9C9C9C" width="60">
+                                <center><a href="/cal_val_ref/{{ candidato.0 }}/Si/{{ solicitud }}" class="btn btn-success" style="background:lightseagreen">Si</a></center>
+                                </td>
+                                <td bgcolor="#9C9C9C" width="60">
+                                <center><a href="/cal_val_ref/{{ candidato.0 }}/No/{{ solicitud }}" class="btn btn-success" style="background:lightseagreen">No</a></center>
+                                </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <br>
+    <center>
+        <a class="btn btn-primary" href="/agr_valida_referencia" align="right" style="background:lightseagreen">Regresar</a>
+    </center>
+    <script type="text/javascript" src="/static/js/jquery-3.2.1.slim.min.js"></script>
+    <script type="text/javascript" src="/static/js/popper.min.js"></script>
+    <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+</div>
+</body>
+
+{% endblock %}

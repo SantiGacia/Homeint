@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<head>
+    <title>HOME-INT</title>
+</head>
+<body style="background-color:#D5DBDB;">
+<br>
+
+<h2>Importar Empleado</h2>
+    <script type="text/javascript" src="/static/js/jquery-3.2.1.slim.min.js"></script>
+    <script type="text/javascript" src="/static/js/popper.min.js"></script>
+    <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+
+<form action="/import_empleado/{{'No'}}" method="post">
+    <div class="form-row">
+        <div class="form-group col-md-2">
+            <label for="curp">CURP</label>
+        <input minlength="18" maxlength="18" type="text" class="form-control" name="curp" id="curp" value="" required="" pattern="([A-Z]{4,})+([0-9]{6,})+([A-Z]{6,})+([A-Z0-9]{2,})">
+        </div>                                                                                                                    <!--NOMBRE--><!--FECHA-->
+    </div>
+    <button type="submit" class="btn btn-primary" style="background:lightseagreen">Importar</button>
+    <a href="/empleado" class="btn btn-success" style="background:lightseagreen;">Regresar</a></center>
+</form>
+
+
+
+
+
+</body>
+{% endblock %}
