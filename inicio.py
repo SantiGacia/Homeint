@@ -484,8 +484,8 @@ def ed_datos_empresa(id):
 def puesto():
     conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
     cursor = conn.cursor()
-    cursor.execute('select idPuesto, Descripcion, SalarioMensual, Beneficios, Bonos, Aprobacion from puesto '
-                   'order by Descripcion')
+    cursor.execute('select idPuesto, Nombrepuesto, Descripcion, SalarioMensual, Beneficios, Bonos, Aprobacion from puesto '
+                   'order by Nombrepuesto')
     datos = cursor.fetchall()
     conn.close()
     return render_template("tabla_puesto.html", puestos=datos)
@@ -493,6 +493,7 @@ def puesto():
 @app.route('/agrega_puesto', methods=['POST'])
 def agrega_puesto():
     if request.method == 'POST':
+        aux_nop = request.form['nompuesto']
         aux_des = request.form['descripcion']
         aux_sal = request.form['salario']
         aux_ben = request.form['beneficios']
@@ -500,16 +501,16 @@ def agrega_puesto():
         aux_aut = request.form['autorizar']
         conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
         cursor = conn.cursor()
-        cursor.execute('select count(*) from puesto where Descripcion = %s',(aux_des))
+        cursor.execute('select count(*) from puesto where Nombrepuesto = %s',(aux_nop))
         puestos = cursor.fetchone()
         if (puestos[0] != 0):
             error = "El Puesto ya se encuentra agregado."
             return render_template("error.html", des_error=error, paginaant="/puesto")
         else:
-            cursor.execute('insert into puesto (Descripcion, SalarioMensual, Beneficios, Bonos, Aprobacion) '
-                           'values (%s,%s,%s,%s,%s)',(aux_des, aux_sal,aux_ben, aux_bon, aux_aut))
+            cursor.execute('insert into puesto (Nombrepuesto, Descripcion, SalarioMensual, Beneficios, Bonos, Aprobacion) '
+                           'values (%s,%s,%s,%s,%s,%s)',(aux_nop, aux_des, aux_sal,aux_ben, aux_bon, aux_aut))
             conn.commit()
-            cursor.execute('select idPuesto, Descripcion, SalarioMensual, Beneficios, Bonos, Aprobacion '
+            cursor.execute('select idPuesto, Nombrepuesto, Descripcion, SalarioMensual, Beneficios, Bonos, Aprobacion '
                            'from puesto where idPuesto=(select max(idPuesto) from puesto)')
             datos = cursor.fetchall()
             cursor.execute('select a.idPuesto, b.idHabilidad,b.Descripcion,c.idPuesto,c.idHabilidad, c.Experiencia '
@@ -534,6 +535,7 @@ def nvo_puesto():
 @app.route('/modifica_puesto/<string:id>', methods=['POST'])
 def modifica_puesto(id):
     if request.method == 'POST':
+        aux_nop = request.form['nompuesto']
         aux_des =request.form['descripcion']
         aux_sal = request.form['salario']
         aux_ben = request.form['beneficios']
@@ -541,8 +543,8 @@ def modifica_puesto(id):
         aux_aut = request.form['autorizar']
         conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
         cursor = conn.cursor()
-        cursor.execute('update puesto set Descripcion=%s, SalarioMensual=%s, Beneficios=%s, Bonos=%s, Aprobacion=%s '
-                       'where idpuesto=%s', (aux_des, aux_sal,aux_ben, aux_bon,aux_aut,id))
+        cursor.execute('update puesto set Nombrepuesto=%s, Descripcion=%s, SalarioMensual=%s, Beneficios=%s, Bonos=%s, Aprobacion=%s '
+                       'where idpuesto=%s', (aux_nop, aux_des, aux_sal,aux_ben, aux_bon,aux_aut,id))
         conn.commit()
         conn.close()
         return redirect(url_for('puesto'))
@@ -552,7 +554,7 @@ def modifica_puesto(id):
 def ed_puesto(id):
     conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
     cursor = conn.cursor()
-    cursor.execute('select idPuesto, Descripcion, SalarioMensual, Beneficios, Bonos, Aprobacion '
+    cursor.execute('select idPuesto, Nombrepuesto, Descripcion, SalarioMensual, Beneficios, Bonos, Aprobacion '
     'from puesto where idPuesto=%s', (id))
     datos=cursor.fetchall()
     cursor.execute('select a.idPuesto, b.idHabilidad,b.Descripcion,c.idPuesto, c.idHabilidad, c.Experiencia '
@@ -607,7 +609,7 @@ def agrega_hab_pto(id):
             cursor.execute('insert into puesto_has_habilidad (idPuesto, idHabilidad, Experiencia) '
                            'values (%s,%s,%s)',(aux_pto,aux_hab,aux_exp))
             conn.commit()
-            cursor.execute('select idPuesto, Descripcion, SalarioMensual, Beneficios, Bonos, Aprobacion '
+            cursor.execute('select idPuesto, Nombrepuesto, Descripcion, SalarioMensual, Beneficios, Bonos, Aprobacion '
                            'from puesto where idPuesto=%s', (aux_pto))
             datos = cursor.fetchall()
             cursor.execute('select a.idPuesto, b.idHabilidad,b.Descripcion,c.idPuesto,c.idHabilidad, c.Experiencia '
@@ -643,7 +645,7 @@ def agrega_idio_pto(id):
             cursor.execute('insert into puesto_has_idioma (idPuesto, idIdioma, Nivel) '
                            'values (%s,%s,%s)',(aux_pto,aux_idi,aux_niv))
             conn.commit()
-            cursor.execute('select idPuesto, Descripcion, SalarioMensual, Beneficios, Bonos, Aprobacion '
+            cursor.execute('select idPuesto, Nombrepuesto, Descripcion, SalarioMensual, Beneficios, Bonos, Aprobacion '
                            'from puesto where idPuesto=%s', (aux_pto))
             datos = cursor.fetchall()
             cursor.execute('select a.idPuesto, b.idHabilidad,b.Descripcion,c.idPuesto, c.idHabilidad, c.Experiencia '
@@ -667,7 +669,7 @@ def bo_hab_pto(idP,idH):
     cursor = conn.cursor()
     cursor.execute('delete from puesto_has_habilidad where idPuesto =%s and idHabilidad=%s',(idP,idH))
     conn.commit()
-    cursor.execute('select idPuesto, Descripcion, SalarioMensual, Beneficios, Bonos, Aprobacion '
+    cursor.execute('select idPuesto, Nombrepuesto, Descripcion, SalarioMensual, Beneficios, Bonos, Aprobacion '
     'from puesto where idPuesto=%s', (idP))
     datos = cursor.fetchall()
     cursor.execute('select a.idPuesto, b.idHabilidad,b.Descripcion,c.idPuesto, c.idHabilidad, c.Experiencia '
@@ -691,7 +693,7 @@ def bo_idi_pto(idP,idI):
     cursor = conn.cursor()
     cursor.execute('delete from puesto_has_idioma where idPuesto =%s and idIdioma=%s',(idP,idI))
     conn.commit()
-    cursor.execute('select idPuesto, Descripcion, SalarioMensual, Beneficios, Bonos, Aprobacion '
+    cursor.execute('select idPuesto, Nombrepuesto, Descripcion, SalarioMensual, Beneficios, Bonos, Aprobacion '
                    'from puesto where idPuesto=%s', (idP))
     datos = cursor.fetchall()
     cursor.execute('select a.idPuesto, b.idHabilidad,b.Descripcion,c.idPuesto, c.idHabilidad, c.Experiencia '
@@ -1051,7 +1053,7 @@ def solicitud():
     cursor = conn.cursor()
     cursor.execute('select * from solicitud')
     cursor.execute(
-        ' select a.idSolicitud, a.FechaSolicitud, a.idArea, b.AreaNombre, a.idPuesto, c.Descripcion, a.NumeroVacante, a.idEstatus_Solicitud, d.Descripcion '
+        ' select a.idSolicitud, a.FechaSolicitud, a.idArea, b.AreaNombre, a.idPuesto, c.Nombrepuesto, a.NumeroVacante, a.idEstatus_Solicitud, d.Descripcion '
         ' from solicitud a, area b, puesto c, estatus_solicitud d '
         ' where b.idArea=a.idArea and c.idPuesto=a.idPuesto and d.idEstatus_Solicitud=a.idEstatus_Solicitud ')
 
@@ -1065,7 +1067,7 @@ def nvo_solicitud():
     cursor = conn.cursor()
     cursor.execute('select idArea, AreaNombre from area')
     datos1 = cursor.fetchall()
-    cursor.execute('select idPuesto, Descripcion from puesto')
+    cursor.execute('select idPuesto, Nombrepuesto from puesto')
     datos2 = cursor.fetchall()
     cursor.execute('select idNivelAcademico, Descripcion from nivelacademico')
     datos3 = cursor.fetchall()
@@ -1104,7 +1106,7 @@ def agrega_solicitud():
 
         conn.commit()
         cursor.execute(
-            ' select a.idSolicitud, a.FechaSolicitud, a.idArea, b.AreaNombre, a.idPuesto, c.Descripcion, a.NumeroVacante, a.idEstatus_Solicitud, d.Descripcion '
+            ' select a.idSolicitud, a.FechaSolicitud, a.idArea, b.AreaNombre, a.idPuesto, c.Nombrepuesto, a.NumeroVacante, a.idEstatus_Solicitud, d.Descripcion '
             ' from solicitud a, area b, puesto c, estatus_solicitud d '
             ' where b.idArea=a.idArea and c.idPuesto=a.idPuesto and d.idEstatus_Solicitud=a.idEstatus_Solicitud')
 
@@ -1121,7 +1123,7 @@ def ed_solicitud(id):
     datos=cursor.fetchall()
     cursor.execute('select idArea, AreaNombre from area')
     datos1 = cursor.fetchall()
-    cursor.execute('select idPuesto, Descripcion from puesto')
+    cursor.execute('select idPuesto, Nombrepuesto from puesto')
     datos2 = cursor.fetchall()
     cursor.execute('select idNivelAcademico, Descripcion from nivelacademico')
     datos3 = cursor.fetchall()
@@ -1153,7 +1155,7 @@ def modifica_solicitud(id):
                        'where idSolicitud= %s',(aux_fec,aux_are,aux_pue,aux_niv,aux_car,aux_vac,aux_est,id))
         conn.commit()
         cursor.execute(
-            ' select a.idSolicitud, a.FechaSolicitud, a.idArea, b.AreaNombre, a.idPuesto, c.Descripcion, a.NumeroVacante, a.idEstatus_Solicitud, d.Descripcion '
+            ' select a.idSolicitud, a.FechaSolicitud, a.idArea, b.AreaNombre, a.idPuesto, c.Nombrepuesto, a.NumeroVacante, a.idEstatus_Solicitud, d.Descripcion '
             ' from solicitud a, area b, puesto c, estatus_solicitud d '
             ' where b.idArea=a.idArea and c.idPuesto=a.idPuesto and d.idEstatus_Solicitud=a.idEstatus_Solicitud ')
 
@@ -1168,7 +1170,7 @@ def bo_solicitud(id):
     cursor.execute('delete from solicitud where idsolicitud = {0}'.format(id))
     conn.commit()
     cursor.execute(
-        ' select a.idSolicitud, a.FechaSolicitud, a.idArea, b.AreaNombre, a.idPuesto, c.Descripcion, a.NumeroVacante, a.idEstatus_Solicitud, d.Descripcion '
+        ' select a.idSolicitud, a.FechaSolicitud, a.idArea, b.AreaNombre, a.idPuesto, c.Nombrepuesto, a.NumeroVacante, a.idEstatus_Solicitud, d.Descripcion '
         ' from solicitud a, area b, puesto c, estatus_solicitud d '
         ' where b.idArea=a.idArea and c.idPuesto=a.idPuesto and d.idEstatus_Solicitud=a.idEstatus_Solicitud ')
 
@@ -1183,7 +1185,7 @@ def autoriza_solicitud():
     cursor = conn.cursor()
     cursor.execute('select * from solicitud')
     cursor.execute(
-        ' select a.idSolicitud, a.FechaSolicitud, a.idArea, b.AreaNombre, a.idPuesto, c.Descripcion, a.NumeroVacante, a.idEstatus_Solicitud, d.Descripcion '
+        ' select a.idSolicitud, a.FechaSolicitud, a.idArea, b.AreaNombre, a.idPuesto, c.Nombrepuesto, a.NumeroVacante, a.idEstatus_Solicitud, d.Descripcion '
         ' from solicitud a, area b, puesto c, estatus_solicitud d '
         ' where b.idArea=a.idArea and c.idPuesto=a.idPuesto and d.idEstatus_Solicitud=a.idEstatus_Solicitud')
 
@@ -1198,7 +1200,7 @@ def aut_solicitud(id):
     cursor.execute('update solicitud set idEstatus_Solicitud=2 where idSolicitud=%s', (id))
     conn.commit()
     cursor.execute(
-        ' select a.idSolicitud, a.FechaSolicitud, a.idArea, b.AreaNombre, a.idPuesto, c.Descripcion, a.NumeroVacante, a.idEstatus_Solicitud, d.Descripcion '
+        ' select a.idSolicitud, a.FechaSolicitud, a.idArea, b.AreaNombre, a.idPuesto, c.Nombrepuesto, a.NumeroVacante, a.idEstatus_Solicitud, d.Descripcion '
         ' from solicitud a, area b, puesto c, estatus_solicitud d '
         ' where b.idArea=a.idArea and c.idPuesto=a.idPuesto and d.idEstatus_Solicitud=a.idEstatus_Solicitud')
 
@@ -1213,7 +1215,7 @@ def can_solicitud(id):
     cursor.execute('update solicitud set idEstatus_Solicitud=6 where idSolicitud=%s', (id))
     conn.commit()
     cursor.execute(
-        ' select a.idSolicitud, a.FechaSolicitud, a.idArea, b.AreaNombre, a.idPuesto, c.Descripcion, a.NumeroVacante, a.idEstatus_Solicitud, d.Descripcion '
+        ' select a.idSolicitud, a.FechaSolicitud, a.idArea, b.AreaNombre, a.idPuesto, c.Nombrepuesto, a.NumeroVacante, a.idEstatus_Solicitud, d.Descripcion '
         ' from solicitud a, area b, puesto c, estatus_solicitud d '
         ' where b.idArea=a.idArea and c.idPuesto=a.idPuesto and d.idEstatus_Solicitud=a.idEstatus_Solicitud')
 
@@ -1227,7 +1229,7 @@ def a_publicar():
     conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
     cursor = conn.cursor()
     cursor.execute(
-        ' select a.idSolicitud, a.FechaSolicitud, a.idArea, b.AreaNombre, a.idPuesto, c.Descripcion, a.NumeroVacante, a.idEstatus_Solicitud, d.Descripcion '
+        ' select a.idSolicitud, a.FechaSolicitud, a.idArea, b.AreaNombre, a.idPuesto, c.Nombrepuesto, a.NumeroVacante, a.idEstatus_Solicitud, d.Descripcion '
         ' from solicitud a, area b, puesto c, estatus_solicitud d '
         ' where b.idArea=a.idArea and c.idPuesto=a.idPuesto and d.idEstatus_Solicitud=a.idEstatus_Solicitud'
         ' and (a.idEstatus_Solicitud=2 or a.idEstatus_Solicitud=3)')
@@ -1241,7 +1243,7 @@ def crea_pub(id):
     conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
     cursor = conn.cursor()
     cursor.execute(
-        ' select a.idSolicitud, a.FechaSolicitud, a.idArea, b.AreaNombre, a.idPuesto, c.Descripcion, a.NumeroVacante, a.idEstatus_Solicitud, d.Descripcion '
+        ' select a.idSolicitud, a.FechaSolicitud, a.idArea, b.AreaNombre, a.idPuesto, c.Nombrepuesto, a.NumeroVacante, a.idEstatus_Solicitud, d.Descripcion '
         ' from solicitud a, area b, puesto c, estatus_solicitud d '
         ' where b.idArea=a.idArea and c.idPuesto=a.idPuesto and d.idEstatus_Solicitud=a.idEstatus_Solicitud'
         ' and (a.idEstatus_Solicitud=2 or a.idEstatus_Solicitud=3) and idSolicitud=%s', (id))
@@ -1280,7 +1282,7 @@ def agrega_publicacion():
         cursor.execute(' update solicitud set idEstatus_Solicitud=3 where idSolicitud=%s', (aux_sol))
         conn.commit()
         cursor.execute(
-            ' select a.idSolicitud, a.FechaSolicitud, a.idArea, b.AreaNombre, a.idPuesto, c.Descripcion, a.NumeroVacante, a.idEstatus_Solicitud, d.Descripcion '
+            ' select a.idSolicitud, a.FechaSolicitud, a.idArea, b.AreaNombre, a.idPuesto, c.Nombrepuesto, a.NumeroVacante, a.idEstatus_Solicitud, d.Descripcion '
             ' from solicitud a, area b, puesto c, estatus_solicitud d '
             ' where b.idArea=a.idArea and c.idPuesto=a.idPuesto and d.idEstatus_Solicitud=a.idEstatus_Solicitud'
             ' and (a.idEstatus_Solicitud=2 or a.idEstatus_Solicitud=3) and idSolicitud=%s', (aux_sol))
@@ -1309,7 +1311,7 @@ def bo_publicacion(id):
     cursor.execute(' delete from anuncio where idanuncio = {0}'.format(id))
     conn.commit()
     cursor.execute(
-        ' select a.idSolicitud, a.FechaSolicitud, a.idArea, b.AreaNombre, a.idPuesto, c.Descripcion, a.NumeroVacante, a.idEstatus_Solicitud, d.Descripcion '
+        ' select a.idSolicitud, a.FechaSolicitud, a.idArea, b.AreaNombre, a.idPuesto, c.Nombrepuesto, a.NumeroVacante, a.idEstatus_Solicitud, d.Descripcion '
         ' from solicitud a, area b, puesto c, estatus_solicitud d '
         ' where b.idArea=a.idArea and c.idPuesto=a.idPuesto and d.idEstatus_Solicitud=a.idEstatus_Solicitud'
         ' and (a.idEstatus_Solicitud=2 or a.idEstatus_Solicitud=3) and idSolicitud=%s', (aux_sol[0]))
@@ -2048,7 +2050,7 @@ def agr_sel_candidato():
     conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
     cursor = conn.cursor()
     cursor.execute('select a.idSolicitud, a.FechaSolicitud, a.idArea, b.AreaNombre, '
-        'a.idPuesto, c.Descripcion, a.NumeroVacante, a.idEstatus_Solicitud, d.Descripcion '
+        'a.idPuesto, c.Nombrepuesto, a.NumeroVacante, a.idEstatus_Solicitud, d.Descripcion '
         'from solicitud a, area b, puesto c, estatus_solicitud d '
         'where b.idArea=a.idArea and c.idPuesto=a.idPuesto and d.idEstatus_Solicitud=a.idEstatus_Solicitud '
         'and (a.idEstatus_Solicitud=3 or a.idEstatus_Solicitud=4)')
@@ -2071,7 +2073,7 @@ def sel_candidato(id):
     conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
     cursor = conn.cursor()
     cursor.execute(
-        ' select a.idSolicitud, a.FechaSolicitud, a.idArea, b.AreaNombre, a.idPuesto, c.Descripcion, a.NumeroVacante, a.idEstatus_Solicitud, d.Descripcion '
+        ' select a.idSolicitud, a.FechaSolicitud, a.idArea, b.AreaNombre, a.idPuesto, c.Nombrepuesto, a.NumeroVacante, a.idEstatus_Solicitud, d.Descripcion '
         ' from solicitud a, area b, puesto c, estatus_solicitud d '
         ' where b.idArea=a.idArea and c.idPuesto=a.idPuesto and d.idEstatus_Solicitud=a.idEstatus_Solicitud'
         ' and (a.idEstatus_Solicitud=3 or a.idEstatus_Solicitud=4) and idSolicitud=%s', (id))
@@ -2103,7 +2105,7 @@ def ins_candidato(ca,so,ans):
         cursor.execute('insert into resultadocandidato (idSolicitud,Curp,Calificacion_Medica, Calificacion, validacion, estatus, Validar_ref, EstatusProceso) values (%s,%s,%s,%s,%s,%s,%s,1)',(so,ca,ans,ans, ans,ans, ans))
         conn.commit()
         cursor.execute(
-            ' select a.idSolicitud, a.FechaSolicitud, a.idArea, b.AreaNombre, a.idPuesto, c.Descripcion, a.NumeroVacante, a.idEstatus_Solicitud, d.Descripcion '
+            ' select a.idSolicitud, a.FechaSolicitud, a.idArea, b.AreaNombre, a.idPuesto, c.Nombrepuesto, a.NumeroVacante, a.idEstatus_Solicitud, d.Descripcion '
             ' from solicitud a, area b, puesto c, estatus_solicitud d '
             ' where b.idArea=a.idArea and c.idPuesto=a.idPuesto and d.idEstatus_Solicitud=a.idEstatus_Solicitud'
             ' and (a.idEstatus_Solicitud=3 or a.idEstatus_Solicitud=4) and idSolicitud=%s', (so))
@@ -2130,7 +2132,7 @@ def bo_sol_candidato(ca,so):
     cursor.execute('delete from resultadocandidato where idSolicitud=%s and Curp=%s',(so, ca))
     conn.commit()
     cursor.execute(
-        ' select a.idSolicitud, a.FechaSolicitud, a.idArea, b.AreaNombre, a.idPuesto, c.Descripcion, a.NumeroVacante, a.idEstatus_Solicitud, d.Descripcion '
+        ' select a.idSolicitud, a.FechaSolicitud, a.idArea, b.AreaNombre, a.idPuesto, c.Nombrepuesto, a.NumeroVacante, a.idEstatus_Solicitud, d.Descripcion '
         ' from solicitud a, area b, puesto c, estatus_solicitud d '
         ' where b.idArea=a.idArea and c.idPuesto=a.idPuesto and d.idEstatus_Solicitud=a.idEstatus_Solicitud'
         ' and (a.idEstatus_Solicitud=3 or a.idEstatus_Solicitud=4) and idSolicitud=%s', (so))
@@ -2196,7 +2198,7 @@ def crea_pub2(id):
     conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
     cursor = conn.cursor()
     cursor.execute(
-        ' select a.idSolicitud, a.FechaSolicitud, a.idArea, b.AreaNombre, a.idPuesto, c.Descripcion, a.NumeroVacante, a.idEstatus_Solicitud, d.Descripcion '
+        ' select a.idSolicitud, a.FechaSolicitud, a.idArea, b.AreaNombre, a.idPuesto, c.Nombrepuesto, a.NumeroVacante, a.idEstatus_Solicitud, d.Descripcion '
         ' from solicitud a, area b, puesto c, estatus_solicitud d '
         ' where b.idArea=a.idArea and c.idPuesto=a.idPuesto and d.idEstatus_Solicitud=a.idEstatus_Solicitud'
         ' and (a.idEstatus_Solicitud=2 or a.idEstatus_Solicitud=3) and idSolicitud=%s', (id))
@@ -2237,7 +2239,7 @@ def nvo_calf_psicologica(ca,so):
     conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
     cursor = conn.cursor()
     cursor.execute(
-        ' select a.idSolicitud, a.FechaSolicitud, a.idArea, b.AreaNombre, a.idPuesto, c.Descripcion, a.NumeroVacante, a.idEstatus_Solicitud, d.Descripcion '
+        ' select a.idSolicitud, a.FechaSolicitud, a.idArea, b.AreaNombre, a.idPuesto, c.Nombrepuesto, a.NumeroVacante, a.idEstatus_Solicitud, d.Descripcion '
         ' from solicitud a, area b, puesto c, estatus_solicitud d '
         ' where b.idArea=a.idArea and c.idPuesto=a.idPuesto and d.idEstatus_Solicitud=a.idEstatus_Solicitud'
         ' and (a.idEstatus_Solicitud=3 or a.idEstatus_Solicitud=4) and idSolicitud=%s', (so))
@@ -2260,7 +2262,7 @@ def cal_sel_candidato(id):
     conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
     cursor = conn.cursor()
     cursor.execute(
-        ' select a.idSolicitud, a.FechaSolicitud, a.idArea, b.AreaNombre, a.idPuesto, c.Descripcion, a.NumeroVacante, a.idEstatus_Solicitud, d.Descripcion '
+        ' select a.idSolicitud, a.FechaSolicitud, a.idArea, b.AreaNombre, a.idPuesto, c.Nombrepuesto, a.NumeroVacante, a.idEstatus_Solicitud, d.Descripcion '
         ' from solicitud a, area b, puesto c, estatus_solicitud d '
         ' where b.idArea=a.idArea and c.idPuesto=a.idPuesto and d.idEstatus_Solicitud=a.idEstatus_Solicitud'
         ' and (a.idEstatus_Solicitud=3 or a.idEstatus_Solicitud=4) and idSolicitud=%s', (id))
@@ -2301,7 +2303,7 @@ def agr_cal_medica():
     conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
     cursor = conn.cursor()
     cursor.execute('select a.idSolicitud, a.FechaSolicitud, a.idArea, b.AreaNombre, '
-        'a.idPuesto, c.Descripcion, a.NumeroVacante, a.idEstatus_Solicitud, d.Descripcion '
+        'a.idPuesto, c.Nombrepuesto, a.NumeroVacante, a.idEstatus_Solicitud, d.Descripcion '
         'from solicitud a, area b, puesto c, estatus_solicitud d '
         'where b.idArea=a.idArea and c.idPuesto=a.idPuesto and d.idEstatus_Solicitud=a.idEstatus_Solicitud '
         'and (a.idEstatus_Solicitud=3 or a.idEstatus_Solicitud=4)')
@@ -2313,7 +2315,7 @@ def agr_cal_medica():
 def nvo_calf_medica(id):
     conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
     cursor = conn.cursor()
-    cursor.execute(' select a.idSolicitud, a.FechaSolicitud, a.idArea, b.AreaNombre, a.idPuesto, c.Descripcion, a.NumeroVacante, a.idEstatus_Solicitud, d.Descripcion '
+    cursor.execute(' select a.idSolicitud, a.FechaSolicitud, a.idArea, b.AreaNombre, a.idPuesto, c.Nombrepuesto, a.NumeroVacante, a.idEstatus_Solicitud, d.Descripcion '
         ' from solicitud a, area b, puesto c, estatus_solicitud d '
         ' where b.idArea=a.idArea and c.idPuesto=a.idPuesto and d.idEstatus_Solicitud=a.idEstatus_Solicitud'
         ' and (a.idEstatus_Solicitud=3 or a.idEstatus_Solicitud=4) and idSolicitud=%s', (id))
@@ -2340,7 +2342,7 @@ def cal_med(Curp,ap,id):
     cursor.execute('update resultadocandidato set Calificacion_Medica=%s, EstatusProceso=3 where Curp=%s and idSolicitud=%s',(ap,Curp,id))
     conn.commit()
     cursor.execute(
-        ' select a.idSolicitud, a.FechaSolicitud, a.idArea, b.AreaNombre, a.idPuesto, c.Descripcion, a.NumeroVacante, a.idEstatus_Solicitud, d.Descripcion '
+        ' select a.idSolicitud, a.FechaSolicitud, a.idArea, b.AreaNombre, a.idPuesto, c.Nombrepuesto, a.NumeroVacante, a.idEstatus_Solicitud, d.Descripcion '
         ' from solicitud a, area b, puesto c, estatus_solicitud d '
         ' where b.idArea=a.idArea and c.idPuesto=a.idPuesto and d.idEstatus_Solicitud=a.idEstatus_Solicitud'
         ' and (a.idEstatus_Solicitud=3 or a.idEstatus_Solicitud=4) and idSolicitud=%s', (id))
@@ -2364,7 +2366,7 @@ def agr_sel_candidato2():
     conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
     cursor = conn.cursor()
     cursor.execute('select a.idSolicitud, a.FechaSolicitud, a.idArea, b.AreaNombre, '
-        'a.idPuesto, c.Descripcion, a.NumeroVacante, a.idEstatus_Solicitud, d.Descripcion '
+        'a.idPuesto, c.Nombrepuesto, a.NumeroVacante, a.idEstatus_Solicitud, d.Descripcion '
         'from solicitud a, area b, puesto c, estatus_solicitud d '
         'where b.idArea=a.idArea and c.idPuesto=a.idPuesto and d.idEstatus_Solicitud=a.idEstatus_Solicitud '
         'and (a.idEstatus_Solicitud=3 or a.idEstatus_Solicitud=4)')
@@ -2377,7 +2379,7 @@ def sel_candidato2(id):
     conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
     cursor = conn.cursor()
     cursor.execute(
-        ' select a.idSolicitud, a.FechaSolicitud, a.idArea, b.AreaNombre, a.idPuesto, c.Descripcion, a.NumeroVacante, a.idEstatus_Solicitud, d.Descripcion '
+        ' select a.idSolicitud, a.FechaSolicitud, a.idArea, b.AreaNombre, a.idPuesto, c.Nombrepuesto, a.NumeroVacante, a.idEstatus_Solicitud, d.Descripcion '
         ' from solicitud a, area b, puesto c, estatus_solicitud d '
         ' where b.idArea=a.idArea and c.idPuesto=a.idPuesto and d.idEstatus_Solicitud=a.idEstatus_Solicitud'
         ' and (a.idEstatus_Solicitud=3 or a.idEstatus_Solicitud=4) and idSolicitud=%s', (id))
@@ -2400,7 +2402,7 @@ def bo_sol_candidato2(ca,so):
     cursor.execute('delete from resultadocandidato where idSolicitud=%s and Curp=%s',(so, ca))
     conn.commit()
     cursor.execute(
-        ' select a.idSolicitud, a.FechaSolicitud, a.idArea, b.AreaNombre, a.idPuesto, c.Descripcion, a.NumeroVacante, a.idEstatus_Solicitud, d.Descripcion '
+        ' select a.idSolicitud, a.FechaSolicitud, a.idArea, b.AreaNombre, a.idPuesto, c.Nombrepuesto, a.NumeroVacante, a.idEstatus_Solicitud, d.Descripcion '
         ' from solicitud a, area b, puesto c, estatus_solicitud d '
         ' where b.idArea=a.idArea and c.idPuesto=a.idPuesto and d.idEstatus_Solicitud=a.idEstatus_Solicitud'
         ' and (a.idEstatus_Solicitud=3 or a.idEstatus_Solicitud=4) and idSolicitud=%s', (so))
@@ -2663,7 +2665,7 @@ def agr_valida_referencia():
     conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
     cursor = conn.cursor()
     cursor.execute('select a.idSolicitud, a.FechaSolicitud, a.idArea, b.AreaNombre, '
-        'a.idPuesto, c.Descripcion, a.NumeroVacante, a.idEstatus_Solicitud, d.Descripcion '
+        'a.idPuesto, c.Nombrepuesto, a.NumeroVacante, a.idEstatus_Solicitud, d.Descripcion '
         'from solicitud a, area b, puesto c, estatus_solicitud d '
         'where b.idArea=a.idArea and c.idPuesto=a.idPuesto and d.idEstatus_Solicitud=a.idEstatus_Solicitud '
         'and (a.idEstatus_Solicitud=3 or a.idEstatus_Solicitud=4)')
@@ -2676,7 +2678,7 @@ def cal_sel_candidato2(id):
     conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
     cursor = conn.cursor()
     cursor.execute(
-        ' select a.idSolicitud, a.FechaSolicitud, a.idArea, b.AreaNombre, a.idPuesto, c.Descripcion, a.NumeroVacante, a.idEstatus_Solicitud, d.Descripcion '
+        ' select a.idSolicitud, a.FechaSolicitud, a.idArea, b.AreaNombre, a.idPuesto, c.Nombrepuesto, a.NumeroVacante, a.idEstatus_Solicitud, d.Descripcion '
         ' from solicitud a, area b, puesto c, estatus_solicitud d '
         ' where b.idArea=a.idArea and c.idPuesto=a.idPuesto and d.idEstatus_Solicitud=a.idEstatus_Solicitud'
         ' and (a.idEstatus_Solicitud=3 or a.idEstatus_Solicitud=4) and idSolicitud=%s', (id))
@@ -2696,7 +2698,7 @@ def cal_val_ref(Curp,ca,id):
     cursor.execute('update resultadocandidato set Validar_ref=%s where Curp=%s and idSolicitud=%s',(ca,Curp,id))
     conn.commit()
     cursor.execute(
-        ' select a.idSolicitud, a.FechaSolicitud, a.idArea, b.AreaNombre, a.idPuesto, c.Descripcion, a.NumeroVacante, a.idEstatus_Solicitud, d.Descripcion '
+        ' select a.idSolicitud, a.FechaSolicitud, a.idArea, b.AreaNombre, a.idPuesto, c.Nombrepuesto, a.NumeroVacante, a.idEstatus_Solicitud, d.Descripcion '
         ' from solicitud a, area b, puesto c, estatus_solicitud d '
         ' where b.idArea=a.idArea and c.idPuesto=a.idPuesto and d.idEstatus_Solicitud=a.idEstatus_Solicitud'
         ' and (a.idEstatus_Solicitud=3 or a.idEstatus_Solicitud=4) and idSolicitud=%s', (id))
@@ -2720,7 +2722,7 @@ def agr_candidato_contratacion():
     conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
     cursor = conn.cursor()
     cursor.execute('select a.idSolicitud, a.FechaSolicitud, a.idArea, b.AreaNombre, '
-        'a.idPuesto, c.Descripcion, a.NumeroVacante, a.idEstatus_Solicitud, d.Descripcion '
+        'a.idPuesto, c.Nombrepuesto, a.NumeroVacante, a.idEstatus_Solicitud, d.Descripcion '
         'from solicitud a, area b, puesto c, estatus_solicitud d '
         'where b.idArea=a.idArea and c.idPuesto=a.idPuesto and d.idEstatus_Solicitud=a.idEstatus_Solicitud '
         'and (a.idEstatus_Solicitud=3 or a.idEstatus_Solicitud=4)')
@@ -2733,7 +2735,7 @@ def sel_candidato_contratacion(id):
     conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
     cursor = conn.cursor()
     cursor.execute(
-        ' select a.idSolicitud, a.FechaSolicitud, a.idArea, b.AreaNombre, a.idPuesto, c.Descripcion, a.NumeroVacante, a.idEstatus_Solicitud, d.Descripcion '
+        ' select a.idSolicitud, a.FechaSolicitud, a.idArea, b.AreaNombre, a.idPuesto, c.Nombrepuesto, a.NumeroVacante, a.idEstatus_Solicitud, d.Descripcion '
         ' from solicitud a, area b, puesto c, estatus_solicitud d '
         ' where b.idArea=a.idArea and c.idPuesto=a.idPuesto and d.idEstatus_Solicitud=a.idEstatus_Solicitud'
         ' and (a.idEstatus_Solicitud=3 or a.idEstatus_Solicitud=4) and idSolicitud=%s', (id))
@@ -2752,7 +2754,7 @@ def muestra_calf_psicologica(ca,so):
     conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
     cursor = conn.cursor()
     cursor.execute(
-        ' select a.idSolicitud, a.FechaSolicitud, a.idArea, b.AreaNombre, a.idPuesto, c.Descripcion, a.NumeroVacante, a.idEstatus_Solicitud, d.Descripcion '
+        ' select a.idSolicitud, a.FechaSolicitud, a.idArea, b.AreaNombre, a.idPuesto, c.Nombrepuesto, a.NumeroVacante, a.idEstatus_Solicitud, d.Descripcion '
         ' from solicitud a, area b, puesto c, estatus_solicitud d '
         ' where b.idArea=a.idArea and c.idPuesto=a.idPuesto and d.idEstatus_Solicitud=a.idEstatus_Solicitud'
         ' and (a.idEstatus_Solicitud=3 or a.idEstatus_Solicitud=4) and idSolicitud=%s', (so))
@@ -2822,7 +2824,7 @@ def contrata_candidato(id,curp,estado):
     conn.commit()
     
     cursor.execute(
-        ' select a.idSolicitud, a.FechaSolicitud, a.idArea, b.AreaNombre, a.idPuesto, c.Descripcion, a.NumeroVacante, a.idEstatus_Solicitud, d.Descripcion '
+        ' select a.idSolicitud, a.FechaSolicitud, a.idArea, b.AreaNombre, a.idPuesto, c.Nombrepuesto, a.NumeroVacante, a.idEstatus_Solicitud, d.Descripcion '
         ' from solicitud a, area b, puesto c, estatus_solicitud d '
         ' where b.idArea=a.idArea and c.idPuesto=a.idPuesto and d.idEstatus_Solicitud=a.idEstatus_Solicitud'
         ' and idSolicitud=%s', (id))
@@ -3454,7 +3456,7 @@ def ed_contrato(Curp):
         cursor.execute(' select idEstadoCivil, Descripcion from estadocivil')
         datos5 = cursor.fetchall()
 
-        cursor.execute('  SELECT a.idContrato, a.Curp, a.idPuesto,b.Descripcion, a.idArea, c.AreaNombre ,a.Salario,a.dias_de_pago , a.fecha_inicio, a.fecha_fin, a.idJornada, e.jornombre , a.horas_semana, e.Descripcion, a.horario'
+        cursor.execute('  SELECT a.idContrato, a.Curp, a.idPuesto,b.Nombrepuesto, a.idArea, c.AreaNombre ,a.Salario,a.dias_de_pago , a.fecha_inicio, a.fecha_fin, a.idJornada, e.jornombre , a.horas_semana, e.Descripcion, a.horario'
                         ' FROM contrato a, puesto b, area c , jornada e'
                         ' where a.idPuesto=b.idPuesto and a.idArea= c.idArea and a.idJornada= e.IdJornada and a.curp=%s',(Curp))
         datos9=cursor.fetchall()
@@ -3517,8 +3519,8 @@ def nvo_contrato(Curp):
             cursor.execute('select idArea, AreaNombre, AreaDescripcion from area ')
             datos9 = cursor.fetchall()
 
-            cursor.execute('select idPuesto, Descripcion, SalarioMensual, Beneficios, Bonos, Aprobacion from puesto '
-                        'order by Descripcion')
+            cursor.execute('select idPuesto, Nombrepuesto, Descripcion, SalarioMensual, Beneficios, Bonos, Aprobacion from puesto '
+                        'order by Nombrepuesto')
             datos10 = cursor.fetchall()        
 
             cursor = mysql.connection.cursor()
@@ -3572,7 +3574,7 @@ def nvo_contrato(Curp):
             cursor.execute(' select idEstadoCivil, Descripcion from estadocivil')
             datos5 = cursor.fetchall()
 
-            cursor.execute('select a.idsolicitud, b.idarea,c.areanombre, b.idpuesto, d.descripcion, d.SalarioMensual'
+            cursor.execute('select a.idsolicitud, b.idarea,c.areanombre, b.idpuesto, d.Nombrepuesto, d.SalarioMensual'
                         ' from resultadocandidato a, solicitud b, area c, puesto d '
                         'where b.idsolicitud=a.idsolicitud and c.idarea=b.idarea and d.idpuesto=b.idpuesto and a.curp=%s' , (Curp))
             datos9=cursor.fetchall()
@@ -3649,11 +3651,11 @@ def modifica_contrato(Curp):
     cursor.execute('select idArea, AreaNombre, AreaDescripcion from area ')
     datos9 = cursor.fetchall()
 
-    cursor.execute('select idPuesto, Descripcion, SalarioMensual, Beneficios, Bonos, Aprobacion from puesto '
-                   'order by Descripcion')
+    cursor.execute('select idPuesto, Nombrepuesto, Descripcion, SalarioMensual, Beneficios, Bonos, Aprobacion from puesto '
+                   'order by Nombrepuesto')
     datos10 = cursor.fetchall()        
 
-    cursor.execute('  SELECT a.idContrato, a.Curp, a.idPuesto,b.Descripcion, a.idArea, c.AreaNombre ,a.Salario,a.dias_de_pago , a.fecha_inicio, a.fecha_fin, a.idJornada, a.horas_semana, a.horario '
+    cursor.execute('  SELECT a.idContrato, a.Curp, a.idPuesto,b.Nombrepuesto, a.idArea, c.AreaNombre ,a.Salario,a.dias_de_pago , a.fecha_inicio, a.fecha_fin, a.idJornada, a.horas_semana, a.horario '
                    '  FROM contrato a, puesto b, area c '
                    '  where a.idPuesto=b.idPuesto and a.idArea= c.idArea and a.curp=%s',(Curp))
     datos13=cursor.fetchall()    
