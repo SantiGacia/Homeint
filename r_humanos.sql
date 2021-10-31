@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 29-10-2021 a las 09:31:32
--- Versión del servidor: 10.4.19-MariaDB
--- Versión de PHP: 8.0.7
+-- Tiempo de generación: 31-10-2021 a las 01:59:37
+-- Versión del servidor: 10.4.21-MariaDB
+-- Versión de PHP: 8.0.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -655,7 +655,8 @@ INSERT INTO `proceso` (`idProceso`, `Descripcion`) VALUES
 
 CREATE TABLE `puesto` (
   `idPuesto` int(11) NOT NULL,
-  `Descripcion` varchar(45) DEFAULT NULL,
+  `Nombrepuesto` varchar(45) DEFAULT NULL,
+  `Descripcion` varchar(200) DEFAULT NULL,
   `SalarioMensual` int(11) DEFAULT NULL,
   `Beneficios` varchar(250) DEFAULT NULL,
   `Bonos` int(11) DEFAULT NULL,
@@ -666,8 +667,10 @@ CREATE TABLE `puesto` (
 -- Volcado de datos para la tabla `puesto`
 --
 
-INSERT INTO `puesto` (`idPuesto`, `Descripcion`, `SalarioMensual`, `Beneficios`, `Bonos`, `Aprobacion`) VALUES
-(1, 'Desarrollador de paginas web', 1500000, 'De ley', 50000, 0);
+INSERT INTO `puesto` (`idPuesto`, `Nombrepuesto`, `Descripcion`, `SalarioMensual`, `Beneficios`, `Bonos`, `Aprobacion`) VALUES
+(1, 'Desarrollador de paginas web', 'paginas web', 1500000, 'De ley', 50000, 0),
+(13, 'Ingeniero en sistemas computacionales', 'hola', 600000, 'de ley', 6000, 1),
+(14, 'Desarrollador en electronica', 'Tecnicodesarrollo', 600000, 'de ley', 55, 0);
 
 -- --------------------------------------------------------
 
@@ -688,7 +691,8 @@ CREATE TABLE `puesto_has_habilidad` (
 INSERT INTO `puesto_has_habilidad` (`idPuesto`, `idHabilidad`, `Experiencia`) VALUES
 (1, 1, '5 años'),
 (1, 2, '5 años'),
-(1, 3, '5 años');
+(1, 3, '5 años'),
+(13, 6, '1');
 
 -- --------------------------------------------------------
 
@@ -707,7 +711,8 @@ CREATE TABLE `puesto_has_idioma` (
 --
 
 INSERT INTO `puesto_has_idioma` (`idPuesto`, `idIdioma`, `Nivel`) VALUES
-(1, 1, 'Avanzado');
+(1, 1, 'Avanzado'),
+(13, 3, 'medio');
 
 -- --------------------------------------------------------
 
@@ -1152,7 +1157,7 @@ ALTER TABLE `proceso`
 -- AUTO_INCREMENT de la tabla `puesto`
 --
 ALTER TABLE `puesto`
-  MODIFY `idPuesto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idPuesto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `solicitud`
