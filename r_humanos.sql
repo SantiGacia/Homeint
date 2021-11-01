@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 31-10-2021 a las 01:59:37
--- Versión del servidor: 10.4.21-MariaDB
--- Versión de PHP: 8.0.12
+-- Tiempo de generación: 01-11-2021 a las 09:13:25
+-- Versión del servidor: 10.4.19-MariaDB
+-- Versión de PHP: 8.0.7
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -42,7 +42,8 @@ CREATE TABLE `anuncio` (
 --
 
 INSERT INTO `anuncio` (`idAnuncio`, `idSolicitud`, `Num_Solicitantes`, `FechaPublicacion`, `FechaCierre`, `idcontacto`, `idMedioPublicidad`) VALUES
-(1, 1, 3, '2021-11-01', '2021-11-06', 1, 1);
+(1, 1, 3, '2021-11-01', '2021-11-06', 1, 1),
+(2, 2, 1, '2021-11-01', '2021-11-07', 2, 1);
 
 -- --------------------------------------------------------
 
@@ -91,6 +92,7 @@ CREATE TABLE `candidato` (
 --
 
 INSERT INTO `candidato` (`Curp`, `RFC`, `Nombre`, `nacionalidad`, `Domicilio`, `Telefono`, `E_Mail`, `Sexo`, `Edad`, `NSS`, `Fotografia`, `idEstadoCivil`) VALUES
+('COCR800325HASDDNB3', 'COCR800325NB3', 'CORONA CORONA ROBERTO', 'Mexicana', 'AVENIDA NIÑOS HEROES NO. 3 #502 20345', '4499707510', 'COC@GMAIL.COM', 'M', 41, '23597329246', NULL, 2),
 ('GAMS040407HASRRNA5', 'GAMS0404074T7', 'Garcia Martinez Santiago', 'Mexicana', 'Casiopea #408 ', '4491115555', 'ssantig07@gmail.com', 'M', 18, '44190407518', NULL, 1);
 
 -- --------------------------------------------------------
@@ -111,6 +113,7 @@ CREATE TABLE `candidato_has_habilidad` (
 --
 
 INSERT INTO `candidato_has_habilidad` (`Curp`, `idHabilidad`, `Experiencia`, `valida`) VALUES
+('COCR800325HASDDNB3', 4, '15 años', 'Si'),
 ('GAMS040407HASRRNA5', 1, '3 años', 'Si');
 
 -- --------------------------------------------------------
@@ -131,6 +134,7 @@ CREATE TABLE `candidato_has_idioma` (
 --
 
 INSERT INTO `candidato_has_idioma` (`Curp`, `idIdioma`, `NIvel`, `valida`) VALUES
+('COCR800325HASDDNB3', 1, 'Avanzado', 'Si'),
 ('GAMS040407HASRRNA5', 1, 'Medio', 'Si');
 
 -- --------------------------------------------------------
@@ -152,6 +156,7 @@ CREATE TABLE `candidato_has_nivelacademico` (
 --
 
 INSERT INTO `candidato_has_nivelacademico` (`Curp`, `idNivelAcademico`, `idCarrera`, `Institucion`, `valida`) VALUES
+('COCR800325HASDDNB3', 2, 2, 'UAA', 'Si'),
 ('GAMS040407HASRRNA5', 1, 3, 'DGETI', 'Si');
 
 -- --------------------------------------------------------
@@ -218,15 +223,18 @@ CREATE TABLE `contrato` (
   `Salario` varchar(50) NOT NULL,
   `dias_de_pago` varchar(100) NOT NULL,
   `lugar_firma` varchar(100) NOT NULL,
-  `fecha_firma` date NOT NULL
+  `fecha_firma` date NOT NULL,
+  `SalarioL` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `contrato`
 --
 
-INSERT INTO `contrato` (`IdContrato`, `Curp`, `idPuesto`, `idArea`, `fecha_inicio`, `fecha_fin`, `idJornada`, `horas_semana`, `horario`, `Salario`, `dias_de_pago`, `lugar_firma`, `fecha_firma`) VALUES
-(2, 'GAMS040407HASRRNA5', 1, 1, '2021-11-01', '2022-02-01', 2, '2', 'Lunes a Viernes', '1500000', 'Dia viernes', '', '2021-11-01');
+INSERT INTO `contrato` (`IdContrato`, `Curp`, `idPuesto`, `idArea`, `fecha_inicio`, `fecha_fin`, `idJornada`, `horas_semana`, `horario`, `Salario`, `dias_de_pago`, `lugar_firma`, `fecha_firma`, `SalarioL`) VALUES
+(3, 'GAME040217HASLXDA3', 15, 1, '2021-12-06', '2022-03-06', 4, '4', 'Lunes a Viernes', '107800', 'Dia viernes', '', '2021-12-06', 'CIENTO SIETE MIL OCHOCIENTOS  PESOS '),
+(4, 'GAMS040407HASRRNA5', 1, 1, '2021-11-08', '2022-02-08', 2, '2', 'Lunes a Sabado', '143000', 'Quincena y día 29 del mes', '', '2021-11-08', 'CIENTO CUARENTA Y TRES MIL  PESOS '),
+(5, 'COCR800325HASDDNB3', 15, 2, '2021-11-15', '2022-02-15', 1, '1', 'Lunes a Viernes', '107050', 'Dia viernes', '', '2021-11-15', 'CIENTO SIETE MIL CINCUENTA PESOS ');
 
 -- --------------------------------------------------------
 
@@ -239,27 +247,29 @@ CREATE TABLE `datos_de_empresa` (
   `Nombre_de_empresa` varchar(45) NOT NULL,
   `Descripcion` varchar(45) DEFAULT NULL,
   `Telefono` varchar(10) DEFAULT NULL,
-  `Domicilio` varchar(45) DEFAULT NULL,
+  `Domicilio` varchar(100) DEFAULT NULL,
   `E_Mail` varchar(45) DEFAULT NULL,
   `RazonSocial` varchar(45) DEFAULT NULL,
   `Estructura_Juridica` varchar(45) DEFAULT NULL,
   `Encargado` varchar(45) DEFAULT NULL,
-  `CIF_Empresa` varchar(9) DEFAULT NULL,
+  `CIF_Empresa` varchar(45) DEFAULT NULL,
   `Acta_constitutiva` varchar(100) NOT NULL,
   `No_Escriturapub` varchar(24) NOT NULL,
-  `Libro_Escriturapub` varchar(24) NOT NULL,
+  `Libro_Escriturapub` varchar(100) NOT NULL,
   `Fecha_Escriturapub` date NOT NULL,
-  `Fe_Escriturapub` varchar(24) NOT NULL,
+  `Fe_Escriturapub` varchar(100) NOT NULL,
   `NP_Escriturapub` varchar(24) NOT NULL,
-  `Ciu_Escriturapub` varchar(100) NOT NULL
+  `Ciu_Escriturapub` varchar(100) NOT NULL,
+  `No_EscriturapubL` varchar(100) NOT NULL,
+  `RepresentanteLegal` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `datos_de_empresa`
 --
 
-INSERT INTO `datos_de_empresa` (`idEmpresa`, `Nombre_de_empresa`, `Descripcion`, `Telefono`, `Domicilio`, `E_Mail`, `RazonSocial`, `Estructura_Juridica`, `Encargado`, `CIF_Empresa`, `Acta_constitutiva`, `No_Escriturapub`, `Libro_Escriturapub`, `Fecha_Escriturapub`, `Fe_Escriturapub`, `NP_Escriturapub`, `Ciu_Escriturapub`) VALUES
-(1, 'PruebaSist S.A ', 'Empresa de prueba para el sistema ', '449-999-88', 'Cetis155', 'pruebasist@pruebasist.com.mx', 'PruebaSist S.A.', 'S.A', 'Nombre del CEO ', '?????????', 'Acta Prueba', '2008', 'libro prueba', '2021-10-07', 'fe prueba', '2008', 'Aguascalientes');
+INSERT INTO `datos_de_empresa` (`idEmpresa`, `Nombre_de_empresa`, `Descripcion`, `Telefono`, `Domicilio`, `E_Mail`, `RazonSocial`, `Estructura_Juridica`, `Encargado`, `CIF_Empresa`, `Acta_constitutiva`, `No_Escriturapub`, `Libro_Escriturapub`, `Fecha_Escriturapub`, `Fe_Escriturapub`, `NP_Escriturapub`, `Ciu_Escriturapub`, `No_EscriturapubL`, `RepresentanteLegal`) VALUES
+(1, 'Homeint S.A.', 'Cosas invocadoras de desarrollo', '4499998888', 'Av Perseo 301, Primo Verdad Inegi, 20267 Aguascalientes, Ags.', 'homeintmaster@homeint.com', 'Sociedad Anonima', 'Física', 'Uvuvwevwevwe Onyetenyevwe Ugwemuhwem Osas', 'B77431213', 'Acta', '200899', 'Homeint Escritura publica', '2021-10-07', 'HUMBERTO GUAR IRACHETA', '47', 'Aguascalientes', 'DOSCIENTOS  MIL OCHOCIENTOS NOVENTA Y NUEVE  ', 'Bad bunny ');
 
 -- --------------------------------------------------------
 
@@ -294,8 +304,9 @@ CREATE TABLE `empleado` (
 --
 
 INSERT INTO `empleado` (`Curp`, `RFC`, `Nombre`, `nacionalidad`, `Domicilio`, `Telefono`, `E_mail`, `Sexo`, `Edad`, `NSS`, `idEstadoCivil`, `Conyuje_Concubino`, `tel_emergencia`, `nombre_emergencia`, `no_infonavit`, `No_contrato`, `Contrato_Definitivo`, `Contrato_Temporal`, `ContratoTemporal_Val`) VALUES
-('GAME040217HASLXDA3', 'GAME040217DA3', 'GALLEGO MUÑOZ EDGAR MARIO', '', 'conocido', '4499915555', 'mariochikito11@gmail.com', 'M', 20, '44190407518', 4, 'A', '4491115555', 'Hermana de mario', '...', 0, '', '', 'No'),
-('GAMS040407HASRRNA5', 'COCR800325B29', 'Garcia Martinez Santiago ', '', 'conocido', '4491115555', 'ssantig07@gmail.com', 'M', 20, '2147483647', 1, '', '4495691241', 'María José Garcia Martínez', '', 0, '', '', 'Si');
+('COCR800325HASDDNB3', 'COCR800325NB3', 'CORONA CORONA ROBERTO', 'Mexicana', 'AVENIDA NIÑOS HEROES NO. 3 #502 20345', '4499707510', 'COC@GMAIL.COM', 'M', 41, '23597329246', 2, 'María Lucia Posada Casas', '4449931212', 'Rigoberto Corona Corona', '', 0, '', '', 'Si'),
+('GAME040217HASLXDA3', 'GAME040217DA3', 'GALLEGO MUÑOZ EDGAR MARIO', 'Mexicana', 'conocido', '4499915555', 'mariochikito11@gmail.com', 'M', 20, '44190407518', 4, 'A', '4491115555', 'Hermana de mario', '...', 0, '', '', 'Si'),
+('GAMS040407HASRRNA5', 'GAMS0404074T7', 'Garcia Martinez Santiago Octavio', 'Mexicana', 'Casiopea #408 Gomez Portugal 20250', '4491115555', 'ssantig07@gmail.com', 'M', 20, '2147483647', 1, '', '4495691241', 'María José Garcia Martínez', '', 0, '', '', 'Si');
 
 -- --------------------------------------------------------
 
@@ -315,6 +326,7 @@ CREATE TABLE `empleado_has_habilidad` (
 --
 
 INSERT INTO `empleado_has_habilidad` (`Curp`, `idHabilidad`, `Experiencia`, `valida`) VALUES
+('COCR800325HASDDNB3', 4, '15 años', 'Si'),
 ('GAME040217HASLXDA3', 4, '5 años', ''),
 ('GAMS040407HASRRNA5', 1, '3 años', 'Si');
 
@@ -336,6 +348,7 @@ CREATE TABLE `empleado_has_idioma` (
 --
 
 INSERT INTO `empleado_has_idioma` (`Curp`, `idIdioma`, `Nivel`, `valida`) VALUES
+('COCR800325HASDDNB3', 1, 'Avanzado', 'Si'),
 ('GAME040217HASLXDA3', 2, 'Medio', ''),
 ('GAMS040407HASRRNA5', 1, 'Medio', 'Si');
 
@@ -358,6 +371,7 @@ CREATE TABLE `empleado_has_nivelacademico` (
 --
 
 INSERT INTO `empleado_has_nivelacademico` (`Curp`, `idNivelAcademico`, `idCarrera`, `Institucion`, `valida`) VALUES
+('COCR800325HASDDNB3', 2, 2, 'UAA', 'Si'),
 ('GAME040217HASLXDA3', 2, 2, 'UAA', ''),
 ('GAMS040407HASRRNA5', 1, 3, 'DGETI', 'Si');
 
@@ -486,10 +500,10 @@ CREATE TABLE `jordesc` (
 --
 
 INSERT INTO `jordesc` (`iddesc`, `name`, `IdJornada`) VALUES
-(1, 'De 8 AM a 14 y 15 - 20', 1),
-(2, '12 - 16 y 18 - 2', 2),
-(3, '10-20', 3),
-(4, '22 horas a 6 horas', 4);
+(1, 'De 8 horas a 14 horas', 1),
+(2, 'De 12horas  a 16 horas', 2),
+(3, 'De 21 horas a 7 horas', 3),
+(4, 'De 22 horas a 8 horas', 4);
 
 -- --------------------------------------------------------
 
@@ -509,10 +523,10 @@ CREATE TABLE `jornada` (
 --
 
 INSERT INTO `jornada` (`IdJornada`, `jornombre`, `Descripcion`, `val`) VALUES
-(1, '8 horas', 'De 8 AM a 14 y 15 - 20', '1'),
-(2, '9 horas', '12 - 16 y 18 - 2', '1'),
-(3, '10 horas', '10-20', '1'),
-(4, 'Nocturna', '22 horas a 6 horas', '1');
+(1, 'Diurna ', 'De 8 horas a 14 horas', '0'),
+(2, 'Diurna 2', 'De 12horas  a 16 horas', '0'),
+(3, 'Nocturna', 'De 21 horas a 7 horas', '0'),
+(4, 'Nocturna 2', 'De 22 horas a 8 horas', '0');
 
 -- --------------------------------------------------------
 
@@ -660,17 +674,18 @@ CREATE TABLE `puesto` (
   `SalarioMensual` int(11) DEFAULT NULL,
   `Beneficios` varchar(250) DEFAULT NULL,
   `Bonos` int(11) DEFAULT NULL,
-  `Aprobacion` tinyint(1) DEFAULT NULL
+  `Aprobacion` tinyint(1) DEFAULT NULL,
+  `SalarioL` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `puesto`
 --
 
-INSERT INTO `puesto` (`idPuesto`, `Nombrepuesto`, `Descripcion`, `SalarioMensual`, `Beneficios`, `Bonos`, `Aprobacion`) VALUES
-(1, 'Desarrollador de paginas web', 'paginas web', 1500000, 'De ley', 50000, 0),
-(13, 'Ingeniero en sistemas computacionales', 'hola', 600000, 'de ley', 6000, 1),
-(14, 'Desarrollador en electronica', 'Tecnicodesarrollo', 600000, 'de ley', 55, 0);
+INSERT INTO `puesto` (`idPuesto`, `Nombrepuesto`, `Descripcion`, `SalarioMensual`, `Beneficios`, `Bonos`, `Aprobacion`, `SalarioL`) VALUES
+(1, 'Desarrollador de paginas web', 'paginas web', 144000, 'De ley', 50000, 0, 'CIENTO CUARENTA Y CUATRO MIL  PESOS '),
+(14, 'Técnico en sistema de cómputos', '1.Mantenimiento de computo. 2. Instalación de hardware y software necesarios en la empresa.', 600000, 'de ley', 55000, 0, 'SEISCIENTOS  MIL  PESOS '),
+(15, 'Diseñador de Creativos - Diseñador Gráfico ', 'Diseñar elementos visuales para la web', 108000, 'De ley', 30000, 1, 'CIENTO OCHO MIL  PESOS ');
 
 -- --------------------------------------------------------
 
@@ -691,8 +706,7 @@ CREATE TABLE `puesto_has_habilidad` (
 INSERT INTO `puesto_has_habilidad` (`idPuesto`, `idHabilidad`, `Experiencia`) VALUES
 (1, 1, '5 años'),
 (1, 2, '5 años'),
-(1, 3, '5 años'),
-(13, 6, '1');
+(1, 3, '5 años');
 
 -- --------------------------------------------------------
 
@@ -711,8 +725,7 @@ CREATE TABLE `puesto_has_idioma` (
 --
 
 INSERT INTO `puesto_has_idioma` (`idPuesto`, `idIdioma`, `Nivel`) VALUES
-(1, 1, 'Avanzado'),
-(13, 3, 'medio');
+(1, 1, 'Avanzado');
 
 -- --------------------------------------------------------
 
@@ -744,7 +757,8 @@ CREATE TABLE `resultadocandidato` (
 --
 
 INSERT INTO `resultadocandidato` (`EstatusProceso`, `Comentarios_area`, `Comentarios_ofertas_salario`, `Comentarios_area_seleccion`, `estatus`, `idSolicitud`, `Curp`, `id_actitud`, `Coeficiente_Intelectual`, `Personalidad`, `apto_psico`, `Validar_ref`, `Calificacion_Medica`, `validacion`, `Calificacion`, `Califica_el_Perfil`) VALUES
-('3', '', '', '', 'Si', 1, 'GAMS040407HASRRNA5', 0, 100, 'Bueno', 0, 'Si', 'Apto', 'Si', 'Apto', '10');
+('3', '', '', '', 'Si', 1, 'GAMS040407HASRRNA5', 0, 100, 'Bueno', 0, 'Si', 'Apto', 'Si', 'Apto', '10'),
+('3', '', '', '', 'Si', 2, 'COCR800325HASDDNB3', 0, 10, 'Bueno', 0, 'Si', 'Apto', 'Si', 'Apto', '10');
 
 -- --------------------------------------------------------
 
@@ -768,7 +782,8 @@ CREATE TABLE `solicitud` (
 --
 
 INSERT INTO `solicitud` (`idSolicitud`, `FechaSolicitud`, `NumeroVacante`, `idArea`, `idPuesto`, `idNivelAcademico`, `idCarrera`, `idEstatus_Solicitud`) VALUES
-(1, '2021-10-27', 3, 1, 1, 2, 3, 3);
+(1, '2021-10-27', 3, 1, 1, 2, 3, 3),
+(2, '2021-10-25', 1, 2, 15, 2, 2, 3);
 
 -- --------------------------------------------------------
 
@@ -1049,7 +1064,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `anuncio`
 --
 ALTER TABLE `anuncio`
-  MODIFY `idAnuncio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idAnuncio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `area`
@@ -1073,7 +1088,7 @@ ALTER TABLE `contacto`
 -- AUTO_INCREMENT de la tabla `contrato`
 --
 ALTER TABLE `contrato`
-  MODIFY `IdContrato` int(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `IdContrato` int(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `datos_de_empresa`
@@ -1157,13 +1172,13 @@ ALTER TABLE `proceso`
 -- AUTO_INCREMENT de la tabla `puesto`
 --
 ALTER TABLE `puesto`
-  MODIFY `idPuesto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `idPuesto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de la tabla `solicitud`
 --
 ALTER TABLE `solicitud`
-  MODIFY `idSolicitud` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idSolicitud` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
@@ -1208,7 +1223,7 @@ ALTER TABLE `candidato_has_idioma`
 -- Filtros para la tabla `candidato_has_nivelacademico`
 --
 ALTER TABLE `candidato_has_nivelacademico`
-  ADD CONSTRAINT `fk_Candidato_has_NivelAcademico_Candidato1` FOREIGN KEY (`Curp`) REFERENCES `candidato` (`Curp`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_Candidato_has_NivelAcademico_Candidato1` FOREIGN KEY (`Curp`) REFERENCES `candidato` (`Curp`) ON DELETE CASCADE ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_Candidato_has_NivelAcademico_Carrera1` FOREIGN KEY (`idCarrera`) REFERENCES `carrera` (`idCarrera`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_Candidato_has_NivelAcademico_NivelAcademico1` FOREIGN KEY (`idNivelAcademico`) REFERENCES `nivelacademico` (`idNivelAcademico`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
