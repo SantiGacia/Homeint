@@ -1505,7 +1505,7 @@ def agrega_hab_can(Curp):
             cursor.execute('insert into candidato_has_habilidad (Curp, idHabilidad, Experiencia) '
                            'values (%s,%s,%s)',(aux_can,aux_hab,aux_exp))
             conn.commit()
-            cursor.execute(' select Curp, RFC, Nombre, Domicilio, Telefono, E_Mail, Sexo, Edad, NSS, idEstadoCivil'
+            cursor.execute(' select Curp, RFC, Nombre,nacionalidad,Domicilio, Telefono, E_Mail, Sexo, Edad, NSS, idEstadoCivil'
                            ' from candidato where Curp=%s', (aux_can))
             datos = cursor.fetchall()
             cursor.execute(' select a.Curp, b.idHabilidad, b.Descripcion, c.Curp, c.idHabilidad, c.Experiencia'
@@ -1560,7 +1560,7 @@ def agrega_idio_can(Curp):
             cursor.execute('insert into candidato_has_idioma (Curp, idIdioma, Nivel) '
                            'values (%s,%s,%s)',(aux_can,aux_idi,aux_niv))
             conn.commit()
-            cursor.execute(' select Curp, RFC, Nombre, Domicilio, Telefono, E_Mail, Sexo, Edad, NSS, idEstadoCivil'
+            cursor.execute(' select Curp, RFC, Nombre,nacionalidad,Domicilio, Telefono, E_Mail, Sexo, Edad, NSS, idEstadoCivil'
                            ' from candidato where Curp=%s', (aux_can))
             datos = cursor.fetchall()
             cursor.execute(' select a.Curp, b.idHabilidad, b.Descripcion, c.Curp, c.idHabilidad, c.Experiencia'
@@ -1616,7 +1616,7 @@ def agrega_aca_can(Curp):
             cursor.execute('insert into candidato_has_nivelacademico (Curp, idNivelAcademico,idCarrera, Institucion) '
                            'values (%s,%s,%s,%s)',(aux_can,aux_nivel,aux_carr,aux_ins))
             conn.commit()
-            cursor.execute(' select Curp, RFC, Nombre, Domicilio, Telefono, E_Mail, Sexo, Edad, NSS, idEstadoCivil'
+            cursor.execute(' select Curp, RFC, Nombre,nacionalidad,Domicilio, Telefono, E_Mail, Sexo, Edad, NSS, idEstadoCivil'
                            ' from candidato where Curp=%s', (aux_can))
             datos = cursor.fetchall()
             cursor.execute(' select a.Curp, b.idHabilidad, b.Descripcion, c.Curp, c.idHabilidad, c.Experiencia'
@@ -1660,7 +1660,7 @@ def bo_hab_can(idC,idH):
     cursor = conn.cursor()
     cursor.execute('delete from candidato_has_habilidad where Curp =%s and idHabilidad=%s',(idC,idH))
     conn.commit()
-    cursor.execute(' select Curp, RFC, Nombre, Domicilio, Telefono, E_Mail, Sexo, Edad, NSS, idEstadoCivil from candidato where Curp=%s',(idC))
+    cursor.execute(' select Curp, RFC, Nombre,nacionalidad,Domicilio, Telefono, E_Mail, Sexo, Edad, NSS, idEstadoCivil from candidato where Curp=%s',(idC))
     datos = cursor.fetchall()
     cursor.execute(' select a.Curp, b.idHabilidad, b.Descripcion, c.Curp, c.idHabilidad, c.Experiencia'
                    ' from candidato a, habilidad b, candidato_has_habilidad c'
@@ -1704,7 +1704,7 @@ def bo_idi_can(idC,idI):
     cursor.execute('delete from candidato_has_idioma where Curp =%s and idIdioma=%s',(idC,idI))
     conn.commit()
     cursor.execute(
-        ' select Curp, RFC, Nombre, Domicilio, Telefono, E_Mail, Sexo, Edad, NSS, idEstadoCivil from candidato where Curp=%s',
+        ' select Curp, RFC, Nombre,nacionalidad,Domicilio, Telefono, E_Mail, Sexo, Edad, NSS, idEstadoCivil from candidato where Curp=%s',
         (idC))
     datos = cursor.fetchall()
     cursor.execute(' select a.Curp, b.idHabilidad, b.Descripcion, c.Curp, c.idHabilidad, c.Experiencia'
@@ -1750,7 +1750,7 @@ def bo_aca_can(idC,idA,idCA):
     cursor.execute('delete from candidato_has_nivelacademico where Curp =%s and idNivelAcademico=%s and idCarrera=%s', (idC, idA,idCA))
     conn.commit()
     cursor.execute(
-        ' select Curp, RFC, Nombre, Domicilio, Telefono, E_Mail, Sexo, Edad, NSS, idEstadoCivil from candidato where Curp=%s',(idC))
+        ' select Curp, RFC, Nombre,nacionalidad,Domicilio, Telefono, E_Mail, Sexo, Edad, NSS, idEstadoCivil from candidato where Curp=%s',(idC))
     datos = cursor.fetchall()
     cursor.execute(' select a.Curp, b.idHabilidad, b.Descripcion, c.Curp, c.idHabilidad, c.Experiencia'
                    ' from candidato a, habilidad b, candidato_has_habilidad c'
@@ -2158,8 +2158,8 @@ def bo_sol_candidato(ca,so):
 def ed_candidato2(Curp,id):
         conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
         cursor = conn.cursor()
-        cursor.execute(' select Curp, RFC, Nombre, Domicilio, Telefono, E_Mail, Sexo, Edad, NSS, idEstadoCivil'
-                       ' from candidato where Curp=%s',(Curp))
+        cursor.execute(' select a. Curp, a.RFC, a.Nombre, a.Domicilio, a.Telefono, a.E_Mail, a.Sexo, a.Edad, a.NSS, a.idEstadoCivil,a.Nacionalidad, b.Descripcion'
+                       ' from candidato a, estadocivil b where a.idEstadoCivil=b.idEstadoCivil and a.Curp=%s',(Curp))
         datos=cursor.fetchall()
 
         cursor.execute(' select a.Curp, b.idHabilidad, b.Descripcion, c.Curp, c.idHabilidad, c.Experiencia'
@@ -2430,8 +2430,8 @@ def ed_candidato3(Curp,ca,id):
 
 
 
-        cursor.execute(' select Curp, RFC, Nombre, Domicilio, Telefono, E_Mail, Sexo, Edad, NSS, idEstadoCivil'
-                       ' from candidato where Curp=%s',(Curp))
+        cursor.execute(' select a. Curp, a.RFC, a.Nombre, a.Domicilio, a.Telefono, a.E_Mail, a.Sexo, a.Edad, a.NSS, a.idEstadoCivil,a.Nacionalidad, b.Descripcion'
+                       ' from candidato a, estadocivil b where a.idEstadoCivil=b.idEstadoCivil and a.Curp=%s',(Curp))
         datos=cursor.fetchall()
 
 
@@ -2480,8 +2480,8 @@ def cal_hab_cdto(Curp,idH,co,id):
         cursor.execute('update candidato_has_habilidad set valida=%s where Curp=%s and idHabilidad=%s',(co,Curp,idH))
         conn.commit()
 
-        cursor.execute(' select Curp, RFC, Nombre, Domicilio, Telefono, E_Mail, Sexo, Edad, NSS, idEstadoCivil'
-                       ' from candidato where Curp=%s',(Curp))
+        cursor.execute(' select a. Curp, a.RFC, a.Nombre, a.Domicilio, a.Telefono, a.E_Mail, a.Sexo, a.Edad, a.NSS, a.idEstadoCivil,a.Nacionalidad, b.Descripcion'
+                       ' from candidato a, estadocivil b where a.idEstadoCivil=b.idEstadoCivil and a.Curp=%s',(Curp))
         datos=cursor.fetchall()
 
         cursor.execute(' select a.Curp, b.idHabilidad, b.Descripcion, c.Curp, c.idHabilidad, c.Experiencia, c.valida'
@@ -2526,8 +2526,8 @@ def cal_idio_cdto(Curp,idI,ca,id):
         cursor.execute('update candidato_has_idioma set valida=%s where Curp=%s and idIdioma=%s',(ca,Curp,idI))
         conn.commit()
 
-        cursor.execute(' select Curp, RFC, Nombre, Domicilio, Telefono, E_Mail, Sexo, Edad, NSS, idEstadoCivil'
-                       ' from candidato where Curp=%s',(Curp))
+        cursor.execute(' select a. Curp, a.RFC, a.Nombre, a.Domicilio, a.Telefono, a.E_Mail, a.Sexo, a.Edad, a.NSS, a.idEstadoCivil,a.Nacionalidad, b.Descripcion'
+                       ' from candidato a, estadocivil b where a.idEstadoCivil=b.idEstadoCivil and a.Curp=%s',(Curp))
         datos=cursor.fetchall()
 
         cursor.execute(' select a.Curp, b.idHabilidad, b.Descripcion, c.Curp, c.idHabilidad, c.Experiencia, c.valida'
@@ -2572,8 +2572,8 @@ def cal_aca_cdto(Curp,idA,co,id):
         cursor.execute('update candidato_has_nivelacademico set valida=%s where Curp=%s and idNivelAcademico=%s',(co,Curp,idA))
         conn.commit()
 
-        cursor.execute(' select Curp, RFC, Nombre, Domicilio, Telefono, E_Mail, Sexo, Edad, NSS, idEstadoCivil'
-                       ' from candidato where Curp=%s',(Curp))
+        cursor.execute(' select a. Curp, a.RFC, a.Nombre, a.Domicilio, a.Telefono, a.E_Mail, a.Sexo, a.Edad, a.NSS, a.idEstadoCivil,a.Nacionalidad, b.Descripcion'
+                       ' from candidato a, estadocivil b where a.idEstadoCivil=b.idEstadoCivil and a.Curp=%s',(Curp))
         datos=cursor.fetchall()
 
         cursor.execute(' select a.Curp, b.idHabilidad, b.Descripcion, c.Curp, c.idHabilidad, c.Experiencia, c.valida'
@@ -2619,8 +2619,8 @@ def cal_val_cdto(Curp,idA,ca):
         cursor.execute('update resultadocandidato set validacion=%s where Curp=%s and idNivelAcademico=%s',(ca,Curp,idA))
         conn.commit()
 
-        cursor.execute(' select Curp, RFC, Nombre, Domicilio, Telefono, E_Mail, Sexo, Edad, NSS, idEstadoCivil'
-                       ' from candidato where Curp=%s',(Curp))
+        cursor.execute(' select a. Curp, a.RFC, a.Nombre, a.Domicilio, a.Telefono, a.E_Mail, a.Sexo, a.Edad, a.NSS, a.idEstadoCivil,a.Nacionalidad, b.Descripcion'
+                       ' from candidato a, estadocivil b where a.idEstadoCivil=b.idEstadoCivil and a.Curp=%s',(Curp))
         datos=cursor.fetchall()
 
         cursor.execute(' select a.Curp, b.idHabilidad, b.Descripcion, c.Curp, c.idHabilidad, c.Experiencia, c.valida'
@@ -2781,8 +2781,8 @@ def muestra_calf_psicologica(ca,so):
 def mue_per_candidato(Curp):
         conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
         cursor = conn.cursor()
-        cursor.execute(' select Curp, RFC, Nombre, Domicilio, Telefono, E_Mail, Sexo, Edad, NSS, idEstadoCivil'
-                       ' from candidato where Curp=%s',(Curp))
+        cursor.execute(' select a. Curp, a.RFC, a.Nombre, a.Domicilio, a.Telefono, a.E_Mail, a.Sexo, a.Edad, a.NSS, a.idEstadoCivil,a.Nacionalidad, b.Descripcion'
+                       ' from candidato a, estadocivil b where a.idEstadoCivil=b.idEstadoCivil and a.Curp=%s',(Curp))
         datos=cursor.fetchall()
 
         cursor.execute(' select a.Curp, b.idHabilidad, b.Descripcion, c.Curp, c.idHabilidad, c.Experiencia, c.valida'
@@ -2795,7 +2795,7 @@ def mue_per_candidato(Curp):
                        ' where a.Curp=c.Curp and b.idIdioma=c.idIdioma and c.Curp=%s',(Curp))
         datos2 = cursor.fetchall()
 
-        cursor.execute(' select a.Curp, b.idNivelAcademico, b.Descripcion, c.idCarrera, c.Descripcion, d.Curp, d.idNivelAcademico, d.idCarrera, d.Institucion'
+        cursor.execute(' select a.Curp, b.idNivelAcademico, b.Descripcion, c.idCarrera, c.Descripcion, d.Curp, d.idNivelAcademico, d.idCarrera, d.Institucion,d.valida'
                        ' from candidato a, nivelacademico b, carrera c, candidato_has_nivelacademico d'
                        ' where a.Curp=d.Curp and b.idNivelAcademico=d.idNivelAcademico and c.idCarrera=d.idCarrera and d.Curp=%s',(Curp))
         datos6 = cursor.fetchall()
@@ -2982,8 +2982,8 @@ def import_empleado(val):
                 error = "El Empleado ya se encuentra agregado."
                 return render_template("error.html", des_error=error, paginaant="/empleado")
             else:
-                cursor.execute('INSERT INTO `empleado`(`Curp`, `RFC`, `Nombre`, `Domicilio`, `Telefono`, `E_mail`, `Sexo`, `Edad`, `NSS`, `idEstadoCivil`)'
-                       'SELECT `Curp`,`RFC`,`Nombre`,`Domicilio`,`Telefono`,`E_Mail`,`Sexo`,`Edad`,`NSS`,`idEstadoCivil`'
+                cursor.execute('INSERT INTO `empleado`(`Curp`, `RFC`, `Nombre`, `nacionalidad`,`Domicilio`, `Telefono`, `E_mail`, `Sexo`, `Edad`, `NSS`, `idEstadoCivil`)'
+                       'SELECT `Curp`,`RFC`,`Nombre`,`nacionalidad`,`Domicilio`,`Telefono`,`E_Mail`,`Sexo`,`Edad`,`NSS`,`idEstadoCivil`'
                        'FROM candidato where CURP=%s',(aux_cur)
                        )
                 conn.commit()
@@ -3110,7 +3110,7 @@ def agrega_emp_hab_can(Curp):
             cursor.execute('insert into empleado_has_habilidad (Curp, idHabilidad, Experiencia) '
                            'values (%s,%s,%s)',(aux_can,aux_hab,aux_exp))
             conn.commit()
-            cursor.execute(' select Curp, RFC, Nombre, Domicilio, Telefono, E_Mail, Sexo, Edad, NSS, idEstadoCivil, Conyuje_Concubino,tel_emergencia, nombre_emergencia, no_infonavit'
+            cursor.execute(' select Curp, RFC, Nombre, Domicilio,nacionalidad, Telefono, E_Mail, Sexo, Edad, NSS, idEstadoCivil, Conyuje_Concubino,tel_emergencia, nombre_emergencia, no_infonavit'
                            ' from empleado where Curp=%s', (aux_can))
             datos = cursor.fetchall()
             cursor.execute(' select a.Curp, b.idHabilidad, b.Descripcion, c.Curp, c.idHabilidad, c.Experiencia'
@@ -3165,8 +3165,9 @@ def agrega_emp_idio_can(Curp):
             cursor.execute('insert into empleado_has_idioma (Curp, idIdioma, Nivel) '
                            'values (%s,%s,%s)',(aux_can,aux_idi,aux_niv))
             conn.commit()
-            cursor.execute(' select Curp, RFC, Nombre, Domicilio, Telefono, E_Mail, Sexo, Edad, NSS, idEstadoCivil, Conyuje_Concubino,tel_emergencia, nombre_emergencia, no_infonavit'
+            cursor.execute(' select Curp, RFC, Nombre, Domicilio,nacionalidad, Telefono, E_Mail, Sexo, Edad, NSS, idEstadoCivil, Conyuje_Concubino,tel_emergencia, nombre_emergencia, no_infonavit'
                            ' from empleado where Curp=%s', (aux_can))
+                           
             datos = cursor.fetchall()
             cursor.execute(' select a.Curp, b.idHabilidad, b.Descripcion, c.Curp, c.idHabilidad, c.Experiencia'
                            ' from empleado a, habilidad b, empleado_has_habilidad c'
@@ -3221,7 +3222,7 @@ def agrega_emp_aca_can(Curp):
             cursor.execute('insert into empleado_has_nivelacademico (Curp, idNivelAcademico,idCarrera, Institucion) '
                            'values (%s,%s,%s,%s)',(aux_can,aux_nivel,aux_carr,aux_ins))
             conn.commit()
-            cursor.execute(' select Curp, RFC, Nombre, Domicilio, Telefono, E_Mail, Sexo, Edad, NSS, idEstadoCivil, Conyuje_Concubino,tel_emergencia, nombre_emergencia, no_infonavit'
+            cursor.execute(' select Curp, RFC, Nombre, Domicilio, nacionalidad,Telefono, E_Mail, Sexo, Edad, NSS, idEstadoCivil, Conyuje_Concubino,tel_emergencia, nombre_emergencia, no_infonavit'
                            ' from empleado where Curp=%s', (aux_can))
             datos = cursor.fetchall()
             cursor.execute(' select a.Curp, b.idHabilidad, b.Descripcion, c.Curp, c.idHabilidad, c.Experiencia'
@@ -3265,7 +3266,7 @@ def bo_emp_hab_can(idC,idH):
     cursor = conn.cursor()
     cursor.execute('delete from empleado_has_habilidad where Curp =%s and idHabilidad=%s',(idC,idH))
     conn.commit()
-    cursor.execute(' select Curp, RFC, Nombre, Domicilio, Telefono, E_Mail, Sexo, Edad, NSS, idEstadoCivil, Conyuje_Concubino,tel_emergencia, nombre_emergencia, no_infonavit from empleado where Curp=%s',(idC))
+    cursor.execute(' select Curp, RFC, Nombre, Domicilio, nacionalidad,Telefono, E_Mail, Sexo, Edad, NSS, idEstadoCivil, Conyuje_Concubino,tel_emergencia, nombre_emergencia, no_infonavit from empleado where Curp=%s',(idC))
     datos = cursor.fetchall()
     cursor.execute(' select a.Curp, b.idHabilidad, b.Descripcion, c.Curp, c.idHabilidad, c.Experiencia'
                    ' from empleado a, habilidad b, empleado_has_habilidad c'
@@ -3309,7 +3310,7 @@ def bo_emp_idi_can(idC,idI):
     cursor.execute('delete from empleado_has_idioma where Curp =%s and idIdioma=%s',(idC,idI))
     conn.commit()
     cursor.execute(
-        ' select Curp, RFC, Nombre, Domicilio, Telefono, E_Mail, Sexo, Edad, NSS, idEstadoCivil, Conyuje_Concubino,tel_emergencia, nombre_emergencia, no_infonavit from empleado where Curp=%s',
+        ' select Curp, RFC, Nombre, Domicilio, nacionalidad,Telefono, E_Mail, Sexo, Edad, NSS, idEstadoCivil, Conyuje_Concubino,tel_emergencia, nombre_emergencia, no_infonavit from empleado where Curp=%s',
         (idC))
     datos = cursor.fetchall()
     cursor.execute(' select a.Curp, b.idHabilidad, b.Descripcion, c.Curp, c.idHabilidad, c.Experiencia'
@@ -3355,7 +3356,7 @@ def bo_emp_aca_can(idC,idA,idCA):
     cursor.execute('delete from empleado_has_nivelacademico where Curp =%s and idNivelAcademico=%s and idCarrera=%s', (idC, idA,idCA))
     conn.commit()
     cursor.execute(
-        ' select Curp, RFC, Nombre, Domicilio, Telefono, E_Mail, Sexo, Edad, NSS, idEstadoCivil, Conyuje_Concubino,tel_emergencia, nombre_emergencia, no_infonavit from empleado where Curp=%s',(idC))
+        ' select Curp, RFC, Nombre, Domicilio, nacionalidad,Telefono, E_Mail, Sexo, Edad, NSS, idEstadoCivil, Conyuje_Concubino,tel_emergencia, nombre_emergencia, no_infonavit from empleado where Curp=%s',(idC))
     datos = cursor.fetchall()
     cursor.execute(' select a.Curp, b.idHabilidad, b.Descripcion, c.Curp, c.idHabilidad, c.Experiencia'
                    ' from empleado a, habilidad b, empleado_has_habilidad c'
@@ -3539,7 +3540,7 @@ def nvo_contrato(Curp):
             conn.close()
             return render_template("nvo_contrato2.html" , jornada=jornada, message=message,turnos=datos12,sexo=sexos,carrera_can=datos8, empleados=datos, can_habs=datos1, can_idis=datos2,can_acas=datos6, habs=datos3, idiomas=datos4, nivel_academico=datos7, ecivil=datos5, areas=datos9, puestos=datos10)
         else:
-            cursor.execute(' select Curp, RFC, Nombre, Domicilio, Telefono, E_Mail, Sexo, Edad, NSS, idEstadoCivil, Conyuje_Concubino,tel_emergencia, nombre_emergencia, no_infonavit'
+            cursor.execute(' select Curp, RFC, Nombre, nacionalidad,Domicilio, Telefono, E_Mail, Sexo, Edad, NSS, idEstadoCivil, Conyuje_Concubino,tel_emergencia, nombre_emergencia, no_infonavit'
                         ' from empleado where Curp=%s',(Curp))
             datos=cursor.fetchall()
 

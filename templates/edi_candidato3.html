@@ -30,6 +30,10 @@
             <label for="rfc">RFC</label>
             <input type="text" class="form-control" name="rfc" id="rfc" placeholder="0101010101" value="{{candidatos.0[1]}}" disabled>
         </div>
+        <div class="form-group col-md-7">
+          <label for="nacionalidad">Nacionalidad</label>
+          <input type="text" class="form-control" name="nacionalidad" id="nacionalidad" value="{{candidatos.0[10]}}" disabled>
+      </div>
     </div>
     <div class="form-row">
         <div class="form-group col-md-2">
@@ -52,25 +56,19 @@
         <div class="form-group col-md-2">
             <label for="sexo">Sexo</label>
             <select name="sexo" id="sexo" class="form-control" disabled>
-                {% if candidatos.0[5]== "M" %}
-                  <option value="M">Masculino</option>
-                {% else %}
-                   <option value="F">Femenino</option>
-                {% endif %}
-                <option value="F">Femenino</option>
-                <option value="M">Masculino</option>
+              {% if candidatos.0[6]== "M" %}
+              <option value="M">Masculino</option>
+              <option value="F">Femenino</option>
+            {% else %}
+               <option value="F">Femenino</option>
+               <option value="M">Masculino</option>
+            {% endif %}
             </select>
         </div>
         <div class="form-group col-md-2">
             <label for="edociv">E. Civil</label>
             <select name="edociv" id="edociv" class="form-control" disabled>
-                {% if candidatos.0[9]==1 %}
-                  <option value="1">Soltero/a</option>
-                {% else %}
-                  <option value="2">Casado/a</option>
-                {% endif %}
-                <option value="1">Soltero/a</option>
-                <option value="2">Casado/a</option>
+              <option selected>{{candidatos.0[11]}}</option>
             </select>
         </div>
     </div>

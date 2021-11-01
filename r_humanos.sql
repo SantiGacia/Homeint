@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 01-11-2021 a las 09:13:25
+-- Tiempo de generación: 01-11-2021 a las 18:58:30
 -- Versión del servidor: 10.4.19-MariaDB
 -- Versión de PHP: 8.0.7
 
@@ -92,8 +92,9 @@ CREATE TABLE `candidato` (
 --
 
 INSERT INTO `candidato` (`Curp`, `RFC`, `Nombre`, `nacionalidad`, `Domicilio`, `Telefono`, `E_Mail`, `Sexo`, `Edad`, `NSS`, `Fotografia`, `idEstadoCivil`) VALUES
-('COCR800325HASDDNB3', 'COCR800325NB3', 'CORONA CORONA ROBERTO', 'Mexicana', 'AVENIDA NIÑOS HEROES NO. 3 #502 20345', '4499707510', 'COC@GMAIL.COM', 'M', 41, '23597329246', NULL, 2),
-('GAMS040407HASRRNA5', 'GAMS0404074T7', 'Garcia Martinez Santiago', 'Mexicana', 'Casiopea #408 ', '4491115555', 'ssantig07@gmail.com', 'M', 18, '44190407518', NULL, 1);
+('COCR800325HASDDNB3', 'COCR800325NB3', 'CORONA CORONA ROBERTO', 'Mexicana', 'AVENIDA NIÑOS HEROES NO. 3 #502 20345', '4499707510', 'COC@GMAIL.COM', 'M', 41, '23597329246', NULL, 1),
+('GAMS040407HASRRNA5', 'GAMS0404074T7', 'Garcia Martinez Santiago', 'Mexicana', 'Casiopea #408 ', '4491115555', 'ssantig07@gmail.com', 'M', 18, '44190407518', NULL, 1),
+('MORJ000106HASRVSA4', 'MORJ040106VSA', 'MORALES RUVALCABA JESUS EMMANUEL', 'Mexicana', 'Hacienda Boca de Ortega 105, Haciendas de Agu', '4491234444', 'jesusghoul2016@gmail.com', 'M', 21, '31241251213', NULL, 4);
 
 -- --------------------------------------------------------
 
@@ -114,7 +115,8 @@ CREATE TABLE `candidato_has_habilidad` (
 
 INSERT INTO `candidato_has_habilidad` (`Curp`, `idHabilidad`, `Experiencia`, `valida`) VALUES
 ('COCR800325HASDDNB3', 4, '15 años', 'Si'),
-('GAMS040407HASRRNA5', 1, '3 años', 'Si');
+('GAMS040407HASRRNA5', 1, '3 años', 'Si'),
+('MORJ000106HASRVSA4', 4, '3 años', 'Si');
 
 -- --------------------------------------------------------
 
@@ -135,7 +137,8 @@ CREATE TABLE `candidato_has_idioma` (
 
 INSERT INTO `candidato_has_idioma` (`Curp`, `idIdioma`, `NIvel`, `valida`) VALUES
 ('COCR800325HASDDNB3', 1, 'Avanzado', 'Si'),
-('GAMS040407HASRRNA5', 1, 'Medio', 'Si');
+('GAMS040407HASRRNA5', 1, 'Medio', 'Si'),
+('MORJ000106HASRVSA4', 1, 'Medio', 'Si');
 
 -- --------------------------------------------------------
 
@@ -156,8 +159,10 @@ CREATE TABLE `candidato_has_nivelacademico` (
 --
 
 INSERT INTO `candidato_has_nivelacademico` (`Curp`, `idNivelAcademico`, `idCarrera`, `Institucion`, `valida`) VALUES
-('COCR800325HASDDNB3', 2, 2, 'UAA', 'Si'),
-('GAMS040407HASRRNA5', 1, 3, 'DGETI', 'Si');
+('COCR800325HASDDNB3', 2, 4, 'UVM', ''),
+('GAMS040407HASRRNA5', 1, 3, 'DGETI', 'Si'),
+('MORJ000106HASRVSA4', 1, 3, 'DGETI', 'Si'),
+('MORJ000106HASRVSA4', 2, 2, 'UVM', 'Si');
 
 -- --------------------------------------------------------
 
@@ -234,7 +239,7 @@ CREATE TABLE `contrato` (
 INSERT INTO `contrato` (`IdContrato`, `Curp`, `idPuesto`, `idArea`, `fecha_inicio`, `fecha_fin`, `idJornada`, `horas_semana`, `horario`, `Salario`, `dias_de_pago`, `lugar_firma`, `fecha_firma`, `SalarioL`) VALUES
 (3, 'GAME040217HASLXDA3', 15, 1, '2021-12-06', '2022-03-06', 4, '4', 'Lunes a Viernes', '107800', 'Dia viernes', '', '2021-12-06', 'CIENTO SIETE MIL OCHOCIENTOS  PESOS '),
 (4, 'GAMS040407HASRRNA5', 1, 1, '2021-11-08', '2022-02-08', 2, '2', 'Lunes a Sabado', '143000', 'Quincena y día 29 del mes', '', '2021-11-08', 'CIENTO CUARENTA Y TRES MIL  PESOS '),
-(5, 'COCR800325HASDDNB3', 15, 2, '2021-11-15', '2022-02-15', 1, '1', 'Lunes a Viernes', '107050', 'Dia viernes', '', '2021-11-15', 'CIENTO SIETE MIL CINCUENTA PESOS ');
+(6, 'MORJ000106HASRVSA4', 15, 2, '2021-11-22', '2021-11-29', 2, '2', 'Lunes a Viernes', '108000', 'Viernes', '', '2021-11-22', 'CIENTO OCHO MIL  PESOS ');
 
 -- --------------------------------------------------------
 
@@ -304,9 +309,9 @@ CREATE TABLE `empleado` (
 --
 
 INSERT INTO `empleado` (`Curp`, `RFC`, `Nombre`, `nacionalidad`, `Domicilio`, `Telefono`, `E_mail`, `Sexo`, `Edad`, `NSS`, `idEstadoCivil`, `Conyuje_Concubino`, `tel_emergencia`, `nombre_emergencia`, `no_infonavit`, `No_contrato`, `Contrato_Definitivo`, `Contrato_Temporal`, `ContratoTemporal_Val`) VALUES
-('COCR800325HASDDNB3', 'COCR800325NB3', 'CORONA CORONA ROBERTO', 'Mexicana', 'AVENIDA NIÑOS HEROES NO. 3 #502 20345', '4499707510', 'COC@GMAIL.COM', 'M', 41, '23597329246', 2, 'María Lucia Posada Casas', '4449931212', 'Rigoberto Corona Corona', '', 0, '', '', 'Si'),
 ('GAME040217HASLXDA3', 'GAME040217DA3', 'GALLEGO MUÑOZ EDGAR MARIO', 'Mexicana', 'conocido', '4499915555', 'mariochikito11@gmail.com', 'M', 20, '44190407518', 4, 'A', '4491115555', 'Hermana de mario', '...', 0, '', '', 'Si'),
-('GAMS040407HASRRNA5', 'GAMS0404074T7', 'Garcia Martinez Santiago Octavio', 'Mexicana', 'Casiopea #408 Gomez Portugal 20250', '4491115555', 'ssantig07@gmail.com', 'M', 20, '2147483647', 1, '', '4495691241', 'María José Garcia Martínez', '', 0, '', '', 'Si');
+('GAMS040407HASRRNA5', 'GAMS0404074T7', 'Garcia Martinez Santiago Octavio', 'Mexicana', 'Casiopea #408 Gomez Portugal 20250', '4491115555', 'ssantig07@gmail.com', 'M', 20, '2147483647', 1, '', '4495691241', 'María José Garcia Martínez', '', 0, '', '', 'Si'),
+('MORJ000106HASRVSA4', 'MORJ040106VSA', 'MORALES RUVALCABA JESUS EMMANUEL', 'Mexicana', 'Hacienda Boca de Ortega 105, Haciendas de Agu', '4491234444', 'jesusghoul2016@gmail.com', 'M', 21, '31241251213', 4, '', '', '', '', 0, '', '', 'Si');
 
 -- --------------------------------------------------------
 
@@ -326,9 +331,9 @@ CREATE TABLE `empleado_has_habilidad` (
 --
 
 INSERT INTO `empleado_has_habilidad` (`Curp`, `idHabilidad`, `Experiencia`, `valida`) VALUES
-('COCR800325HASDDNB3', 4, '15 años', 'Si'),
 ('GAME040217HASLXDA3', 4, '5 años', ''),
-('GAMS040407HASRRNA5', 1, '3 años', 'Si');
+('GAMS040407HASRRNA5', 1, '3 años', 'Si'),
+('MORJ000106HASRVSA4', 4, '3 años', 'Si');
 
 -- --------------------------------------------------------
 
@@ -348,9 +353,9 @@ CREATE TABLE `empleado_has_idioma` (
 --
 
 INSERT INTO `empleado_has_idioma` (`Curp`, `idIdioma`, `Nivel`, `valida`) VALUES
-('COCR800325HASDDNB3', 1, 'Avanzado', 'Si'),
 ('GAME040217HASLXDA3', 2, 'Medio', ''),
-('GAMS040407HASRRNA5', 1, 'Medio', 'Si');
+('GAMS040407HASRRNA5', 1, 'Medio', 'Si'),
+('MORJ000106HASRVSA4', 1, 'Medio', 'Si');
 
 -- --------------------------------------------------------
 
@@ -371,9 +376,10 @@ CREATE TABLE `empleado_has_nivelacademico` (
 --
 
 INSERT INTO `empleado_has_nivelacademico` (`Curp`, `idNivelAcademico`, `idCarrera`, `Institucion`, `valida`) VALUES
-('COCR800325HASDDNB3', 2, 2, 'UAA', 'Si'),
 ('GAME040217HASLXDA3', 2, 2, 'UAA', ''),
-('GAMS040407HASRRNA5', 1, 3, 'DGETI', 'Si');
+('GAMS040407HASRRNA5', 1, 3, 'DGETI', 'Si'),
+('MORJ000106HASRVSA4', 1, 3, 'DGETI', 'Si'),
+('MORJ000106HASRVSA4', 2, 2, 'UVM', 'Si');
 
 -- --------------------------------------------------------
 
@@ -758,7 +764,8 @@ CREATE TABLE `resultadocandidato` (
 
 INSERT INTO `resultadocandidato` (`EstatusProceso`, `Comentarios_area`, `Comentarios_ofertas_salario`, `Comentarios_area_seleccion`, `estatus`, `idSolicitud`, `Curp`, `id_actitud`, `Coeficiente_Intelectual`, `Personalidad`, `apto_psico`, `Validar_ref`, `Calificacion_Medica`, `validacion`, `Calificacion`, `Califica_el_Perfil`) VALUES
 ('3', '', '', '', 'Si', 1, 'GAMS040407HASRRNA5', 0, 100, 'Bueno', 0, 'Si', 'Apto', 'Si', 'Apto', '10'),
-('3', '', '', '', 'Si', 2, 'COCR800325HASDDNB3', 0, 10, 'Bueno', 0, 'Si', 'Apto', 'Si', 'Apto', '10');
+('3', '', '', '', 'Si', 2, 'COCR800325HASDDNB3', 0, 10, 'Bueno', 0, 'Si', 'Apto', 'Si', 'Apto', '10'),
+('3', '', '', '', 'Pendiente', 2, 'MORJ000106HASRVSA4', 0, 100, 'Bueno', 0, 'Pendiente', 'Apto', 'Si', 'No Apto', '10');
 
 -- --------------------------------------------------------
 
@@ -871,7 +878,7 @@ ALTER TABLE `candidato_has_idioma`
 -- Indices de la tabla `candidato_has_nivelacademico`
 --
 ALTER TABLE `candidato_has_nivelacademico`
-  ADD PRIMARY KEY (`Curp`,`idNivelAcademico`),
+  ADD PRIMARY KEY (`Curp`,`idNivelAcademico`,`idCarrera`),
   ADD KEY `fk_Candidato_has_NivelAcademico_NivelAcademico1` (`idNivelAcademico`),
   ADD KEY `fk_Candidato_has_NivelAcademico_Carrera1` (`idCarrera`);
 
@@ -927,7 +934,7 @@ ALTER TABLE `empleado_has_idioma`
 -- Indices de la tabla `empleado_has_nivelacademico`
 --
 ALTER TABLE `empleado_has_nivelacademico`
-  ADD PRIMARY KEY (`Curp`,`idNivelAcademico`),
+  ADD PRIMARY KEY (`Curp`,`idNivelAcademico`,`idCarrera`),
   ADD KEY `idNivelAcademico` (`idNivelAcademico`,`idCarrera`),
   ADD KEY `idCarrera` (`idCarrera`);
 
@@ -1088,7 +1095,7 @@ ALTER TABLE `contacto`
 -- AUTO_INCREMENT de la tabla `contrato`
 --
 ALTER TABLE `contrato`
-  MODIFY `IdContrato` int(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `IdContrato` int(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `datos_de_empresa`
@@ -1234,7 +1241,7 @@ ALTER TABLE `contrato`
   ADD CONSTRAINT `contrato_ibfk_1` FOREIGN KEY (`idArea`) REFERENCES `area` (`idArea`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `contrato_ibfk_2` FOREIGN KEY (`idPuesto`) REFERENCES `puesto` (`idPuesto`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `contrato_ibfk_3` FOREIGN KEY (`idJornada`) REFERENCES `jornada` (`IdJornada`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `contrato_ibfk_4` FOREIGN KEY (`Curp`) REFERENCES `empleado` (`Curp`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `contrato_ibfk_4` FOREIGN KEY (`Curp`) REFERENCES `empleado` (`Curp`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `empleado_has_habilidad`
@@ -1256,7 +1263,7 @@ ALTER TABLE `empleado_has_idioma`
 ALTER TABLE `empleado_has_nivelacademico`
   ADD CONSTRAINT `empleado_has_nivelacademico_ibfk_1` FOREIGN KEY (`idNivelAcademico`) REFERENCES `nivelacademico` (`idNivelAcademico`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `empleado_has_nivelacademico_ibfk_2` FOREIGN KEY (`idCarrera`) REFERENCES `carrera` (`idCarrera`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `empleado_has_nivelacademico_ibfk_3` FOREIGN KEY (`Curp`) REFERENCES `empleado` (`Curp`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `empleado_has_nivelacademico_ibfk_3` FOREIGN KEY (`Curp`) REFERENCES `empleado` (`Curp`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `jordesc`
