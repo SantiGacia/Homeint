@@ -146,22 +146,26 @@
           <label for="puesto">Puesto</label>
           <input type="text" class="form-control" name="puesto" id="puesto" placeholder="" value="{{datoscontrato.0[3]}}" disabled >
       </div>
-      <div class="form-group col-md-4">
-          <label for="area">Área</label>
-          <input type="text" class="form-control" name="area" id="area" value="{{datoscontrato.0[5]}}" disabled>
-      </div>
+    
       <div class="form-group col-md-2">
-          <label for="salario">Salario</label>
+          <label for="salario">Salario Mensual</label>
           <input type="number" class="form-control" name="salario" id="salario"  value="{{datoscontrato.0[6]}}" disabled>
+      </div>
+      <div class="form-group col-md-3">
+        <label for="salario">ㅤ</label>
+        <input type="text" class="form-control" name="sall" id="sall" placeholder="LETRA" value="{{datoscontrato.0[15]}}"  disabled> 
+      </div>
+    </div>
+    <div class=form-row>
+      <div class="form-group col-md-4">
+        <label for="area">Área</label>
+        <input type="text" class="form-control" name="area" id="area" value="{{datoscontrato.0[5]}}" disabled>
       </div>
       <div class="form-group col-md-2">
         <label for="diapaga">Dias de paga</label>
         <input type="text" class="form-control" name="diapaga" id="diapaga" value="{{datoscontrato.0[7]}}" disabled>
       </div>
-    
-      
-
-  </div>
+    </div>
   </form>
   <form>
     <div class=form-row>

@@ -433,23 +433,25 @@ def modificar_datos_empresa(id):
         aux_telefono = request.form['tel']
         aux_encargado = request.form['encargado']
 
-        aux_noescpub = request.form['no_esct_publica']
+        aux_noescpub = request.form['numescpub']
         aux_libroescpub = request.form['libro_esct_publica']
         aux_fechaescpub = request.form['fecha_esct_publica']
         aux_feescpub = request.form['fe_esct_publica']
         aux_npescpub = request.form['np_esct_publica']
         aux_ciuescpub = request.form['ciu_escpub']
-
+        aux_numesces = request.form ['resultadol']
         aux_CIF = request.form['CIF']
+        aux_rlegal = request.form['rlegal']
+        
 
         conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
         cursor = conn.cursor()
         cursor.execute(
-            'update datos_de_empresa set Nombre_de_empresa=%s,Descripcion=%s, Telefono=%s, Domicilio=%s, E_Mail=%s, Acta_constitutiva=%s,RazonSocial=%s, Estructura_Juridica=%s, Encargado=%s, CIF_Empresa=%s,No_Escriturapub=%s, Libro_Escriturapub=%s, Fecha_Escriturapub=%s, Fe_Escriturapub=%s, NP_Escriturapub=%s, Ciu_Escriturapub=%s'
-            'where Nombre_de_empresa=%s', (
+            'update datos_de_empresa set Nombre_de_empresa=%s,Descripcion=%s, Telefono=%s, Domicilio=%s, E_Mail=%s, Acta_constitutiva=%s,RazonSocial=%s, Estructura_Juridica=%s, Encargado=%s, CIF_Empresa=%s,No_Escriturapub=%s, Libro_Escriturapub=%s, Fecha_Escriturapub=%s, Fe_Escriturapub=%s, NP_Escriturapub=%s, Ciu_Escriturapub=%s, No_EscriturapubL=%s, RepresentanteLegal=%s'
+            'where Nombre_de_empresa=%s' , (
             aux_nombre, aux_descripcion, aux_telefono, aux_domicilio, aux_correo, aux_acta, aux_razon, aux_estructura,
             aux_encargado, aux_CIF, aux_noescpub, aux_libroescpub, aux_fechaescpub, aux_feescpub, aux_npescpub,
-            aux_ciuescpub, id))
+            aux_ciuescpub, aux_numesces,aux_rlegal ,id))
         conn.commit()
         conn.close()
     return redirect(url_for('agr_datos_empresa'))
@@ -470,7 +472,7 @@ def ed_datos_empresa(id):
     conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
     cursor = conn.cursor()
     cursor.execute('select Nombre_de_empresa, Descripcion, Telefono, Domicilio, E_Mail, RazonSocial, '
-                   'Estructura_Juridica, Encargado, CIF_Empresa,`Acta_constitutiva`,`No_Escriturapub`,`Libro_Escriturapub`,`Fecha_Escriturapub`,`Fe_Escriturapub`,`NP_Escriturapub`,`Ciu_Escriturapub`'
+                   'Estructura_Juridica, Encargado, CIF_Empresa,`Acta_constitutiva`,`No_Escriturapub`,`Libro_Escriturapub`,`Fecha_Escriturapub`,`Fe_Escriturapub`,`NP_Escriturapub`,`Ciu_Escriturapub`, `No_EscriturapubL`, `RepresentanteLegal`'
                    'from datos_de_empresa where Nombre_de_empresa = %s', (id))
     dato = cursor.fetchall()
     conn.close()
@@ -484,7 +486,7 @@ def ed_datos_empresa(id):
 def puesto():
     conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
     cursor = conn.cursor()
-    cursor.execute('select idPuesto, Nombrepuesto, Descripcion, SalarioMensual, Beneficios, Bonos, Aprobacion from puesto '
+    cursor.execute('select idPuesto, Nombrepuesto, Descripcion, SalarioMensual, Beneficios, Bonos, Aprobacion,SalarioL from puesto '
                    'order by Nombrepuesto')
     datos = cursor.fetchall()
     conn.close()
@@ -499,6 +501,7 @@ def agrega_puesto():
         aux_ben = request.form['beneficios']
         aux_bon = request.form['bonos']
         aux_aut = request.form['autorizar']
+        aux_sall = request.form['sall']
         conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
         cursor = conn.cursor()
         cursor.execute('select count(*) from puesto where Nombrepuesto = %s',(aux_nop))
@@ -507,10 +510,10 @@ def agrega_puesto():
             error = "El Puesto ya se encuentra agregado."
             return render_template("error.html", des_error=error, paginaant="/puesto")
         else:
-            cursor.execute('insert into puesto (Nombrepuesto, Descripcion, SalarioMensual, Beneficios, Bonos, Aprobacion) '
-                           'values (%s,%s,%s,%s,%s,%s)',(aux_nop, aux_des, aux_sal,aux_ben, aux_bon, aux_aut))
+            cursor.execute('insert into puesto (Nombrepuesto, Descripcion, SalarioMensual, Beneficios, Bonos, Aprobacion, SalarioL) '
+                           'values (%s,%s,%s,%s,%s,%s,%s)',(aux_nop, aux_des, aux_sal,aux_ben, aux_bon, aux_aut,aux_sall))
             conn.commit()
-            cursor.execute('select idPuesto, Nombrepuesto, Descripcion, SalarioMensual, Beneficios, Bonos, Aprobacion '
+            cursor.execute('select idPuesto, Nombrepuesto, Descripcion, SalarioMensual, Beneficios, Bonos, Aprobacion, SalarioL'
                            'from puesto where idPuesto=(select max(idPuesto) from puesto)')
             datos = cursor.fetchall()
             cursor.execute('select a.idPuesto, b.idHabilidad,b.Descripcion,c.idPuesto,c.idHabilidad, c.Experiencia '
@@ -541,10 +544,11 @@ def modifica_puesto(id):
         aux_ben = request.form['beneficios']
         aux_bon = request.form['bonos']
         aux_aut = request.form['autorizar']
+        aux_sall = request.form['sall']
         conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
         cursor = conn.cursor()
-        cursor.execute('update puesto set Nombrepuesto=%s, Descripcion=%s, SalarioMensual=%s, Beneficios=%s, Bonos=%s, Aprobacion=%s '
-                       'where idpuesto=%s', (aux_nop, aux_des, aux_sal,aux_ben, aux_bon,aux_aut,id))
+        cursor.execute('update puesto set Nombrepuesto=%s, Descripcion=%s, SalarioMensual=%s, Beneficios=%s, Bonos=%s, Aprobacion=%s, SalarioL=%s'
+                       'where idpuesto=%s', (aux_nop, aux_des, aux_sal,aux_ben, aux_bon,aux_aut,aux_sall,id))
         conn.commit()
         conn.close()
         return redirect(url_for('puesto'))
@@ -554,7 +558,7 @@ def modifica_puesto(id):
 def ed_puesto(id):
     conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
     cursor = conn.cursor()
-    cursor.execute('select idPuesto, Nombrepuesto, Descripcion, SalarioMensual, Beneficios, Bonos, Aprobacion '
+    cursor.execute('select idPuesto, Nombrepuesto, Descripcion, SalarioMensual, Beneficios, Bonos, Aprobacion, SalarioL '
     'from puesto where idPuesto=%s', (id))
     datos=cursor.fetchall()
     cursor.execute('select a.idPuesto, b.idHabilidad,b.Descripcion,c.idPuesto, c.idHabilidad, c.Experiencia '
@@ -3456,7 +3460,7 @@ def ed_contrato(Curp):
         cursor.execute(' select idEstadoCivil, Descripcion from estadocivil')
         datos5 = cursor.fetchall()
 
-        cursor.execute('  SELECT a.idContrato, a.Curp, a.idPuesto,b.Nombrepuesto, a.idArea, c.AreaNombre ,a.Salario,a.dias_de_pago , a.fecha_inicio, a.fecha_fin, a.idJornada, e.jornombre , a.horas_semana, e.Descripcion, a.horario'
+        cursor.execute('  SELECT a.idContrato, a.Curp, a.idPuesto,b.Nombrepuesto, a.idArea, c.AreaNombre ,a.Salario,a.dias_de_pago , a.fecha_inicio, a.fecha_fin, a.idJornada, e.jornombre , a.horas_semana, e.Descripcion, a.horario,a.SalarioL'
                         ' FROM contrato a, puesto b, area c , jornada e'
                         ' where a.idPuesto=b.idPuesto and a.idArea= c.idArea and a.idJornada= e.IdJornada and a.curp=%s',(Curp))
         datos9=cursor.fetchall()
@@ -3574,7 +3578,7 @@ def nvo_contrato(Curp):
             cursor.execute(' select idEstadoCivil, Descripcion from estadocivil')
             datos5 = cursor.fetchall()
 
-            cursor.execute('select a.idsolicitud, b.idarea,c.areanombre, b.idpuesto, d.Nombrepuesto, d.SalarioMensual'
+            cursor.execute('select a.idsolicitud, b.idarea,c.areanombre, b.idpuesto, d.Nombrepuesto, d.SalarioMensual,d.SalarioL'
                         ' from resultadocandidato a, solicitud b, area c, puesto d '
                         'where b.idsolicitud=a.idsolicitud and c.idarea=b.idarea and d.idpuesto=b.idpuesto and a.curp=%s' , (Curp))
             datos9=cursor.fetchall()
@@ -3693,6 +3697,7 @@ def agr_nvo_contrato(val):
         aux_puesto= request.form['idpuesto']
         aux_area= request.form['id_area']
         aux_salario=request.form['salario']
+        aux_sall=request.form['sall']
         aux_diapaga = request.form['diapaga']
         aux_dateini = request.form['fecha_inicio']
         aux_dateend = request.form['fecha_fin']
@@ -3703,8 +3708,8 @@ def agr_nvo_contrato(val):
 
         cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cur.execute(
-                "INSERT INTO contrato (Curp, idPuesto, idArea, fecha_inicio, fecha_fin, idJornada, horas_semana, horario,Salario,dias_de_pago,fecha_firma) Values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-        ,(aux_curp,aux_puesto,aux_area,aux_dateini,aux_dateend,aux_jor,aux_hsemana,aux_horario,aux_salario,aux_diapaga,aux_diafirma))
+                "INSERT INTO contrato (Curp, idPuesto, idArea, fecha_inicio, fecha_fin, idJornada, horas_semana, horario,Salario,dias_de_pago,fecha_firma,SalarioL) Values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+        ,(aux_curp,aux_puesto,aux_area,aux_dateini,aux_dateend,aux_jor,aux_hsemana,aux_horario,aux_salario,aux_diapaga,aux_diafirma,aux_sall))
         mysql.connection.commit()
 
         cur.execute('UPDATE `empleado` SET `ContratoTemporal_Val` = %s'
@@ -3724,6 +3729,7 @@ def editar_contrato(id):
         aux_puesto= request.form['idpuesto']
         aux_area= request.form['id_area']
         aux_salario=request.form['salario']
+        aux_sall=request.form['sall']
         aux_diapaga = request.form['diapaga']
         aux_dateini = request.form['fecha_inicio']
         aux_dateend = request.form['fecha_fin']
@@ -3733,8 +3739,8 @@ def editar_contrato(id):
         aux_diafirma=request.form['fecha_inicio']
 
         cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cur.execute( 'Update contrato set Curp=%s, idPuesto=%s, idArea=%s, fecha_inicio=%s, fecha_fin=%s, idJornada=%s, horas_semana=%s, horario=%s, Salario= %s, dias_de_pago=%s, fecha_firma = %s where idContrato=%s'
-                                            ,(aux_curp,aux_puesto,aux_area,aux_dateini,aux_dateend,aux_jor,aux_hsemana,aux_horario,aux_salario,aux_diapaga,aux_diafirma,id))
+        cur.execute( 'Update contrato set Curp=%s, idPuesto=%s, idArea=%s, fecha_inicio=%s, fecha_fin=%s, idJornada=%s, horas_semana=%s, horario=%s, Salario= %s, dias_de_pago=%s, fecha_firma=%s, SalarioL=%s where idContrato=%s'
+                                            ,(aux_curp,aux_puesto,aux_area,aux_dateini,aux_dateend,aux_jor,aux_hsemana,aux_horario,aux_salario,aux_diapaga,aux_diafirma,aux_sall,id))
         mysql.connection.commit()
         cur.close()
         return redirect(url_for('contrato'))
@@ -3752,6 +3758,36 @@ def bo_contrato(Curp,val,id):
     conn.close()
     return redirect(url_for('contrato'))
 
+##Mostrar contrato 
+@app.route('/mue_contrato/<string:Curp>') 
+def mue_contrato (Curp):
+    conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
+    cursor = conn.cursor()  
+    cursor.execute('select count(*) from contrato where Curp = %s',(Curp))
+    existecontrato = cursor.fetchone()
+    if (existecontrato[0]!= 0 ):
+        #Datos empresa
+        cursor.execute(' SELECT idEmpresa, Nombre_de_empresa, Descripcion, Telefono, Domicilio, E_Mail, RazonSocial, Estructura_Juridica, Encargado, CIF_Empresa, Acta_constitutiva, No_Escriturapub, Libro_Escriturapub, Fecha_Escriturapub, Fe_Escriturapub, NP_Escriturapub, Ciu_Escriturapub, No_EscriturapubL, RepresentanteLegal' 
+                    ' FROM datos_de_empresa')
+        datos14=cursor.fetchall()
+
+        #Datos empleados
+        cursor.execute(' SELECT a.Curp, a.RFC, a.Nombre, a.nacionalidad, a.Domicilio, a.Telefono, a.E_mail, a.Sexo, a.Edad, a.NSS, a.idEstadoCivil, b.Descripcion, a.Conyuje_Concubino, a.tel_emergencia, a.nombre_emergencia, a.no_infonavit, a.No_contrato, a.Contrato_Definitivo, a.Contrato_Temporal, a.ContratoTemporal_Val'
+                    ' from empleado a, estadocivil b '
+                    ' where a.idEstadoCivil=b.idEstadoCivil and a.Curp =%s ', (Curp))
+        datos15=cursor.fetchall()
+
+        #Datos contrato
+        cursor.execute(' SELECT a.idContrato, a.Curp, a.idPuesto,b.NombrePuesto,b.Descripcion, a.idArea, c.AreaNombre , a.dias_de_pago , a.fecha_inicio, a.fecha_fin, a.idJornada, e.name, d.jornombre, a.salario, a.horas_semana, a.horario, a.fecha_firma, b.SalarioL'
+                    ' FROM contrato a, puesto b, area c, jornada d, jordesc e '
+                    ' where a.idPuesto=b.idPuesto and a.idArea= c.idArea and d.IdJornada=a.idJornada and e.iddesc=a.horas_semana and a.curp=%s ',(Curp))
+        datos16=cursor.fetchall()
+
+        conn.close()
+        return render_template("mue_contrato.html" , empresa=datos14, empleados=datos15, contrato=datos16)
+    else:
+        error = "Este empleado no tiene un contrato."
+        return render_template("error.html", des_error=error, paginaant="/contrato")
 
 
 
