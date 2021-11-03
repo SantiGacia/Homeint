@@ -513,7 +513,7 @@ def agrega_puesto():
             cursor.execute('insert into puesto (Nombrepuesto, Descripcion, SalarioMensual, Beneficios, Bonos, Aprobacion, SalarioL) '
                            'values (%s,%s,%s,%s,%s,%s,%s)',(aux_nop, aux_des, aux_sal,aux_ben, aux_bon, aux_aut,aux_sall))
             conn.commit()
-            cursor.execute('select idPuesto, Nombrepuesto, Descripcion, SalarioMensual, Beneficios, Bonos, Aprobacion, SalarioL'
+            cursor.execute('select idPuesto, Nombrepuesto, Descripcion, SalarioMensual, Beneficios, Bonos, Aprobacion, SalarioL '
                            'from puesto where idPuesto=(select max(idPuesto) from puesto)')
             datos = cursor.fetchall()
             cursor.execute('select a.idPuesto, b.idHabilidad,b.Descripcion,c.idPuesto,c.idHabilidad, c.Experiencia '
@@ -3660,7 +3660,7 @@ def modifica_contrato(Curp):
                    'order by Nombrepuesto')
     datos10 = cursor.fetchall()        
 
-    cursor.execute('  SELECT a.idContrato, a.Curp, a.idPuesto,b.Nombrepuesto, a.idArea, c.AreaNombre ,a.Salario,a.dias_de_pago , a.fecha_inicio, a.fecha_fin, a.idJornada, a.horas_semana, a.horario '
+    cursor.execute('  SELECT a.idContrato, a.Curp, a.idPuesto,b.Nombrepuesto, a.idArea, c.AreaNombre ,a.Salario,a.dias_de_pago , a.fecha_inicio, a.fecha_fin, a.idJornada, a.horas_semana, a.horario, a.SalarioL'
                    '  FROM contrato a, puesto b, area c '
                    '  where a.idPuesto=b.idPuesto and a.idArea= c.idArea and a.curp=%s',(Curp))
     datos13=cursor.fetchall()    
