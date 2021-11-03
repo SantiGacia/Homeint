@@ -2230,7 +2230,7 @@ def agr_cal_psicologica():
     conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
     cursor = conn.cursor()
     cursor.execute('select a.idSolicitud, a.FechaSolicitud, a.idArea, b.AreaNombre, '
-        'a.idPuesto, c.Descripcion, a.NumeroVacante, a.idEstatus_Solicitud, d.Descripcion '
+        'a.idPuesto, c.NombrePuesto, a.NumeroVacante, a.idEstatus_Solicitud, d.Descripcion '
         'from solicitud a, area b, puesto c, estatus_solicitud d '
         'where b.idArea=a.idArea and c.idPuesto=a.idPuesto and d.idEstatus_Solicitud=a.idEstatus_Solicitud '
         'and (a.idEstatus_Solicitud=3 or a.idEstatus_Solicitud=4)')
@@ -3779,7 +3779,7 @@ def mue_contrato (Curp):
         datos15=cursor.fetchall()
 
         #Datos contrato
-        cursor.execute(' SELECT a.idContrato, a.Curp, a.idPuesto,b.NombrePuesto,b.Descripcion, a.idArea, c.AreaNombre , a.dias_de_pago , a.fecha_inicio, a.fecha_fin, a.idJornada, e.name, d.jornombre, a.salario, a.horas_semana, a.horario, a.fecha_firma, b.SalarioL'
+        cursor.execute(' SELECT a.idContrato, a.Curp, a.idPuesto,b.NombrePuesto,b.Descripcion, a.idArea, c.AreaNombre , a.dias_de_pago , a.fecha_inicio, a.fecha_fin, a.idJornada, e.name, d.jornombre, a.salario, a.horas_semana, a.horario, a.fecha_firma, a.SalarioL'
                     ' FROM contrato a, puesto b, area c, jornada d, jordesc e '
                     ' where a.idPuesto=b.idPuesto and a.idArea= c.idArea and d.IdJornada=a.idJornada and e.iddesc=a.horas_semana and a.curp=%s ',(Curp))
         datos16=cursor.fetchall()
