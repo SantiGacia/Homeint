@@ -907,7 +907,7 @@ def jor_agr():
 def agr_datos_jor():
     conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
     cursor = conn.cursor()
-    cursor.execute('select idJornada, jorNombre, Descripcion from jornada ')
+    cursor.execute('select idJornada, jorNombre, Descripcion from jornada ORDER BY `jornada`.`jornombre` ASC ')
     datos=cursor.fetchall()
     conn.close()
     return render_template("tabla_jor.html", areas = datos )
