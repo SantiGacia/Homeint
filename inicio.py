@@ -3791,6 +3791,80 @@ def mue_contrato (Curp):
         return render_template("error.html", des_error=error, paginaant="/contrato")
 
 
+#Tipo de contrato 
+
+@app.route('/tipo_contrato')
+def tipo_contrato():
+    return render_template("tipo_contrato.html")
+
+@app.route('/tipo_con_agr', methods=['POST'])
+def tipo_con_agr():
+    if request.method == 'POST':
+        aux_descripcion = request.form['descripcion']
+        conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
+        cursor = conn.cursor()
+        cursor.execute('select count(*) from tipo_contrato where descripción = %s', (aux_descripcion))
+        carreras = cursor.fetchone()
+        if (carreras[0] != 0):
+            error = "El tipo de contrato ya se encuentra agregada."
+            return render_template("error.html", des_error=error, paginaant="/agr_datos_tipo")
+        else:
+            cursor.execute('insert into tipo_contrato (descripción) values (%s)', (aux_descripcion))
+            conn.commit()
+            conn.close()
+            return redirect(url_for('agr_datos_tipo'))
+
+
+@app.route('/modifica_tipo/<string:id>', methods=['POST'])
+def modifica_tipo(id):
+    if request.method == 'POST':
+        descripcion=request.form['descripcion']
+        conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
+        cursor = conn.cursor()
+        cursor.execute('select count(*) from tipo_contrato where descripción = %s',(descripcion))
+        tipo = cursor.fetchone()
+        if (tipo[0] != 0):
+            error = "El tipo de contrato ya se encuentra agregada."
+            return render_template("error.html", des_error=error, paginaant="/agr_datos_tipo")
+        else:
+            cursor.execute('update tipo_contrato set descripción=%s where tipo_contrato=%s', (descripcion,id))
+            conn.commit()
+            conn.close()
+    return redirect(url_for('agr_datos_tipo'))
+
+@app.route('/ed_tipo/<string:id>')
+def ed_tipo(id):
+    conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
+    cursor = conn.cursor()
+    cursor.execute('select tipo_contrato, descripción from tipo_contrato where tipo_contrato = %s', (id))
+    dato=cursor.fetchall()
+    conn.close()
+    return render_template("edi_tipo.html", tipo = dato[0])
+
+
+@app.route('/agr_datos_tipo')
+def agr_datos_tipo():
+    conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
+    cursor = conn.cursor()
+    cursor.execute('select tipo_contrato, descripción from tipo_contrato order by descripción')
+    datos=cursor.fetchall()
+    conn.close()
+    return render_template("tabla_tipo_con.html", tipo = datos )
+
+@app.route('/bo_tipo/<string:id>')
+def bo_tipo(id):
+    conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
+    cursor = conn.cursor()
+    cursor.execute('select count(*) from tipo_contrato where tipo_contrato = {0}'.format(id))
+    tipo = cursor.fetchone()
+    if (tipo[0] == 0):
+        error = "El tipo de contrato tiene dependientes, no puede ser borrado."
+        return render_template("error.html", des_error=error, paginaant="/agr_datos_tipo")
+    else:
+        cursor.execute('delete from tipo_contrato where tipo_contrato = {0}'.format(id))
+        conn.commit()
+        conn.close()
+        return redirect(url_for('agr_datos_tipo'))
 
 
 
