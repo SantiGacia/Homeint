@@ -134,6 +134,30 @@
   <form action="/editar_contrato/{{datoscontrato.0[0]}}" method="POST">   
     <div class=form-row>
         <input minlength="18" maxlength="18" type="text" class="form-control" name="curp" id="curp" value="{{empleados.0[0]}}" hidden>
+        <div class="form-group col-md-2">
+          <label for="estatus">Estatus de contrato</label>
+          <select name="estatus" id="estatus" class="form-control">
+              <option value="{{ datoscontrato.0[16] }}" selected>{{ datoscontrato.0[17] }}</option>
+                  {%
+                      for estatus in estatus
+                  %}
+                      <option value="{{ estatus.0 }}">{{ estatus.1 }}</option>
+                  {%   endfor %}
+          </select> 
+        </div>
+        <div class="form-group col-md-2">
+          <label for="tipcon">Tipo de contrato</label>
+            <select name="tipcon" id="tipcon" class="form-control">
+                <option value="{{ datoscontrato.0[18] }}" selected>{{ datoscontrato.0[19] }}</option>
+                    {%
+                        for tipcon in tipocontrato
+                    %}
+                        <option value="{{ tipcon.0 }}">{{ tipcon.1 }}</option>
+                    {%   endfor %}
+            </select> 
+        </div> 
+      </div>
+      <div class=form-row>
         <div class="form-group col-md-4">
             <label for="idpuesto">Puesto</label>
             <select name="idpuesto" id="idpuesto" class="form-control">
@@ -151,7 +175,7 @@
         </div>
         <div class="form-group col-md-3">
             <label for="salario">ㅤ</label>
-            <input type="text" class="form-control" name="sall" id="sall" placeholder="LETRA" value="{{datoscontrato.0[13]}}"  required> 
+            <input type="text" class="form-control" name="sall" id="sall" placeholder="LETRA" value="{{datoscontrato.0[15]}}"  required> 
         </div>
     </div>
     <div class=form-row>
@@ -206,7 +230,7 @@
         </div>
         <div class="form-group col-md-2">
             <label for="dias">Horario</label>
-            <input type="text" class="form-control" name="dias" id="dias" value="{{datoscontrato.0[12]}}" required>
+            <input type="text" class="form-control" name="dias" id="dias" value="{{datoscontrato.0[14]}}" required>
 
             
         </div>
@@ -227,7 +251,7 @@
     
     country_select.onchange = function(){
         country = country_select.value;
-        alert(country);
+        
         fetch('state/' + country).then(function(response){
         response.json().then(function(data) {
         optionHTML = '';
