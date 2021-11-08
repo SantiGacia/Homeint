@@ -1,0 +1,83 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<body style="background-color:#D5DBDB;">
+<link rel="stylesheet" href="\static\css\tabla2.css">
+<a href="/nvo_contrato/{{curp}}" class="btn btn-success" style="background:#20b2aa">Agregar Contrato</a>
+<a href="/contrato" class="btn btn-success" style="background:lightseagreen">Regresar</a>
+<center><h3>Contratos <span id="nompr"></span></h3></center> 
+<input type="text" id="nombre" name="nombre" value="{{nombre.0}}" hidden> 
+<div id="main-container">
+      <table width="100%" border="1" cellpadding="0" cellspacing="0" bordercolor="#000000">
+       <tbody>
+        <tr>
+          <td color="FFFFFF" bgcolor="#465F5A" valign="top">
+            <table width="100%" border="1" cellpadding="0" cellspacing="0" bordercolor="#000000">
+              <thead>
+                <tr>
+                  <td color="white" bgcolor="006666"><font color="white">No Contrato</font></td>
+                    <td color="white" bgcolor="006666"><font color="white">Puesto</font></td>
+                    <td color="white" bgcolor="006666"><font color="white">Area</font></td>
+                    <td color="white" bgcolor="006666"><font color="white">Fecha Inicio</font></td>
+                    <td color="white" bgcolor="006666"><font color="white">Fecha final</font></td>
+                    <td color="white" bgcolor="006666"><font color="white">Estatus</font></td>
+                    <td color="white" bgcolor="006666"><font color="white">Tipo</font></td>
+                    <td color="white" bgcolor="006666"><font color="white"></font></td>
+                    <td color="white" bgcolor="006666"><font color="white"></font></td>
+
+                </tr>
+              </thead>
+              <tbody>
+                {% for contrato in contratos %}
+                  <tr>
+                    <td>
+                        {{ contrato.0 }}
+                    </td>
+                    <td>
+                        {{ contrato.4 }}
+                    </td >
+                    <td>
+                      {{ contrato.6 }}
+                    </td >
+                    <td>
+                        {{ contrato.7 }}
+                    </td >
+                    <td>
+                        {{ contrato.8 }}
+                    </td >
+                    <td>
+                      {{ contrato.10 }}
+                    </td >
+                    <td>
+                      {{ contrato.2 }}
+                    </td >
+                    <td bgcolor="#9C9C9C" width="60">
+                      <center><a href="/ed_contrato/{{curp}}/{{contrato.0}}" class="btn btn-success" style="background:lightseagreen">Ver/Editar </a></center>
+                    </td>
+                    <td bgcolor="#9C9C9C" width="60">
+                      <center><a href="/mue_contrato/{{curp}}/{{contrato.0}}" class="btn btn-success" style="background:lightseagreen">Descargar</a></center>
+
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+          <script type="text/javascript" src="/static/js/jquery-3.2.1.slim.min.js"></script>
+    <script type="text/javascript" src="/static/js/popper.min.js"></script>
+    <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+    </table>
+</div>
+
+<script>
+  nom=document.getElementById('nombre').value;
+  let a =nom.substring(2, nom.length - 3);
+  document.getElementById("nompr").innerHTML=a
+</script>
+</body>
+
+ 
+
+{% endblock %}

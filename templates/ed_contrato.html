@@ -128,10 +128,11 @@
     </form>
     {% for empleado in empleados %}
     
-      <a href="/modifica_contrato/{{empleado.0}}" class="btn btn-success" style="background:lightseagreen;">Editar contrato</a></center>
-      <a href="/bo_contrato/{{empleado.0}}/{{'No'}}/{{datoscontrato.0[0]}}" class="btn btn-success" style="background:lightseagreen">Borrar Contrato</a></center>
+      <a href="/modifica_contrato/{{empleado.0}}/{{datoscontrato.0[0]}}" class="btn btn-success" style="background:lightseagreen "onclick="location.href=this.href+'/'+val;return false;">Editar contrato</a></center>
       <a href="/ed_empleado/{{ empleado.0 }}" class="btn btn-success" style="background:lightseagreen;">Editar Perfil</a></center>
-      <a href="/contrato" class="btn btn-success" style="background:lightseagreen;">Regresar</a></center>
+      <a href="/ca_contrato/{{datoscontrato.0[0]}}/{{ empleado.0 }}" class="btn btn-success" style="background:rgb(235, 29, 29)">Cancelar Contrato</a></center>
+      <a href="/firma_contrato/{{datoscontrato.0[0]}}/{{empleado.0}}" class="btn btn-success" style="background:lightseagreen;">Firmar</a></center>
+      <a href="/vercontrato/{{empleado.0}}" class="btn btn-success" style="background:lightseagreen;">Regresar</a></center>
     </td>
   </tr>
   {% endfor %}
@@ -140,6 +141,17 @@
   <br>
   <form action="">
           
+    <div class=form-row>
+      <div class="form-group col-md-2">
+        <label for="estatus">Estatus de contrato</label>
+        <input type="text" class="form-control" name="estatus" id="estatus" value="{{datoscontrato.0[17]}}" disabled>
+      </div>
+      <div class="form-group col-md-2">
+        <label for="tipcon">Tipo de contrato</label>
+        <input type="tipcon" class="form-control" name="tipcon" id="tipcon" value="{{datoscontrato.0[18]}}" disabled>
+      </div> 
+    </div>
+
     <div class=form-row>
       
       <div class="form-group col-md-4">
@@ -166,8 +178,6 @@
         <input type="text" class="form-control" name="diapaga" id="diapaga" value="{{datoscontrato.0[7]}}" disabled>
       </div>
     </div>
-  </form>
-  <form>
     <div class=form-row>
 
       <div class="form-group col-md-2">
@@ -192,14 +202,42 @@
         <div class="form-group col-md-2">
             <label for="dias">Horario</label>
             <input type="text" class="form-control" name="dias" id="dias"value="{{datoscontrato.0[14]}}" disabled>
-
-            
         </div>
-
     </div>
   </form>
 
-  
+  <script>
+    //Script para comprobar la fecha de firma
+    var f = new Date();
+    var dnow=(f.getDate());
+    var mnow=(f.getMonth()+1);
+    var ynow=(f.getFullYear());
+    //Secciona por año, mes, dia la fecha de inicio
+    fechaini=document.getElementById('fecha_inicio').value;
+    var yini = fechaini.slice(0,4);
+    var mini = fechaini.slice(5,7);
+    var dini = fechaini.slice(8,10);
+    //Hace la resta de ver cuantos dias faltan para la fecha de inicio
+    var vald = dini-dnow;
+    var valm = mini-mnow;
+    var valy = yini-ynow;
+
+    //si algun valor es negativo lo convierte a 0
+    if(vald<=0)
+    var vald=0
+    if(valm<=0)
+    var valm=0
+    if(valy<=0)
+    var valy=0
+    //si todos los contadores llegan a 0, se establece un unico 0
+    if(vald===0 && valm===0 && valy===0){
+      var val=0
+    }else{
+      var val= vald+""+valm+""+valy;
+    }
+
+    
+  </script>
 
 
 </body>

@@ -3,7 +3,7 @@
 {% block content %}
 <body style="background-color:#D5DBDB;">
 <link rel="stylesheet" href="\static\css\tabla2.css">
-<center><h3>Empleados registrados</h3></center>
+<center><h3>Contratos de empleados </h3></center>
 <div id="main-container">
       <table width="100%" border="1" cellpadding="0" cellspacing="0" bordercolor="#000000">
        <tbody>
@@ -14,9 +14,7 @@
                 <tr>
                     <td color="white" bgcolor="006666"><font color="white">CURP</font></td>
                     <td color="white" bgcolor="006666"><font color="white">Nombre</font></td>
-                    <td color="white" bgcolor="006666"><font color="white">¿Tiene datos para contrato temporal?</font></td>
-                    <td color="white" bgcolor="006666"><font color="white"></font></td>
-                    <td color="white" bgcolor="006666"><font color="white"></font></td>
+                    
                     <td color="white" bgcolor="006666"><font color="white"></font></td>
 
                 </tr>
@@ -30,18 +28,12 @@
                     <td>
                         {{ empleado.1 }}
                     </td >
-                    <td>
-                      {{ empleado.2 }}
-                  </td >
+                   
+
                       <td bgcolor="#9C9C9C" width="60">
-                      <center><a href="/nvo_contrato/{{empleado.0}}" class="btn btn-success" style="background:lightseagreen">Agregar nuevos datos contrato</a></center>
+                      <center><a href="/vercontrato/{{empleado.0}}" class="btn btn-success" style="background:lightseagreen">Ver contratos</a></center>
                     </td>
-                    <td bgcolor="#9C9C9C" width="60">
-                      <center><a href="/ed_contrato/{{empleado.0}}" class="btn btn-success" style="background:lightseagreen">Ver/Editar datos contrato</a></center>
-                    </td>
-                    <td bgcolor="#9C9C9C" width="60">
-                      <center><a href="/mue_contrato/{{empleado.0}}" class="btn btn-success" style="background:lightseagreen">Descargar contrato temporal</a></center>
-                    </td>
+                    
                   </tr>
                 {% endfor %}
               </tbody>

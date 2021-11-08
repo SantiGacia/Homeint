@@ -127,16 +127,41 @@
     </div>
     {% for empleado in empleados %}
       <a href="/ed_empleado/{{ empleado.0 }}" class="btn btn-success" style="background:lightseagreen;">Editar Perfil</a></center>
-      <a href="/contrato" class="btn btn-success" style="background:lightseagreen;">Regresar</a></center>
+      <a href="/vercontrato/{{empleado.0}}" class="btn btn-success" style="background:lightseagreen;">Regresar</a></center>
     </td>
   </tr>
   {% endfor %}
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   <br>
   <br>
-<form action="/agr_nvo_contrato/{{'Si'}}" method="POST">   
-    <div class=form-row>
-        <input minlength="18" maxlength="18" type="text" class="form-control" name="curp" id="curp" value="{{empleados.0[0]}}" hidden>
+  <h5>Datos para contrato</h5>
+<form action="/agr_nvo_contrato" method="POST">  
+  <div class=form-row> 
+    <input minlength="18" maxlength="18" type="text" class="form-control" name="curp" id="curp" value="{{empleados.0[0]}}" hidden>
+    <div class="form-group col-md-2">
+      <label for="estatus">Estatus de contrato</label>
+      <select name="estatus" id="estatus" class="form-control">
+          <option value="" selected>Choose...</option>
+              {%
+                  for estatus in estatus
+              %}
+                  <option value="{{ estatus.0 }}">{{ estatus.1 }}</option>
+              {%   endfor %}
+      </select> 
+    </div>
+    <div class="form-group col-md-2">
+      <label for="tipcon">Tipo de contrato</label>
+        <select name="tipcon" id="tipcon" class="form-control">
+            <option value="" selected>Choose...</option>
+                {%
+                    for tipcon in tipocontrato
+                %}
+                    <option value="{{ tipcon.0 }}">{{ tipcon.1 }}</option>
+                {%   endfor %}
+        </select> 
+    </div> 
+  </div>
+  <div class=form-row> 
         <div class="form-group col-md-4">
             <label for="idpuesto">Puesto</label>
             <select name="idpuesto" id="idpuesto" class="form-control">
@@ -159,6 +184,9 @@
         </div>
     </div>
     <div class=form-row>
+
+      
+
         <div class="form-group col-md-4">
             <label for="id_area">Área</label>
             <select name="id_area" id="id_area" class="form-control">
@@ -176,15 +204,14 @@
         </div>
 
     </div>
+    
    
         <div class=form-row>
-
-        <div class="form-group col-md-2">
+          <div class="form-group col-md-2">
             <label for="fecha_inicio">Fecha de inicio</label>
             <input type="date" class="form-control" name="fecha_inicio" id="fecha_inicio" required>
-            
-        </div>
-
+              
+          </div>
         <div class="form-group col-md-2">
             <label for="fecha_fin">Fecha de conclusion</label>
             <input type="date" class="form-control" name="fecha_fin" id="fecha_fin" required>
@@ -221,7 +248,6 @@
     
     country_select.onchange = function(){
         country = country_select.value;
-        alert(country);
         fetch('state/' + country).then(function(response){
         response.json().then(function(data) {
         optionHTML = '';
