@@ -143,13 +143,8 @@
         
         <div class="form-group col-md-2">
           <label for="estatus">Estatus de contrato</label>
-          <select name="estatus" id="estatus" class="form-control">
-              <option value="" selected>{{ estatus[0].1}}</option>
-                  {%
-                      for estatus in estatus
-                  %}
-                      <option value="{{ estatus.0 }}">{{ estatus.1 }}</option>
-                  {%   endfor %}
+          <select name="estatus" id="estatus" class="form-control" readonly>
+            <option value="1" selected>En proceso </option readonly>
           </select> 
         </div>
         <div class="form-group col-md-2">
@@ -256,13 +251,16 @@
     tipo_select = document.getElementById('tipcon'); 
     fechafin = document.getElementById ('fecha_fin'); 
 
-    fechafin.disabled=false; 
+    fechafin.readOnly=false; 
     tipo_select.onchange = function(){
       tipcon = tipo_select.value; 
+
       if (tipcon ==='2'){
-        fechafin.disabled=true; 
+        fechafin.readOnly=true; 
+        
       } else {
-        fechafin.disabled=false; 
+        fechafin.readOnly=false; 
+        
       }
     }
 

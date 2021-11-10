@@ -187,10 +187,6 @@
       </div>
 
       <div class="form-group col-md-2">
-          <label for="fecha_fin">Fecha de conclusion</label>
-          <input type="date" class="form-control" name="fecha_fin" id="fecha_fin" value="{{datoscontrato.0[9]}}" disabled>
-      </div>
-      <div class="form-group col-md-2">
         <label for="jornada">Jornada</label>
         <input type="text" class="form-control" name="jornada" id="jornada"  value="{{datoscontrato.0[11]}}" disabled>
       </div>
@@ -207,7 +203,6 @@
   </form>
 
   <script>
-
     //Script para comprobar la fecha de firma
     var f = new Date();
     var dnow=(f.getDate());
@@ -243,6 +238,7 @@
       var val= vald+""+valm+""+valy;
     }
 
+    
   </script>
 
 
