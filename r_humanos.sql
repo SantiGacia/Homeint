@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 01-11-2021 a las 18:58:30
+-- Tiempo de generación: 09-11-2021 a las 22:18:14
 -- Versión del servidor: 10.4.19-MariaDB
 -- Versión de PHP: 8.0.7
 
@@ -53,8 +53,8 @@ INSERT INTO `anuncio` (`idAnuncio`, `idSolicitud`, `Num_Solicitantes`, `FechaPub
 
 CREATE TABLE `area` (
   `idArea` int(11) NOT NULL,
-  `AreaDescripcion` varchar(100) DEFAULT NULL,
-  `AreaNombre` varchar(45) DEFAULT NULL
+  `AreaDescripcion` varchar(250) DEFAULT NULL,
+  `AreaNombre` varchar(250) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -75,9 +75,9 @@ INSERT INTO `area` (`idArea`, `AreaDescripcion`, `AreaNombre`) VALUES
 CREATE TABLE `candidato` (
   `Curp` varchar(18) NOT NULL,
   `RFC` varchar(13) DEFAULT NULL,
-  `Nombre` varchar(45) DEFAULT NULL,
+  `Nombre` varchar(250) DEFAULT NULL,
   `nacionalidad` text NOT NULL,
-  `Domicilio` varchar(45) DEFAULT NULL,
+  `Domicilio` varchar(250) DEFAULT NULL,
   `Telefono` varchar(10) DEFAULT NULL,
   `E_Mail` varchar(45) DEFAULT NULL,
   `Sexo` varchar(45) DEFAULT NULL,
@@ -172,7 +172,7 @@ INSERT INTO `candidato_has_nivelacademico` (`Curp`, `idNivelAcademico`, `idCarre
 
 CREATE TABLE `carrera` (
   `idCarrera` int(11) NOT NULL,
-  `Descripcion` varchar(200) DEFAULT NULL
+  `Descripcion` varchar(250) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -193,8 +193,8 @@ INSERT INTO `carrera` (`idCarrera`, `Descripcion`) VALUES
 
 CREATE TABLE `contacto` (
   `idcontacto` int(11) NOT NULL,
-  `Nombre` varchar(45) NOT NULL,
-  `Domicilio` varchar(45) DEFAULT NULL,
+  `Nombre` varchar(250) NOT NULL,
+  `Domicilio` varchar(250) DEFAULT NULL,
   `Razon_Social` varchar(45) DEFAULT NULL,
   `Telefono` varchar(10) DEFAULT NULL,
   `Email` varchar(45) NOT NULL,
@@ -217,6 +217,7 @@ INSERT INTO `contacto` (`idcontacto`, `Nombre`, `Domicilio`, `Razon_Social`, `Te
 
 CREATE TABLE `contrato` (
   `IdContrato` int(18) NOT NULL,
+  `Tipo_contrato` int(11) NOT NULL,
   `Curp` varchar(18) NOT NULL,
   `idPuesto` int(11) NOT NULL,
   `idArea` int(11) NOT NULL,
@@ -229,17 +230,19 @@ CREATE TABLE `contrato` (
   `dias_de_pago` varchar(100) NOT NULL,
   `lugar_firma` varchar(100) NOT NULL,
   `fecha_firma` date NOT NULL,
-  `SalarioL` varchar(100) NOT NULL
+  `SalarioL` varchar(100) NOT NULL,
+  `Estatus_contrato` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `contrato`
 --
 
-INSERT INTO `contrato` (`IdContrato`, `Curp`, `idPuesto`, `idArea`, `fecha_inicio`, `fecha_fin`, `idJornada`, `horas_semana`, `horario`, `Salario`, `dias_de_pago`, `lugar_firma`, `fecha_firma`, `SalarioL`) VALUES
-(3, 'GAME040217HASLXDA3', 15, 1, '2021-12-06', '2022-03-06', 4, '4', 'Lunes a Viernes', '107800', 'Dia viernes', '', '2021-12-06', 'CIENTO SIETE MIL OCHOCIENTOS  PESOS '),
-(4, 'GAMS040407HASRRNA5', 1, 1, '2021-11-08', '2022-02-08', 2, '2', 'Lunes a Sabado', '143000', 'Quincena y día 29 del mes', '', '2021-11-08', 'CIENTO CUARENTA Y TRES MIL  PESOS '),
-(6, 'MORJ000106HASRVSA4', 15, 2, '2021-11-22', '2021-11-29', 2, '2', 'Lunes a Viernes', '108000', 'Viernes', '', '2021-11-22', 'CIENTO OCHO MIL  PESOS ');
+INSERT INTO `contrato` (`IdContrato`, `Tipo_contrato`, `Curp`, `idPuesto`, `idArea`, `fecha_inicio`, `fecha_fin`, `idJornada`, `horas_semana`, `horario`, `Salario`, `dias_de_pago`, `lugar_firma`, `fecha_firma`, `SalarioL`, `Estatus_contrato`) VALUES
+(10, 1, 'GAMS040407HASRRNA5', 1, 1, '2021-12-02', '2022-04-10', 2, '2', 'Lunes a Viernes', '144000', 'Dia miercoles', '', '2021-12-02', 'CIENTO CUARENTA Y CUATRO MIL  PESOS ', 1),
+(17, 2, 'GAME040217HASLXDA3', 1, 2, '2021-11-17', '2021-11-24', 2, '2', 'Lunes a Jueves', '1500000', 'Dia miercoles', '', '2021-11-17', 'UN MILLON QUINIENTOS  MIL  PESOS ', 2),
+(18, 1, 'GAME040217HASLXDA3', 1, 2, '2021-11-17', '2021-12-10', 2, '2', 'Lunes a Sabado', '1500000', 'Viernes', '', '2021-11-17', 'UN MILLON QUINIENTOS  MIL  PESOS ', 4),
+(19, 1, 'MORJ000106HASRVSA4', 15, 2, '2021-11-19', '2022-01-28', 1, '1', 'Lunes a Jueves', '108000', 'Dia miercoles', '', '2021-11-19', 'CIENTO OCHO MIL  PESOS ', 1);
 
 -- --------------------------------------------------------
 
@@ -249,10 +252,10 @@ INSERT INTO `contrato` (`IdContrato`, `Curp`, `idPuesto`, `idArea`, `fecha_inici
 
 CREATE TABLE `datos_de_empresa` (
   `idEmpresa` int(11) NOT NULL,
-  `Nombre_de_empresa` varchar(45) NOT NULL,
-  `Descripcion` varchar(45) DEFAULT NULL,
+  `Nombre_de_empresa` varchar(250) NOT NULL,
+  `Descripcion` varchar(250) DEFAULT NULL,
   `Telefono` varchar(10) DEFAULT NULL,
-  `Domicilio` varchar(100) DEFAULT NULL,
+  `Domicilio` varchar(250) DEFAULT NULL,
   `E_Mail` varchar(45) DEFAULT NULL,
   `RazonSocial` varchar(45) DEFAULT NULL,
   `Estructura_Juridica` varchar(45) DEFAULT NULL,
@@ -263,7 +266,7 @@ CREATE TABLE `datos_de_empresa` (
   `Libro_Escriturapub` varchar(100) NOT NULL,
   `Fecha_Escriturapub` date NOT NULL,
   `Fe_Escriturapub` varchar(100) NOT NULL,
-  `NP_Escriturapub` varchar(24) NOT NULL,
+  `NP_Escriturapub` varchar(250) NOT NULL,
   `Ciu_Escriturapub` varchar(100) NOT NULL,
   `No_EscriturapubL` varchar(100) NOT NULL,
   `RepresentanteLegal` varchar(200) NOT NULL
@@ -285,9 +288,9 @@ INSERT INTO `datos_de_empresa` (`idEmpresa`, `Nombre_de_empresa`, `Descripcion`,
 CREATE TABLE `empleado` (
   `Curp` varchar(18) NOT NULL,
   `RFC` varchar(13) NOT NULL,
-  `Nombre` varchar(45) NOT NULL,
+  `Nombre` varchar(250) NOT NULL,
   `nacionalidad` text NOT NULL,
-  `Domicilio` varchar(45) NOT NULL,
+  `Domicilio` varchar(250) NOT NULL,
   `Telefono` varchar(10) NOT NULL,
   `E_mail` varchar(45) NOT NULL,
   `Sexo` varchar(2) NOT NULL,
@@ -296,7 +299,7 @@ CREATE TABLE `empleado` (
   `idEstadoCivil` int(11) NOT NULL,
   `Conyuje_Concubino` varchar(45) NOT NULL,
   `tel_emergencia` varchar(10) NOT NULL,
-  `nombre_emergencia` varchar(45) NOT NULL,
+  `nombre_emergencia` varchar(250) NOT NULL,
   `no_infonavit` varchar(20) NOT NULL,
   `No_contrato` int(11) NOT NULL,
   `Contrato_Definitivo` varchar(100) NOT NULL,
@@ -309,7 +312,7 @@ CREATE TABLE `empleado` (
 --
 
 INSERT INTO `empleado` (`Curp`, `RFC`, `Nombre`, `nacionalidad`, `Domicilio`, `Telefono`, `E_mail`, `Sexo`, `Edad`, `NSS`, `idEstadoCivil`, `Conyuje_Concubino`, `tel_emergencia`, `nombre_emergencia`, `no_infonavit`, `No_contrato`, `Contrato_Definitivo`, `Contrato_Temporal`, `ContratoTemporal_Val`) VALUES
-('GAME040217HASLXDA3', 'GAME040217DA3', 'GALLEGO MUÑOZ EDGAR MARIO', 'Mexicana', 'conocido', '4499915555', 'mariochikito11@gmail.com', 'M', 20, '44190407518', 4, 'A', '4491115555', 'Hermana de mario', '...', 0, '', '', 'Si'),
+('GAME040217HASLXDA3', 'GAME040217DA3', 'GALLEGO MUÑOZ EDGAR MARIO', 'Mexicana', 'conocido', '4499915555', 'mariochikito11@gmail.com', 'M', 20, '44190407518', 4, 'A', '4491115555', 'Hermana de mario', '...', 0, '', '', 'No'),
 ('GAMS040407HASRRNA5', 'GAMS0404074T7', 'Garcia Martinez Santiago Octavio', 'Mexicana', 'Casiopea #408 Gomez Portugal 20250', '4491115555', 'ssantig07@gmail.com', 'M', 20, '2147483647', 1, '', '4495691241', 'María José Garcia Martínez', '', 0, '', '', 'Si'),
 ('MORJ000106HASRVSA4', 'MORJ040106VSA', 'MORALES RUVALCABA JESUS EMMANUEL', 'Mexicana', 'Hacienda Boca de Ortega 105, Haciendas de Agu', '4491234444', 'jesusghoul2016@gmail.com', 'M', 21, '31241251213', 4, '', '', '', '', 0, '', '', 'Si');
 
@@ -426,6 +429,27 @@ INSERT INTO `estatus_candidato` (`EstatusProceso`, `Descripcion`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `estatus_contrato`
+--
+
+CREATE TABLE `estatus_contrato` (
+  `estatus_contrato` int(11) NOT NULL,
+  `descripción` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `estatus_contrato`
+--
+
+INSERT INTO `estatus_contrato` (`estatus_contrato`, `descripción`) VALUES
+(1, 'En proceso'),
+(2, 'Firmado'),
+(3, 'Terminado'),
+(4, 'Cancelado');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `estatus_solicitud`
 --
 
@@ -454,7 +478,7 @@ INSERT INTO `estatus_solicitud` (`idEstatus_Solicitud`, `Descripcion`) VALUES
 
 CREATE TABLE `habilidad` (
   `idHabilidad` int(11) NOT NULL,
-  `Descripcion` varchar(45) DEFAULT NULL
+  `Descripcion` varchar(250) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -562,7 +586,7 @@ INSERT INTO `mediopublicidad` (`idMedioPublicidad`, `Descripcion`) VALUES
 
 CREATE TABLE `nivelacademico` (
   `idNivelAcademico` int(11) NOT NULL,
-  `Descripcion` varchar(45) DEFAULT NULL
+  `Descripcion` varchar(250) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -675,8 +699,8 @@ INSERT INTO `proceso` (`idProceso`, `Descripcion`) VALUES
 
 CREATE TABLE `puesto` (
   `idPuesto` int(11) NOT NULL,
-  `Nombrepuesto` varchar(45) DEFAULT NULL,
-  `Descripcion` varchar(200) DEFAULT NULL,
+  `Nombrepuesto` varchar(250) DEFAULT NULL,
+  `Descripcion` varchar(250) DEFAULT NULL,
   `SalarioMensual` int(11) DEFAULT NULL,
   `Beneficios` varchar(250) DEFAULT NULL,
   `Bonos` int(11) DEFAULT NULL,
@@ -795,6 +819,25 @@ INSERT INTO `solicitud` (`idSolicitud`, `FechaSolicitud`, `NumeroVacante`, `idAr
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `tipo_contrato`
+--
+
+CREATE TABLE `tipo_contrato` (
+  `tipo_contrato` int(11) NOT NULL,
+  `descripción` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `tipo_contrato`
+--
+
+INSERT INTO `tipo_contrato` (`tipo_contrato`, `descripción`) VALUES
+(1, 'Temporal'),
+(2, 'Permanente');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `turno`
 --
 
@@ -902,7 +945,9 @@ ALTER TABLE `contrato`
   ADD KEY `fk_Contrato_CURP` (`Curp`) USING BTREE,
   ADD KEY `fk_Contrato_Jornada` (`idJornada`) USING BTREE,
   ADD KEY `fk_Contrato_Area` (`idArea`) USING BTREE,
-  ADD KEY `fk_Contrato_Puesto` (`idPuesto`) USING BTREE;
+  ADD KEY `fk_Contrato_Puesto` (`idPuesto`) USING BTREE,
+  ADD KEY `Tipo_contrato` (`Tipo_contrato`),
+  ADD KEY `Estatus_contrato` (`Estatus_contrato`);
 
 --
 -- Indices de la tabla `datos_de_empresa`
@@ -949,6 +994,12 @@ ALTER TABLE `estadocivil`
 --
 ALTER TABLE `estatus_candidato`
   ADD PRIMARY KEY (`EstatusProceso`);
+
+--
+-- Indices de la tabla `estatus_contrato`
+--
+ALTER TABLE `estatus_contrato`
+  ADD PRIMARY KEY (`estatus_contrato`);
 
 --
 -- Indices de la tabla `estatus_solicitud`
@@ -1051,6 +1102,12 @@ ALTER TABLE `solicitud`
   ADD KEY `fk_Solicitud_Estatus_Solicitud1` (`idEstatus_Solicitud`);
 
 --
+-- Indices de la tabla `tipo_contrato`
+--
+ALTER TABLE `tipo_contrato`
+  ADD PRIMARY KEY (`tipo_contrato`);
+
+--
 -- Indices de la tabla `turno`
 --
 ALTER TABLE `turno`
@@ -1095,7 +1152,7 @@ ALTER TABLE `contacto`
 -- AUTO_INCREMENT de la tabla `contrato`
 --
 ALTER TABLE `contrato`
-  MODIFY `IdContrato` int(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `IdContrato` int(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT de la tabla `datos_de_empresa`
@@ -1114,6 +1171,12 @@ ALTER TABLE `estadocivil`
 --
 ALTER TABLE `estatus_candidato`
   MODIFY `EstatusProceso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT de la tabla `estatus_contrato`
+--
+ALTER TABLE `estatus_contrato`
+  MODIFY `estatus_contrato` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `estatus_solicitud`
@@ -1188,6 +1251,12 @@ ALTER TABLE `solicitud`
   MODIFY `idSolicitud` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT de la tabla `tipo_contrato`
+--
+ALTER TABLE `tipo_contrato`
+  MODIFY `tipo_contrato` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
@@ -1241,7 +1310,9 @@ ALTER TABLE `contrato`
   ADD CONSTRAINT `contrato_ibfk_1` FOREIGN KEY (`idArea`) REFERENCES `area` (`idArea`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `contrato_ibfk_2` FOREIGN KEY (`idPuesto`) REFERENCES `puesto` (`idPuesto`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `contrato_ibfk_3` FOREIGN KEY (`idJornada`) REFERENCES `jornada` (`IdJornada`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `contrato_ibfk_4` FOREIGN KEY (`Curp`) REFERENCES `empleado` (`Curp`) ON DELETE CASCADE ON UPDATE NO ACTION;
+  ADD CONSTRAINT `contrato_ibfk_4` FOREIGN KEY (`Curp`) REFERENCES `empleado` (`Curp`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `contrato_ibfk_5` FOREIGN KEY (`Tipo_contrato`) REFERENCES `tipo_contrato` (`tipo_contrato`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `contrato_ibfk_6` FOREIGN KEY (`Estatus_contrato`) REFERENCES `estatus_contrato` (`estatus_contrato`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `empleado_has_habilidad`

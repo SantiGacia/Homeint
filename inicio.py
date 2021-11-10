@@ -3567,11 +3567,7 @@ def nvo_contrato(Curp):
         query = "select * from jornada"
         cursor.execute(query)
         jornada = cursor.fetchall()
-
-            
-
-            
-
+                
         conn.close()
         return render_template("nvo_contrato2.html" ,estatus=datos14, tipocontrato=datos13,jornada=jornada,turnos=datos12,sexo=sexos,carrera_can=datos8, empleados=datos, can_habs=datos1, can_idis=datos2,can_acas=datos6, habs=datos3, idiomas=datos4, nivel_academico=datos7, ecivil=datos5, areas=datos9, puestos=datos10)
     else:
@@ -3633,7 +3629,6 @@ def nvo_contrato(Curp):
         cursor.execute(query)
         jornada = cursor.fetchall() 
 
-            
 
         conn.close()
         return render_template("nvo_contrato.html",estatus=datos14,tipocontrato=datos13,turnos=datos10, impor=datos9,jornada=jornada, sexo=sexos,carrera_can=datos8, empleados=datos, can_habs=datos1, can_idis=datos2,can_acas=datos6, habs=datos3, idiomas=datos4, nivel_academico=datos7, ecivil=datos5)
