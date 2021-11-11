@@ -4088,6 +4088,73 @@ def mue_contrato (Curp,id):
             return render_template("mue_contrato.html" , empresa=datos14, empleados=datos15, contrato=datos16)
 
 
+##curso
+
+@app.route('/curso')
+def curso():
+    return render_template("curso.html")
+
+@app.route('/curso_agr', methods=['POST'])
+def curso_agr():
+    if request.method == 'POST':
+        aux_nombr = request.form['nombre']
+        aux_descripcion = request.form['descripcion']
+        conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
+        cursor = conn.cursor()
+        cursor.execute('select count(*) from curso where nombre = %s', (aux_nombr))
+        puestos = cursor.fetchone()
+        if (puestos[0] != 0):
+            error = "El curso ya se encuentra agregado."
+            return render_template("error.html", des_error=error, paginaant="/agr_datos_curso")
+        cursor.execute('insert into curso (nombre, Descripcion) values (%s,%s)', (aux_nombr, aux_descripcion))
+        conn.commit()
+        conn.close()
+    return redirect(url_for('agr_datos_curso'))
+
+@app.route('/bo_curso/<string:id>')
+def bo_curso(id):
+    conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
+    cursor = conn.cursor()
+    cursor.execute('delete from curso where idcurso = {0}'.format(id))
+    conn.commit()
+    conn.close()
+    return redirect(url_for('agr_datos_curso'))
+
+@app.route('/agr_datos_curso')
+def agr_datos_curso():
+    conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
+    cursor = conn.cursor()
+    cursor.execute('select idcurso, nombre, Descripcion from curso order by nombre')
+    datos=cursor.fetchall()
+    conn.close()
+    return render_template("tabla_curso.html", cursos = datos )
+
+@app.route('/ed_curso/<string:id>')
+def ed_curso(id):
+    conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
+    cursor = conn.cursor()
+    cursor.execute('select idcurso, nombre, Descripcion from curso where idcurso = %s', (id))
+    dato=cursor.fetchall()
+    conn.close()
+    return render_template("edi_curso.html", curso = dato[0])
+
+@app.route('/modifica_curso/<string:id>', methods=['POST'])
+def modifica_curso(id):
+    if request.method == 'POST':
+        nombr=request.form['nombre']
+        descrip=request.form['descripcion']
+        conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
+        cursor = conn.cursor()
+        cursor.execute('select count(*) from curso where nombre = %s',(descrip))
+        cursos = cursor.fetchone()
+        if (cursos[0] != 0):
+            error = "El curso ya se encuentra agregado."
+            return render_template("error.html", des_error=error, paginaant="/agr_datos_curso")
+        else:
+            cursor.execute('update curso set  ombre=%s, Descripcion=%s where idcurso=%s', (nombr, descrip, id))
+            conn.commit()
+            conn.close()
+    return redirect(url_for('agr_datos_curso'))
 
 
 

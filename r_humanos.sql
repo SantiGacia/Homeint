@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 09-11-2021 a las 22:18:14
--- Versión del servidor: 10.4.19-MariaDB
--- Versión de PHP: 8.0.7
+-- Tiempo de generación: 11-11-2021 a las 00:10:36
+-- Versión del servidor: 10.4.20-MariaDB
+-- Versión de PHP: 8.0.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -167,6 +167,22 @@ INSERT INTO `candidato_has_nivelacademico` (`Curp`, `idNivelAcademico`, `idCarre
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `capacitacion`
+--
+
+CREATE TABLE `capacitacion` (
+  `curp` varchar(18) NOT NULL,
+  `idcurso` int(11) NOT NULL,
+  `idestatus` int(11) NOT NULL,
+  `fecha_inicio` date NOT NULL,
+  `fecha_termino` date NOT NULL,
+  `capacitador` varchar(250) NOT NULL,
+  `acreditado` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `carrera`
 --
 
@@ -243,6 +259,18 @@ INSERT INTO `contrato` (`IdContrato`, `Tipo_contrato`, `Curp`, `idPuesto`, `idAr
 (17, 2, 'GAME040217HASLXDA3', 1, 2, '2021-11-17', '2021-11-24', 2, '2', 'Lunes a Jueves', '1500000', 'Dia miercoles', '', '2021-11-17', 'UN MILLON QUINIENTOS  MIL  PESOS ', 2),
 (18, 1, 'GAME040217HASLXDA3', 1, 2, '2021-11-17', '2021-12-10', 2, '2', 'Lunes a Sabado', '1500000', 'Viernes', '', '2021-11-17', 'UN MILLON QUINIENTOS  MIL  PESOS ', 4),
 (19, 1, 'MORJ000106HASRVSA4', 15, 2, '2021-11-19', '2022-01-28', 1, '1', 'Lunes a Jueves', '108000', 'Dia miercoles', '', '2021-11-19', 'CIENTO OCHO MIL  PESOS ', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `curso`
+--
+
+CREATE TABLE `curso` (
+  `idcurso` int(11) NOT NULL,
+  `nombre` varchar(250) NOT NULL,
+  `Descripcion` varchar(250) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -446,6 +474,17 @@ INSERT INTO `estatus_contrato` (`estatus_contrato`, `descripción`) VALUES
 (2, 'Firmado'),
 (3, 'Terminado'),
 (4, 'Cancelado');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `estatus_curso`
+--
+
+CREATE TABLE `estatus_curso` (
+  `idestatus` int(11) NOT NULL,
+  `Descripcion` varchar(250) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -926,6 +965,14 @@ ALTER TABLE `candidato_has_nivelacademico`
   ADD KEY `fk_Candidato_has_NivelAcademico_Carrera1` (`idCarrera`);
 
 --
+-- Indices de la tabla `capacitacion`
+--
+ALTER TABLE `capacitacion`
+  ADD PRIMARY KEY (`curp`,`idcurso`),
+  ADD KEY `idcurso` (`idcurso`,`idestatus`),
+  ADD KEY `idestatus` (`idestatus`);
+
+--
 -- Indices de la tabla `carrera`
 --
 ALTER TABLE `carrera`
@@ -948,6 +995,12 @@ ALTER TABLE `contrato`
   ADD KEY `fk_Contrato_Puesto` (`idPuesto`) USING BTREE,
   ADD KEY `Tipo_contrato` (`Tipo_contrato`),
   ADD KEY `Estatus_contrato` (`Estatus_contrato`);
+
+--
+-- Indices de la tabla `curso`
+--
+ALTER TABLE `curso`
+  ADD PRIMARY KEY (`idcurso`);
 
 --
 -- Indices de la tabla `datos_de_empresa`
@@ -1000,6 +1053,12 @@ ALTER TABLE `estatus_candidato`
 --
 ALTER TABLE `estatus_contrato`
   ADD PRIMARY KEY (`estatus_contrato`);
+
+--
+-- Indices de la tabla `estatus_curso`
+--
+ALTER TABLE `estatus_curso`
+  ADD PRIMARY KEY (`idestatus`);
 
 --
 -- Indices de la tabla `estatus_solicitud`
@@ -1155,6 +1214,12 @@ ALTER TABLE `contrato`
   MODIFY `IdContrato` int(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
+-- AUTO_INCREMENT de la tabla `curso`
+--
+ALTER TABLE `curso`
+  MODIFY `idcurso` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `datos_de_empresa`
 --
 ALTER TABLE `datos_de_empresa`
@@ -1177,6 +1242,12 @@ ALTER TABLE `estatus_candidato`
 --
 ALTER TABLE `estatus_contrato`
   MODIFY `estatus_contrato` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT de la tabla `estatus_curso`
+--
+ALTER TABLE `estatus_curso`
+  MODIFY `idestatus` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `estatus_solicitud`
@@ -1302,6 +1373,14 @@ ALTER TABLE `candidato_has_nivelacademico`
   ADD CONSTRAINT `fk_Candidato_has_NivelAcademico_Candidato1` FOREIGN KEY (`Curp`) REFERENCES `candidato` (`Curp`) ON DELETE CASCADE ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_Candidato_has_NivelAcademico_Carrera1` FOREIGN KEY (`idCarrera`) REFERENCES `carrera` (`idCarrera`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_Candidato_has_NivelAcademico_NivelAcademico1` FOREIGN KEY (`idNivelAcademico`) REFERENCES `nivelacademico` (`idNivelAcademico`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `capacitacion`
+--
+ALTER TABLE `capacitacion`
+  ADD CONSTRAINT `capacitacion_ibfk_1` FOREIGN KEY (`idcurso`) REFERENCES `curso` (`idcurso`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `capacitacion_ibfk_2` FOREIGN KEY (`idestatus`) REFERENCES `estatus_curso` (`idestatus`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `capacitacion_ibfk_3` FOREIGN KEY (`curp`) REFERENCES `empleado` (`Curp`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `contrato`
