@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<body style="background-color:#D5DBDB;">
+<h2>Editar Curso</h2>
+            <form action="/modifica_curso/{{curso.0}}" method="post">
+                <div class="form-row">
+                    <label for="nombre">Nombre del curso</label>
+                    <input type="text" class="form-control" name="nombre" id="nombre" value="{{curso.1}}" required>
+                </div>
+                <div class="form-row">
+                    <label for="descripcion">Descripción</label>
+                    <input type="text" class="form-control" name="descripcion" id="descripcion" value="{{curso.2}}" required>
+                </div>
+
+                <br>
+              <button type="submit" class="btn btn-primary" style="background:lightseagreen">Enviar Cambios</button>
+                <script type="text/javascript" src="/static/js/jquery-3.2.1.slim.min.js"></script>
+    <script type="text/javascript" src="/static/js/popper.min.js"></script>
+    <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+
+    <a class="btn btn-primary" href="/agr_datos_curso" align="right" style="background:lightseagreen">Regresar</a>
+            </form>
+
+</body>
+
+{% endblock %}
