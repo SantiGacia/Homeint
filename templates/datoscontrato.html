@@ -6,13 +6,10 @@
 </head>
 <body style="background-color:#D5DBDB;">
 <br>
-
-<h2>Contrato</h2>
-    <script type="text/javascript" src="/static/js/jquery-3.2.1.slim.min.js"></script>
-    <script type="text/javascript" src="/static/js/popper.min.js"></script>
-    <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
-
-
+<script type="text/javascript" src="/static/js/jquery-3.2.1.slim.min.js"></script>
+<script type="text/javascript" src="/static/js/popper.min.js"></script>
+<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+<form action="">
     <div class="form-row">
         <div class="form-group col-md-2">
             <label for="curp">CURP</label>
@@ -101,46 +98,9 @@
           </select>
         </div>
     </div>
-
-    <div class="form-row">
-            <div class="form-group col-md-9">
-                    <label for="nomcoy">Conyugue_concubino(nombre de esposa)</label>
-                <input type="text" class="form-control" name="nomcoy" id="nomcoy" value="{{empleados.0[11]}}" disabled>
-            </div>
+      
 
 
-            <div class="form-group col-md-9">
-                <label for="nomcaux">Nombre de contacto</label>
-                <input type="text" class="form-control" name="nomcaux" id="nomcaux" value="{{empleados.0[13]}}" disabled>
-            </div>
-
-            <div class="form-group col-md-2">
-                <label for="telaux">Telefono de contacto</label>
-            <input type="text" class="form-control" name="telaux" id="telaux" value="{{empleados.0[12]}}" disabled>
-            </div>
-
-
-        <div class="form-group col-md-4">
-                <label for="numinfonavit">Numero de infonavit</label>
-                <input type="text" class="form-control" name="numinfonavit" id="numinfonavit"  value="{{empleados.0[14]}}" disabled>
-        </div>
-    </div>
-    </form>
-    {% for empleado in empleados %}
-    
-      <a href="/modifica_contrato/{{empleado.0}}/{{datoscontrato.0[0]}}" class="btn btn-success" style="background:lightseagreen "onclick="location.href=this.href+'/'+val;return false;">Editar contrato</a></center>
-      <a href="/ed_empleado/{{ empleado.0 }}" class="btn btn-success" style="background:lightseagreen;">Editar Perfil</a></center>
-      <a href="/ca_contrato/{{datoscontrato.0[0]}}/{{ empleado.0 }}" class="btn btn-success" style="background:rgb(235, 29, 29)">Cancelar Contrato</a></center>
-      <a href="/firma_contrato/{{datoscontrato.0[0]}}/{{empleado.0}}" class="btn btn-success" style="background:lightseagreen;">Firmar</a></center>
-      <a href="/vercontrato/{{empleado.0}}" class="btn btn-success" style="background:lightseagreen;">Regresar</a></center>
-    </td>
-  </tr>
-  {% endfor %}
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  <br>
-  <br>
-  <form action="">
-          
     <div class=form-row>
       <div class="form-group col-md-2">
         <label for="estatus">Estatus de contrato</label>
@@ -205,8 +165,15 @@
         </div>
     </div>
   </form>
-
-  <script>
+  {% for empleado in empleados %}
+    
+  <a href="/modifica_contrato/{{empleado.0}}/{{datoscontrato.0[0]}}" class="btn btn-success" style="background:lightseagreen "onclick="location.href=this.href+'/'+val;return false;">Editar contrato</a></center>
+  <a href="/ed_empleado/{{ empleado.0 }}" class="btn btn-success" style="background:lightseagreen;">Editar Perfil</a></center>
+  <a href="/cursos_contrato/{{empleado.0}}/{{datoscontrato.0[0]}}"" class="btn btn-success" style="background:lightseagreen;">Regresar</a></center>
+</td>
+</tr>
+{% endfor %}
+<script>
 
     //Script para comprobar la fecha de firma
     var f = new Date();
@@ -245,7 +212,6 @@
     }
 
   </script>
-
-
 </body>
-{% endblock %}
+
+  {% endblock %}

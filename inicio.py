@@ -2795,7 +2795,12 @@ def cal_val_ref(Curp,ca,id):
     conn.close()
     return render_template("tabla_validacion_referecias.html", can_seleccionados=datos1, sol=dato_sol, solicitud=id)
 
+
+
+
 #---------------- NUEVO MÓDULO DE CONTRATACIÓN ------------------#
+
+
 
 #------------------------ Selecciona Candidato a contratar --------------------------------#
 
@@ -3480,7 +3485,7 @@ def bo_emp_aca_can(idC,idA,idCA):
 
 
 
-##Contrato temporal
+##Contrato 
 @app.route('/contrato')
 def contrato():
     conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
@@ -3633,7 +3638,7 @@ def nvo_contrato(Curp):
         conn.close()
         return render_template("nvo_contrato.html",estatus=datos14,tipocontrato=datos13,turnos=datos10, impor=datos9,jornada=jornada, sexo=sexos,carrera_can=datos8, empleados=datos, can_habs=datos1, can_idis=datos2,can_acas=datos6, habs=datos3, idiomas=datos4, nivel_academico=datos7, ecivil=datos5)
 
-@app.route('/nvo_contrato/state/<get_state>')
+@app.route('/nvo_contrato/state/<get_state>')#3
 def statebycountry(get_state):
     cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     result = cur.execute("SELECT * FROM jordesc WHERE IdJornada = %s", [get_state])
@@ -3685,94 +3690,28 @@ def ed_contrato(Curp,id):
         datos=cursor.fetchall()
 
 
-        cursor.execute(' select a.Curp, b.idHabilidad, b.Descripcion, c.Curp, c.idHabilidad, c.Experiencia'
-                       ' from empleado a, habilidad b, empleado_has_habilidad c'
-                       ' where a.Curp=c.Curp and b.idHabilidad=c.idHabilidad and c.Curp=%s',(Curp))
-        datos1=cursor.fetchall()
-
-        cursor.execute(' select a.Curp, b.idIdioma, b.Lenguaje, c.Curp, c.idIdioma, c.Nivel'
-                       ' from empleado a, idioma b, empleado_has_idioma c'
-                       ' where a.Curp=c.Curp and b.idIdioma=c.idIdioma and c.Curp=%s',(Curp))
-        datos2 = cursor.fetchall()
-
-        cursor.execute(' select a.Curp, b.idNivelAcademico, b.Descripcion, c.idCarrera, c.Descripcion, d.Curp, d.idNivelAcademico, d.idCarrera, d.Institucion'
-                       ' from empleado a, nivelacademico b, carrera c, empleado_has_nivelacademico d'
-                       ' where a.Curp=d.Curp and b.idNivelAcademico=d.idNivelAcademico and c.idCarrera=d.idCarrera and d.Curp=%s',(Curp))
-        datos6 = cursor.fetchall()
-
-
-        cursor.execute(' select idhabilidad, Descripcion from habilidad order by Descripcion')
-        datos3 = cursor.fetchall()
-
-        cursor.execute(' select idIdioma, Lenguaje from idioma order by Lenguaje')
-        datos4 = cursor.fetchall()
-
-        cursor.execute(' select idNivelAcademico, Descripcion from nivelacademico order by Descripcion')
-        datos7 = cursor.fetchall()
-
-        cursor.execute(' select Curp,Sexo from empleado where Curp=%s',(Curp))
-        sexos = cursor.fetchall()
-
-        cursor.execute('select idCarrera, Descripcion from carrera order by Descripcion')
-        datos8=cursor.fetchall()
-
-        cursor.execute(' select idEstadoCivil, Descripcion from estadocivil')
-        datos5 = cursor.fetchall()
 
         cursor.execute('SELECT a.idContrato, a.Curp, a.idPuesto,b.Nombrepuesto, a.idArea, c.AreaNombre ,a.Salario,a.dias_de_pago , a.fecha_inicio, a.fecha_fin, a.idJornada, e.jornombre , a.horas_semana, e.Descripcion, a.horario,a.SalarioL,a.Estatus_contrato,d.descripción, f.descripción '
-                        'FROM contrato a, puesto b, area c , Estatus_contrato d ,jornada e, tipo_contrato f '
-                        'where a.idPuesto=b.idPuesto and a.idArea= c.idArea and a.idJornada= e.IdJornada and a.Tipo_contrato=f.tipo_contrato and a.Estatus_contrato=d.estatus_contrato and a.idContrato=%s',(id))
+                        'FROM contrato a, puesto b, area c , estatus_contrato d ,jornada e, tipo_contrato f '
+                        'where a.idPuesto=b.idPuesto and a.idArea= c.idArea and a.idJornada= e.IdJornada and a.Tipo_contrato=f.tipo_contrato and a.estatus_contrato=d.estatus_contrato and a.idContrato=%s',(id))
         datos9=cursor.fetchall()
 
         conn.close()
-        return render_template("ed_contratoper.html" ,datoscontrato=datos9,sexo=sexos,carrera_can=datos8, empleados=datos, can_habs=datos1, can_idis=datos2,can_acas=datos6, habs=datos3, idiomas=datos4, nivel_academico=datos7, ecivil=datos5)
+        return render_template("ed_contratoper.html" ,datoscontrato=datos9, empleados=datos)
     else:
         cursor.execute(' select Curp, RFC, Nombre,nacionalidad,Domicilio, Telefono, E_Mail, Sexo, Edad, NSS, idEstadoCivil, Conyuje_Concubino,tel_emergencia, nombre_emergencia, no_infonavit'
                        ' from empleado where Curp=%s',(Curp))
         datos=cursor.fetchall()
 
 
-        cursor.execute(' select a.Curp, b.idHabilidad, b.Descripcion, c.Curp, c.idHabilidad, c.Experiencia'
-                       ' from empleado a, habilidad b, empleado_has_habilidad c'
-                       ' where a.Curp=c.Curp and b.idHabilidad=c.idHabilidad and c.Curp=%s',(Curp))
-        datos1=cursor.fetchall()
-
-        cursor.execute(' select a.Curp, b.idIdioma, b.Lenguaje, c.Curp, c.idIdioma, c.Nivel'
-                       ' from empleado a, idioma b, empleado_has_idioma c'
-                       ' where a.Curp=c.Curp and b.idIdioma=c.idIdioma and c.Curp=%s',(Curp))
-        datos2 = cursor.fetchall()
-
-        cursor.execute(' select a.Curp, b.idNivelAcademico, b.Descripcion, c.idCarrera, c.Descripcion, d.Curp, d.idNivelAcademico, d.idCarrera, d.Institucion'
-                       ' from empleado a, nivelacademico b, carrera c, empleado_has_nivelacademico d'
-                       ' where a.Curp=d.Curp and b.idNivelAcademico=d.idNivelAcademico and c.idCarrera=d.idCarrera and d.Curp=%s',(Curp))
-        datos6 = cursor.fetchall()
-
-
-        cursor.execute(' select idhabilidad, Descripcion from habilidad order by Descripcion')
-        datos3 = cursor.fetchall()
-
-        cursor.execute(' select idIdioma, Lenguaje from idioma order by Lenguaje')
-        datos4 = cursor.fetchall()
-
-        cursor.execute(' select idNivelAcademico, Descripcion from nivelacademico order by Descripcion')
-        datos7 = cursor.fetchall()
-
-        cursor.execute(' select Curp,Sexo from empleado where Curp=%s',(Curp))
-        sexos = cursor.fetchall()
-
-        cursor.execute('select idCarrera, Descripcion from carrera order by Descripcion')
-        datos8=cursor.fetchall()
-
-        cursor.execute(' select idEstadoCivil, Descripcion from estadocivil')
-        datos5 = cursor.fetchall()
 
         cursor.execute('SELECT a.idContrato, a.Curp, a.idPuesto,b.Nombrepuesto, a.idArea, c.AreaNombre ,a.Salario,a.dias_de_pago , a.fecha_inicio, a.fecha_fin, a.idJornada, e.jornombre , a.horas_semana, e.Descripcion, a.horario,a.SalarioL,a.Estatus_contrato,d.descripción, f.descripción '
-                        'FROM contrato a, puesto b, area c , Estatus_contrato d ,jornada e, tipo_contrato f '
-                        'where a.idPuesto=b.idPuesto and a.idArea= c.idArea and a.idJornada= e.IdJornada and a.Tipo_contrato=f.tipo_contrato and a.Estatus_contrato=d.estatus_contrato and a.idContrato=%s',(id))
+                        'FROM contrato a, puesto b, area c , estatus_contrato d ,jornada e, tipo_contrato f '
+                        'where a.idPuesto=b.idPuesto and a.idArea= c.idArea and a.idJornada= e.IdJornada and a.Tipo_contrato=f.tipo_contrato and a.estatus_contrato=d.estatus_contrato and a.idContrato=%s',(id))
         datos9=cursor.fetchall()
 
         conn.close()
-        return render_template("ed_contrato.html" ,datoscontrato=datos9,sexo=sexos,carrera_can=datos8, empleados=datos, can_habs=datos1, can_idis=datos2,can_acas=datos6, habs=datos3, idiomas=datos4, nivel_academico=datos7, ecivil=datos5)
+        return render_template("ed_contrato.html" ,datoscontrato=datos9, empleados=datos)
 
    
 @app.route('/firma_contrato/<string:id>/<string:Curp>')
@@ -4157,9 +4096,46 @@ def modifica_curso(id):
     return redirect(url_for('agr_datos_curso'))
 
 
+###Cursos
+@app.route('/cursos')
+def cursos():
+    conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
+    cursor = conn.cursor()
+    cursor.execute(' SELECT a.IdContrato,a.Tipo_contrato, a.Curp, b.nombre, d.descripción '
+                    ' FROM contrato a, empleado b, tipo_contrato d '
+                    ' where a.Curp=b.Curp and d.tipo_contrato=a.Tipo_contrato ')
+    datos=cursor.fetchall()
+    conn.close()
+    return render_template("tabla_cursos.html", empleados = datos)
 
 
+@app.route('/cursos_contrato/<string:id>/<string:Curp>')
+def cursos_contrato(id,Curp):
+    conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
+    cursor = conn.cursor()
+    cursor.execute('SELECT a.IdContrato, a.Tipo_contrato, a.Curp, a.idPuesto, a.idArea, a.fecha_inicio, a.fecha_fin, a.Estatus_contrato,b.nombre '
+                    'FROM contrato a, curso b '
+                    'WHERE a.IdContrato=%s',(id))
+    datos=cursor.fetchall()
+    conn.close()
+    return render_template("cursos_contrato.html", empleados = datos, id=id, curp=Curp)
 
+@app.route('/datoscontrato/<string:Curp>/<string:id>')
+def datoscontrato(Curp,id):
+    conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
+    cursor = conn.cursor()
+
+    cursor.execute(' select Curp, RFC, Nombre,nacionalidad,Domicilio, Telefono, E_Mail, Sexo, Edad, NSS, idEstadoCivil, Conyuje_Concubino,tel_emergencia, nombre_emergencia, no_infonavit'
+                       ' from empleado where Curp=%s',(Curp))
+    datos=cursor.fetchall()
+
+    cursor.execute('SELECT a.idContrato, a.Curp, a.idPuesto,b.Nombrepuesto, a.idArea, c.AreaNombre ,a.Salario,a.dias_de_pago , a.fecha_inicio, a.fecha_fin, a.idJornada, e.jornombre , a.horas_semana, e.Descripcion, a.horario,a.SalarioL,a.Estatus_contrato,d.descripción, f.descripción '
+                    'FROM contrato a, puesto b, area c , Estatus_contrato d ,jornada e, tipo_contrato f '
+                    'where a.idPuesto=b.idPuesto and a.idArea= c.idArea and a.idJornada= e.IdJornada and a.Tipo_contrato=f.tipo_contrato and a.Estatus_contrato=d.estatus_contrato and a.idContrato=%s',(id))
+    datos9=cursor.fetchall()
+
+    conn.close()
+    return render_template("datoscontrato.html" ,datoscontrato=datos9,empleados=datos)
 
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
