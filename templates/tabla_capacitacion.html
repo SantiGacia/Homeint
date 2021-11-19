@@ -3,10 +3,7 @@
 {% block content %}
 <body style="background-color:#D5DBDB;">
 <link rel="stylesheet" href="\static\css\tabla2.css">
-<a href="/nivel_academico" class="btn btn-success" style="background:lightseagreen">Nuevo Curso</a>
-<a href="/datoscontrato/{{curp}}/{{id}}" class="btn btn-success" style="background:lightseagreen">Ver datos contrato</a>
-
-<center><h3>Empleados/contratos </h3></center>
+<center><h3>Contratos de empleados </h3></center>
 <div id="main-container">
       <table width="100%" border="1" cellpadding="0" cellspacing="0" bordercolor="#000000">
        <tbody>
@@ -15,33 +12,32 @@
             <table width="100%" border="1" cellpadding="0" cellspacing="0" bordercolor="#000000">
               <thead>
                 <tr>
-                    <td color="white" bgcolor="006666"><font color="white">Fecha de inicio</font></td>
-                    <td color="white" bgcolor="006666"><font color="white">Fecha final</font></td>
-                    
-                    <td color="white" bgcolor="006666"><font color="white">Estatus</font></td>
-                    <td color="white" bgcolor="006666"><font color="white">Curso</font></td>
+                    <td color="white" bgcolor="006666"><font color="white">CURP</font></td>
+                    <td color="white" bgcolor="006666"><font color="white">Nombre</font></td>
+                    <td color="white" bgcolor="006666"><font color="white">Tipo Contrato</font></td>
+                    <td color="white" bgcolor="006666"><font color="white"></font></td>
+
                 </tr>
               </thead>
               <tbody>
-                {% for empleado in empls %}
+                {% for empleado in empleados %}
                   <tr>
                     <td>
-                        {{ empleado.0 }}
+                        {{ empleado.2 }}
                     </td>
                     <td>
-                        {{ empleado.1 }}
+                        {{ empleado.3 }}
                     </td >
-                    {% for contrato in cont %}
-                      <td>
-                          {{ contrato.9}}
-                      </td>
+                    <td>
+                      {{ empleado.4 }}
+                    </td >
+                   
 
                       <td bgcolor="#9C9C9C" width="60">
-                      <center><a href="/vercontrato/{{empleado.0}}" class="btn btn-success" style="background:lightseagreen">Editar</a></center>
+                      <center><a href="/capacitacion_contrato/{{empleado.0}}/{{ empleado.2 }}" class="btn btn-success" style="background:lightseagreen">Capacitacion</a></center>
                     </td>
                     
                   </tr>
-                  {% endfor %}
                 {% endfor %}
               </tbody>
             </table>
