@@ -3,9 +3,9 @@
 {% block content %}
 <body style="background-color:#D5DBDB;">
 <link rel="stylesheet" href="\static\css\tabla2.css">
-<a href="/vercontrato/{{curp}}" class="btn btn-success" style="background:#20b2aa">Agregar Contrato</a>
-<a href="/cursos" class="btn btn-success" style="background:lightseagreen">Regresar</a>
-<center><h3>Contratos <span id="nompr"></span></h3></center> 
+<a href="/nvo_contrato/{{curp}}" class="btn btn-success" style="background:#20b2aa">Agregar Contrato</a>
+<a href="/contrato" class="btn btn-success" style="background:lightseagreen">Regresar</a>
+<center><h3>Contratos de <span id="nompr"></span></h3></center> 
 <input type="text" id="nombre" name="nombre" value="{{nombre.0}}" hidden> 
 <div id="main-container">
       <table width="100%" border="1" cellpadding="0" cellspacing="0" bordercolor="#000000">
@@ -71,6 +71,12 @@
     </table>
 </div>
 
+<script>
+  nom=document.getElementById('nombre').value;
+  let a =nom.substring(2, nom.length - 3);
+  document.getElementById("nompr").innerHTML=a
+</script>
+</body>
 
  
 
