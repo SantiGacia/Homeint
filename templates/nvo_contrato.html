@@ -234,13 +234,15 @@
     
     country_select.onchange = function(){
         country = country_select.value;
-        
+        console.log(country)
         fetch('state/' + country).then(function(response){
         response.json().then(function(data) {
         optionHTML = '';
         for (state of data.statecountry) {
             optionHTML += '<option value="' + state.iddesc +'">' + state.name + '</option>'
+            
         }
+        console.log(country)
         state_select.innerHTML = optionHTML;
         });
         });
@@ -254,6 +256,7 @@
     fechafin.readOnly=false; 
     tipo_select.onchange = function(){
       tipcon = tipo_select.value; 
+      console.log(tipcon);
 
       if (tipcon ==='2'){
         fechafin.readOnly=true; 

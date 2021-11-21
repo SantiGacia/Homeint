@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 11-11-2021 a las 00:10:36
--- Versión del servidor: 10.4.20-MariaDB
--- Versión de PHP: 8.0.9
+-- Tiempo de generación: 19-11-2021 a las 00:40:46
+-- Versión del servidor: 10.4.21-MariaDB
+-- Versión de PHP: 7.3.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -172,13 +172,21 @@ INSERT INTO `candidato_has_nivelacademico` (`Curp`, `idNivelAcademico`, `idCarre
 
 CREATE TABLE `capacitacion` (
   `curp` varchar(18) NOT NULL,
+  `IdContrato` int(11) NOT NULL,
   `idcurso` int(11) NOT NULL,
   `idestatus` int(11) NOT NULL,
   `fecha_inicio` date NOT NULL,
   `fecha_termino` date NOT NULL,
   `capacitador` varchar(250) NOT NULL,
-  `acreditado` int(11) NOT NULL
+  `acreditado` varchar(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `capacitacion`
+--
+
+INSERT INTO `capacitacion` (`curp`, `IdContrato`, `idcurso`, `idestatus`, `fecha_inicio`, `fecha_termino`, `capacitador`, `acreditado`) VALUES
+('GAME040217HASLXDA3', 18, 1, 4, '2021-11-27', '2021-12-07', 'Yo', 'Si');
 
 -- --------------------------------------------------------
 
@@ -271,6 +279,13 @@ CREATE TABLE `curso` (
   `nombre` varchar(250) NOT NULL,
   `Descripcion` varchar(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `curso`
+--
+
+INSERT INTO `curso` (`idcurso`, `nombre`, `Descripcion`) VALUES
+(1, 'a', 'a');
 
 -- --------------------------------------------------------
 
@@ -968,8 +983,10 @@ ALTER TABLE `candidato_has_nivelacademico`
 -- Indices de la tabla `capacitacion`
 --
 ALTER TABLE `capacitacion`
-  ADD PRIMARY KEY (`curp`,`idcurso`),
-  ADD KEY `idcurso` (`idcurso`,`idestatus`),
+  ADD PRIMARY KEY (`curp`,`idcurso`,`idestatus`),
+  ADD UNIQUE KEY `curp` (`curp`),
+  ADD KEY `capacitacion_ibfk_4` (`IdContrato`),
+  ADD KEY `idcurso` (`idcurso`),
   ADD KEY `idestatus` (`idestatus`);
 
 --
@@ -1217,7 +1234,7 @@ ALTER TABLE `contrato`
 -- AUTO_INCREMENT de la tabla `curso`
 --
 ALTER TABLE `curso`
-  MODIFY `idcurso` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idcurso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `datos_de_empresa`
@@ -1379,8 +1396,8 @@ ALTER TABLE `candidato_has_nivelacademico`
 --
 ALTER TABLE `capacitacion`
   ADD CONSTRAINT `capacitacion_ibfk_1` FOREIGN KEY (`idcurso`) REFERENCES `curso` (`idcurso`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `capacitacion_ibfk_2` FOREIGN KEY (`idestatus`) REFERENCES `estatus_curso` (`idestatus`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `capacitacion_ibfk_3` FOREIGN KEY (`curp`) REFERENCES `empleado` (`Curp`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `capacitacion_ibfk_3` FOREIGN KEY (`curp`) REFERENCES `empleado` (`Curp`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `capacitacion_ibfk_4` FOREIGN KEY (`IdContrato`) REFERENCES `contrato` (`IdContrato`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `contrato`
