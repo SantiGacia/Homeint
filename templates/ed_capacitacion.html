@@ -10,11 +10,11 @@
     <script type="text/javascript" src="/static/js/jquery-3.2.1.slim.min.js"></script>
     <script type="text/javascript" src="/static/js/popper.min.js"></script>
     <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
-    <form action="/capacitacion_agr" method="POST">  
+    <form action="/modifica_capac/{{curp}}" method="POST">  
     <div class="form-group col-md-5">
        <label for="curso">Curso</label>
        <select name="curso" id="curso" class="form-control" required>
-            <option value="1" selected>Choose...</option>
+            <option value="{{cont.1}}" selected> {{cont.1}} </option>
             {% 
                 for cur in cursos
             %}                
@@ -27,16 +27,16 @@
             <input type="text" class="form-control" name="curp" id="curp" value="{{Curp}}" hidden>
             <input type="text" class="form-control" name="id" id="id" value="{{id}}" hidden>
             <label for="fecha_inicio">Fecha de inicio</label>
-            <input type="date" class="form-control" name="fecha_inicio" id="fecha_inicio" required>
+            <input type="date" class="form-control" name="fecha_inicio" id="fecha_inicio" value="{{cont.2}}" required>
           </div>
         <div class="form-group col-md-4">
             <label for="fecha_fin">Fecha de conclusion</label>
-            <input type="date" class="form-control" name="fecha_fin" id="fecha_fin" required>
+            <input type="date" class="form-control" name="fecha_fin" id="fecha_fin" value={{cont.3}} required>
         </div>
         <div class="form-group col-md-4">
             <label for="estatus">Estatus de capacitacion</label>
-            <select name="estatus" id="estatus" class="form-control" required>
-                 <option value="" selected>Choose...</option>
+            <select name="estatus" id="estatus" class="form-control" value= {{cont.5}} required>
+                 <option value="{{cont.4}}" selected>Choose...</option>
                     {%
                          for con in estatus
                     %}
@@ -48,7 +48,7 @@
     <div class=form-row>
         <div class="form-group col-md-8">
             <label for="capacitador">Capacitador</label>
-        <input type="text" class="form-control" name="capacitador" id="capacitador" value="" >
+        <input type="text" class="form-control" name="capacitador" id="capacitador" value="{{cont.4}}" >
         </div>
     </div>
     <br>

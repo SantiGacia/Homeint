@@ -3,8 +3,8 @@
 {% block content %}
 <body style="background-color:#D5DBDB;">
 <link rel="stylesheet" href="\static\css\tabla2.css">
-<a href="/nvo_capacitacion/{{curp}}/{{id}}" class="btn btn-success" style="background:#20b2aa">Agregar capacitación</a>
-<a href="/datoscontrato/{{curp}}/{{id}}" class="btn btn-success" style="background:lightseagreen">Ver datos contrato</a>
+<a href="/nvo_capacitacion/{{curp}}" class="btn btn-success" style="background:#20b2aa">Agregar capacitación</a>
+<a href="/datoscontrato/{{curp}}" class="btn btn-success" style="background:lightseagreen">Ver datos contrato</a>
 <a href="/capacitacion" class="btn btn-success" style="background:lightseagreen">Regresar</a>
 
 <center><h3>Empleados/contratos </h3></center>
@@ -28,20 +28,20 @@
                 {% for dat in datos %}
                   <tr>
                     <td>
+                      {{ dat.2 }}
+                    </td >
+                    <td>
+                      {{ dat.3 }}
+                    </td >
+                    <td>
                       {{ dat.5 }}
-                    </td >
-                    <td>
-                      {{ dat.6 }} 
-                    </td >
-                    <td>
-                      {{ dat.4 }}
                     </td>
                     <td>
-                      {{ dat.2 }}
+                      {{ dat.1 }}
                     </td >
 
                       <td bgcolor="#9C9C9C" width="60">
-                      <center><a href="/vercontrato/{{dat.0}}" class="btn btn-success" style="background:lightseagreen">Editar</a></center>
+                      <center><a href="/ed_capacitacion/{{curp}}" class="btn btn-success" style="background:lightseagreen">Editar</a></center>
                     </td>
                     
                   </tr>

@@ -4109,15 +4109,15 @@ def capacitacion():
     return render_template("tabla_capacitacion.html", empleados = datos)
 
 
-@app.route('/capacitacion_contrato/<string:id>/<string:Curp>')
-def capacitacion_contrato(id,Curp):
+@app.route('/capacitacion_contrato/<string:Curp>')
+def capacitacion_contrato(Curp):
     conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
     cursor = conn.cursor()
-    cursor.execute(' SELECT a.IdContrato, a.idcurso, b.nombre, a.idestatus,c.descripción, a.fecha_inicio, a.fecha_termino FROM capacitacion a , curso b, estatus_contrato c '
-                   ' WHERE a.idcurso=b.idcurso and a.idestatus=c.estatus_contrato and a.IdContrato=%s',(id))
+    cursor.execute( ' SELECT  curp, idcurso, fecha_inicio, fecha_termino, capacitador, idestatus_cap  FROM capacitacion WHERE curp=%s ',(Curp))
     datos=cursor.fetchall()
     conn.close()
-    return render_template('capacitacion_contrato.html', datos=datos, id=id, curp=Curp)
+    return render_template('capacitacion_contrato.html', datos=datos, curp=Curp)
+
 
 @app.route('/datoscontrato/<string:Curp>/<string:id>')
 def datoscontrato(Curp,id):
@@ -4138,41 +4138,36 @@ def datoscontrato(Curp,id):
 
 
 
-@app.route('/nvo_capacitacion/<string:Curp>/<string:id>')
-def nvo_capacitacion(Curp,id): 
+@app.route('/nvo_capacitacion/<string:Curp>')
+def nvo_capacitacion(Curp):
     conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
     cursor = conn.cursor()
     cursor.execute('SELECT idcurso, nombre Descripcion from curso '
                     'order by nombre')
     datos=cursor.fetchall()
-    cursor.execute(' select a.IdContrato, a.Tipo_contrato, a.estatus_contrato, b.descripción '
-                ' from contrato a, Estatus_contrato b '
-                ' where a.Estatus_contrato=b.estatus_contrato and IdContrato=%s ',(id))
-    datos2 = cursor.fetchall()    
-
+    cursor.execute( 'SELECT idestatus_cap, descripcion FROM estatus_capacitacion ')
+    datos2 = cursor.fetchall()
     conn.close()
-    return render_template("capacitacion.html", cursos=datos, estatus=datos2,Curp=Curp,id=id)
+    return render_template("capacitacion.html", cursos=datos, estatus=datos2,Curp=Curp)
 
 @app.route('/capacitacion_agr', methods=['POST'])
 def capacitacion_agr(): 
     if request.method == 'POST':
         aux_curp = request.form['curp']
-        aux_id = request.form['id']
         aux_curs = request.form['curso']
-        aux_idst = request.form['estatus']
+        aux_estatus= request.form['estatus']
         aux_fechain = request.form['fecha_inicio']
         aux_fechafin = request.form['fecha_fin']
         aux_capac = request.form['capacitador']
-        aux_acr = request.form['acreditado']
         
         conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
         cursor = conn.cursor()
-        cursor.execute('insert into capacitacion (curp,idContrato, idcurso, idestatus, fecha_inicio, fecha_termino, capacitador, acreditado)'
-                       'values (%s,%s,%s,%s,%s,%s,%s,%s)',
-                       (aux_curp, aux_id,aux_curs, aux_idst, aux_fechain, aux_fechafin, aux_capac, aux_acr))
+        cursor.execute('insert into capacitacion (curp, idcurso, fecha_inicio, fecha_termino, capacitador, idestatus_cap )'
+                       'values (%s,%s,%s,%s,%s,%s)',
+                       (aux_curp, aux_curs, aux_fechain, aux_fechafin, aux_capac, aux_estatus))
         conn.commit()
         conn.close()
-    return redirect(url_for('capacitacion_contrato', id=aux_id,Curp=aux_curp))
+    return redirect(url_for('capacitacion_contrato', Curp=aux_curp))
 
 @app.route('/agr_datos_capacitacion')
 def agr_datos_capacitacion():
@@ -4183,6 +4178,38 @@ def agr_datos_capacitacion():
     conn.close()
     return redirect(url_for('/capacitacion'))
 
+@app.route('/ed_capacitacion/<string:Curp>')
+def ed_capacitacion(Curp):
+    conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
+    cursor = conn.cursor()
+    cursor.execute('SELECT idcurso, nombre Descripcion from curso '
+                    'order by nombre')
+    datos=cursor.fetchall()
+    cursor.execute( 'SELECT idestatus_cap, descripcion FROM estatus_capacitacion ')
+    datos2 = cursor.fetchall()
+    cursor.execute( ' SELECT  curp, idcurso, fecha_inicio, fecha_termino, capacitador, idestatus_cap  FROM capacitacion WHERE curp=%s ',(Curp))
+    datos3=cursor.fetchall()
+    conn.close()
+    return render_template("ed_capacitacion.html", cursos=datos, estatus=datos2, cont=datos3, Curp=Curp)
+    
+@app.route('/modifica_capac/<string:Curp>', methods=['POST'])
+def modifica_capac(Curp):
+    if request.method == 'POST':
+        aux_curp = request.form['curp']
+        aux_curs = request.form['curso']
+        aux_estatus= request.form['estatus']
+        aux_fechain = request.form['fecha_inicio']
+        aux_fechafin = request.form['fecha_fin']
+        aux_capac = request.form['capacitador']
+        conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
+        cursor = conn.cursor()
+        cursor.execute('update capacitacion '
+                       'set curp=%s, idcurso=%s, fecha_inicio=%s, fecha_termino=%s, capacitador=%s, idestatus_cap=%s'
+                       'where curp=%s', (aux_curp, aux_curs, aux_fechain, aux_fechafin, aux_capac, aux_estatus, Curp))
+        conn.commit()
+        conn.close()
+        return redirect(url_for('capacitacion_agr'))
+        
 
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
