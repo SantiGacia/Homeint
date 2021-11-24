@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="\static\css\home_tabla.css">
         <script src="https://kit.fontawesome.com/a387a70883.js" crossorigin="anonymous"></script>
-        <title>HOME</title>
+        <title>HOME-INT</title>
 </head>
 <body>
 	<div id="main-container">
@@ -14,14 +14,14 @@
 		<table>
 			<thead>
 				<tr>
-          <td><i class="fas fa-pen-square"></i> Nombre del curso</td>
-          <td >Descripción del curso</td>
+          <td>Nombre del curso <i class="fas fa-pen-square"></i></td>
+          <td >Descripción del curso <i class="fas fa-book"></i></td>
           <td></td>
-          <td ><a href="/curso" class="bt-agregar"><i class="fas fa-plus"></a></i></td>
+          <td ><center><a href="/curso" class="bt-agregar">Agregar curso <i class="fas fa-plus"></a></i></center></td>
           
         </tr>
 			</thead>
-			<tbody>
+			<tbody class="tbodydif">
                 {% for curso in cursos %}
                   <tr>
                     <td>

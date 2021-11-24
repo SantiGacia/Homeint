@@ -1,29 +1,30 @@
-{% extends "layout.html" %}
+{% extends "home_layout.html" %}
 
 {% block content %}
-<body style="background-color:#D5DBDB;">
-<link rel="stylesheet" href="\static\css\tabla2.css">
+<head>
+	<meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="\static\css\home_tabla.css">
+        <script src="https://kit.fontawesome.com/a387a70883.js" crossorigin="anonymous"></script>
+        <title>HOME</title>
+</head>
+
 <div id="main-container">
   <center><h1 class="titulo_tablas">Solicitudes Registradas</h1></center>
-      <table width="100%" border="1" cellpadding="0" cellspacing="0" bordercolor="#000000">
-       <tbody>
-        <tr>
-          <td color="FFFFFF" bgcolor="#465F5A" valign="top">
-            <table width="100%" border="1" cellpadding="0" cellspacing="0" bordercolor="#000000">
-              <thead>
-                <tr>
-                    <td color="white" bgcolor="006666"><font color="white">Id Solicitud</font></td>
-                    <td color="white" bgcolor="006666"><font color="white">Fecha</font></td>
-                    <td color="white" bgcolor="006666"><font color="white">Area</font></td>
-                    <td color="white" bgcolor="006666"><font color="white">Puesto</font></td>
-                    <td color="white" bgcolor="006666"><font color="white">Vacantes</font></td>
-                    <td color="white" bgcolor="006666"><font color="white">Estado</font></td>
-                    <td color="white" bgcolor="006666"><font color="white"></font></td>
-                </tr>
+      <table >
+        <thead>
+          <tr>
+              <td >Id Solicitud</td>
+              <td >Fecha</td>
+              <td >Area</td>
+              <td >Puesto</td>
+              <td >Vacantes</td>
+              <td >Estado</td>
+              <td ></td>
+          </tr>
               </thead>
-              <tbody>
-                  <tr>
-                      <tbody>
+                      <tbody class="tbodydif">
                 {% for solicitud in solicitudes %}
                   <tr>
                     <td>
@@ -44,21 +45,19 @@
                     <td>
                         {{ solicitud.8 }}
                     </td >
-                    <td bgcolor="#9C9C9C" width="60">
-                        <center><a href="/sel_candidato_contratacion/{{solicitud.0}}" class="btn btn-success" style="background:lightseagreen">Candidatos</a></center>
+                    <td >
+                        <center><a href="/sel_candidato_contratacion/{{solicitud.0}}" class="button-10" role="button">Candidatos</a></center>
                     </td>
                 {% endfor %}
               </tbody>
                   </tr>
-              </tbody>
+                  
             </table>
-          </td>
-        </tr>
-      </tbody>
           <script type="text/javascript" src="/static/js/jquery-3.2.1.slim.min.js"></script>
     <script type="text/javascript" src="/static/js/popper.min.js"></script>
     <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
     </table>
+  </div>
 </div>
 </body>
 

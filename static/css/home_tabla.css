@@ -5,13 +5,14 @@
 	Color iluminado: 369681;
 */
 body{
-	background-color: #fff;
+	background-color: #fbfdff;
 	font-family:sans-serif;
+
 }
 
 #main-container{
 	margin: 5% auto;
-	width: 800px;
+	width: 70%;
 }
 
 .titulo_tablas{
@@ -25,23 +26,26 @@ table{
 	text-align: left;
 	border-collapse: collapse;
 	width: 100%;
+	border: 1px solid rgb(117, 117, 117);
 }
 
 
 th, td{
 	padding: 15px;
+	border: 1px solid rgb(117, 117, 117);
 }
 
 thead{
-	background-color: #3498DB   ;
+	background-color: #004C38;
 	color: white;
+	
 }
 
-tr:nth-child(even)	{
+.tbodydif tr:nth-child(even)	{
 	background-color: #F2F3F4;
 }
 
-tr:hover td{
+.tbodydif tr:hover td{
 	background-color: #ddd;
 	color: black;
 }
@@ -57,6 +61,55 @@ tr:hover td{
 }
 */
 
+
+
+.button-10 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 6px 14px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
+  border-radius: 6px;
+  border: none;
+
+  color: #fff;
+  background: linear-gradient(180deg, #01886f 0%, #007E67 100%);
+   background-origin: border-box;
+  box-shadow: 0px 0.5px 1.5px rgba(54, 122, 246, 0.25), inset 0px 0.8px 0px -0.25px rgba(255, 255, 255, 0.2);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-10:focus {
+  box-shadow: inset 0px 0.8px 0px -0.25px rgba(255, 255, 255, 0.2), 0px 0.5px 1.5px rgba(54, 122, 246, 0.25), 0px 0px 0px 3.5px rgba(58, 108, 217, 0.5);
+  outline: 0;
+}
+.button-10solo {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 6px 14px;
+	font-family: -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
+	border-radius: 6px;
+	border: none;
+  
+	color: #fff;
+	background: linear-gradient(180deg, #4B91F7 0%, #367AF6 100%);
+	 background-origin: border-box;
+	box-shadow: 0px 0.5px 1.5px rgba(54, 122, 246, 0.25), inset 0px 0.8px 0px -0.25px rgba(255, 255, 255, 0.2);
+	user-select: none;
+	-webkit-user-select: none;
+	touch-action: manipulation;
+	margin-left: 40%;
+	margin-right: 40%;
+  }
+  
+  .button-10solo:focus {
+	box-shadow: inset 0px 0.8px 0px -0.25px rgba(255, 255, 255, 0.2), 0px 0.5px 1.5px rgba(54, 122, 246, 0.25), 0px 0px 0px 3.5px rgba(58, 108, 217, 0.5);
+	outline: 0;
+  }
+
 .boton-eliminar:hover{
 	color: red;
 }
@@ -68,3 +121,4 @@ tr:hover td{
 .bt-agregar{
 	color: white;
 }
+
