@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 19-11-2021 a las 00:40:46
--- Versión del servidor: 10.4.21-MariaDB
--- Versión de PHP: 7.3.30
+-- Tiempo de generación: 23-11-2021 a las 22:28:45
+-- Versión del servidor: 10.4.19-MariaDB
+-- Versión de PHP: 8.0.7
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -172,21 +172,21 @@ INSERT INTO `candidato_has_nivelacademico` (`Curp`, `idNivelAcademico`, `idCarre
 
 CREATE TABLE `capacitacion` (
   `curp` varchar(18) NOT NULL,
-  `IdContrato` int(11) NOT NULL,
   `idcurso` int(11) NOT NULL,
-  `idestatus` int(11) NOT NULL,
   `fecha_inicio` date NOT NULL,
   `fecha_termino` date NOT NULL,
   `capacitador` varchar(250) NOT NULL,
-  `acreditado` varchar(11) NOT NULL
+  `idestatus_cap` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `capacitacion`
 --
 
-INSERT INTO `capacitacion` (`curp`, `IdContrato`, `idcurso`, `idestatus`, `fecha_inicio`, `fecha_termino`, `capacitador`, `acreditado`) VALUES
-('GAME040217HASLXDA3', 18, 1, 4, '2021-11-27', '2021-12-07', 'Yo', 'Si');
+INSERT INTO `capacitacion` (`curp`, `idcurso`, `fecha_inicio`, `fecha_termino`, `capacitador`, `idestatus_cap`) VALUES
+('GAME040217HASLXDA3', 4, '2021-11-21', '2021-11-23', 'Yo', 1),
+('GAMS040407HASRRNA5', 3, '2021-11-21', '2021-11-30', 'Yo', 4),
+('GAMS040407HASRRNA5', 4, '2021-11-22', '2021-11-27', 'Yo', 1);
 
 -- --------------------------------------------------------
 
@@ -285,7 +285,8 @@ CREATE TABLE `curso` (
 --
 
 INSERT INTO `curso` (`idcurso`, `nombre`, `Descripcion`) VALUES
-(1, 'a', 'a');
+(3, 'Inducción ', 'Inducción de la empresa '),
+(4, 'Higiene', 'Curso de higiene y normas de sanidad.');
 
 -- --------------------------------------------------------
 
@@ -468,6 +469,27 @@ INSERT INTO `estatus_candidato` (`EstatusProceso`, `Descripcion`) VALUES
 (2, 'Calif.Psicologica'),
 (3, 'Calif.Medica'),
 (4, 'Validado.Tec');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `estatus_capacitacion`
+--
+
+CREATE TABLE `estatus_capacitacion` (
+  `idestatus_cap` int(11) NOT NULL,
+  `descripcion` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `estatus_capacitacion`
+--
+
+INSERT INTO `estatus_capacitacion` (`idestatus_cap`, `descripcion`) VALUES
+(1, 'Progmado'),
+(2, 'En curso '),
+(3, 'Acreditado'),
+(4, 'No acreditado');
 
 -- --------------------------------------------------------
 
@@ -670,7 +692,8 @@ CREATE TABLE `perfil_admo` (
 INSERT INTO `perfil_admo` (`idPerfil`, `Descripcion`) VALUES
 (1, 'Administrador'),
 (2, 'Director'),
-(3, 'Gerente de desarrollo');
+(3, 'Gerente de desarrollo'),
+(24, 'test');
 
 -- --------------------------------------------------------
 
@@ -690,7 +713,8 @@ CREATE TABLE `perfil_has_proceso` (
 
 INSERT INTO `perfil_has_proceso` (`idPerfil`, `idProceso`, `idPermiso`) VALUES
 (1, 10, 1),
-(3, 13, 2);
+(3, 13, 2),
+(24, 10, 2);
 
 -- --------------------------------------------------------
 
@@ -929,7 +953,8 @@ CREATE TABLE `usuario` (
 
 INSERT INTO `usuario` (`idUsuario`, `usuario`, `password`, `nombre`, `Perfil`) VALUES
 (1, 'Fernando', 'abcd1234', 'Luis Fernando', 1),
-(2, 'Juanpe', 'aaaa1111', 'Juan Carloz Lopez', 1);
+(2, 'Juanpe', 'aaaa1111', 'Juan Carloz Lopez', 1),
+(6, 'Santi', 'a1234', 'SANTIAGO', 24);
 
 --
 -- Índices para tablas volcadas
@@ -983,11 +1008,8 @@ ALTER TABLE `candidato_has_nivelacademico`
 -- Indices de la tabla `capacitacion`
 --
 ALTER TABLE `capacitacion`
-  ADD PRIMARY KEY (`curp`,`idcurso`,`idestatus`),
-  ADD UNIQUE KEY `curp` (`curp`),
-  ADD KEY `capacitacion_ibfk_4` (`IdContrato`),
-  ADD KEY `idcurso` (`idcurso`),
-  ADD KEY `idestatus` (`idestatus`);
+  ADD PRIMARY KEY (`curp`,`idcurso`),
+  ADD KEY `estatus_cap` (`idestatus_cap`);
 
 --
 -- Indices de la tabla `carrera`
@@ -1064,6 +1086,12 @@ ALTER TABLE `estadocivil`
 --
 ALTER TABLE `estatus_candidato`
   ADD PRIMARY KEY (`EstatusProceso`);
+
+--
+-- Indices de la tabla `estatus_capacitacion`
+--
+ALTER TABLE `estatus_capacitacion`
+  ADD PRIMARY KEY (`idestatus_cap`);
 
 --
 -- Indices de la tabla `estatus_contrato`
@@ -1234,7 +1262,7 @@ ALTER TABLE `contrato`
 -- AUTO_INCREMENT de la tabla `curso`
 --
 ALTER TABLE `curso`
-  MODIFY `idcurso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idcurso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `datos_de_empresa`
@@ -1253,6 +1281,12 @@ ALTER TABLE `estadocivil`
 --
 ALTER TABLE `estatus_candidato`
   MODIFY `EstatusProceso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT de la tabla `estatus_capacitacion`
+--
+ALTER TABLE `estatus_capacitacion`
+  MODIFY `idestatus_cap` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `estatus_contrato`
@@ -1312,7 +1346,7 @@ ALTER TABLE `nivelacademico`
 -- AUTO_INCREMENT de la tabla `perfil_admo`
 --
 ALTER TABLE `perfil_admo`
-  MODIFY `idPerfil` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `idPerfil` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT de la tabla `permisos`
@@ -1348,7 +1382,7 @@ ALTER TABLE `tipo_contrato`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Restricciones para tablas volcadas
@@ -1395,9 +1429,7 @@ ALTER TABLE `candidato_has_nivelacademico`
 -- Filtros para la tabla `capacitacion`
 --
 ALTER TABLE `capacitacion`
-  ADD CONSTRAINT `capacitacion_ibfk_1` FOREIGN KEY (`idcurso`) REFERENCES `curso` (`idcurso`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `capacitacion_ibfk_3` FOREIGN KEY (`curp`) REFERENCES `empleado` (`Curp`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `capacitacion_ibfk_4` FOREIGN KEY (`IdContrato`) REFERENCES `contrato` (`IdContrato`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `a` FOREIGN KEY (`idestatus_cap`) REFERENCES `estatus_capacitacion` (`idestatus_cap`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `contrato`
