@@ -14,17 +14,17 @@
 		<table>
 			<thead>
 				<tr>
-					<td>Empresa&nbsp;<i class="fas fa-book"></i></td>
+					<td>Empresa<i class="fas fa-book"></i></td>
 					<th></th></a></i></th>
 				</tr>
 			</thead>
-			<tbody>
+			<tbody class="tbodydif">
                 {% for nivel in niveles %}
                   <tr>
                     <td>
                       {{ nivel.0 }}
                     </td>
-					<td>
+				          	<td>
                       <center><a href="/ed_datos_empresa/{{nivel.0}}" class="boton-editar">Editar&nbsp;<i class="far fa-edit"></i></i></a></center></td>
                     </td>
 

@@ -14,10 +14,15 @@
 		<table>
 			<thead>
 				<tr>
-					<th>Nombre de la Jornada&nbsp;<i class="fas fa-pen-square"></i></th><th>Descripción de la jornada&nbsp;<i class="fas fa-book"></i></th><th></th><th class="th-plus"><a href="/jornada" class="bt-agregar"><i class="fas fa-plus"></a></i></th>
+          <td><i class="fas fa-pen-square">Nombre de la Jornada</i></td>
+          <td><i class="fas fa-book">Descripción de la jornada</i></td>
+          <td></td>
+          <td></td>
+          <td><class="th-plus"><a href="/jornada" class="bt-agregar"><i class="fas fa-plus"></a></td>
+          
 				</tr>
 			</thead>
-			<tbody>
+			<tbody class="tbodydif">
                 {% for tarea in areas %}
                   <tr>
                     <td>
@@ -26,11 +31,13 @@
                     <td>
                       {{ tarea.2 }}
                     </td>
+                    <td>
                       <center><a href="/ed_jor/{{tarea.0}}" class="boton-editar">Editar&nbsp;<i class="far fa-edit"></i></a></center></td>
                     </td>
                     <td>
                       <center><a href="/bo_jor/{{tarea.0}}" class="boton-eliminar">Eliminar&nbsp;<i class="fas fa-trash-alt"></i></a></center></td>
                     </td>
+                    <td></td>
                   </tr>
                 {% endfor %}
               </tbody>

@@ -14,18 +14,18 @@
 		<table>
 			<thead>
 				<tr>
-					<td>Descripción&nbsp;<i class="fas fa-book"></i></td>
+					<td>Descripción<i class="fas fa-book"></i></td>
 					<td></td>
-					<th class="th-plus"><a href="/tipo_contrato" class="bt-agregar"><i class="fas fa-plus"></a></i></th>
+					<td class="th-plus"><a href="/tipo_contrato" class="bt-agregar"><i class="fas fa-plus"></a></i></td>
 				</tr>
 			</thead>
-			<tbody>
+			<tbody class="tbodydif">
                 {% for tipo in tipos %}
                   <tr>
                     <td>
                       {{ tipo.1 }}
                     </td>
-					<td>
+				          	<td>
                       <center><a href="/ed_tipo/{{tipo.0}}" class="boton-editar">Editar&nbsp;<i class="far fa-edit"></i></i></a></center></td>
                     </td>
                     <td>
