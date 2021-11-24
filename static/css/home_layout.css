@@ -1,0 +1,97 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+
+}
+/*Ajustes del cuerpo de loyout*/
+body{
+    background-size: auto;
+    background-color: #fff ;
+    background-position: center;
+    font-family: sans-serif;
+
+}
+
+/*Ajustes de logo*/
+.logo{
+    margin-top: 5px;
+}
+
+
+
+.li{
+    text-align: right;
+}
+/*Ajustes del area de menu*/
+.menu-bar{
+    background: #ededed ;
+    height: 84px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 5%;
+    text-align: center;
+
+}
+/*Ajustes de las listas*/
+.menu-bar ul{
+    display: inline-flex;
+    list-style: none;
+    color: black;
+}
+/*Ajustes de los elementos de las listas*/
+.menu-bar ul li{
+    padding: 10px 65px;
+    position: relative;
+}
+
+.menu-bar ul li a{
+    text-decoration: none;
+    color: black;
+    font-size: 20px;
+    transition: all 0.3s ;
+}
+
+
+.menu-bar ul li:hover{
+    background: #F8F9F9 ;
+    border-radius: 3px;
+
+}
+/*Ajustes de las sub listas*/
+.sub-menu{
+    display: none;
+}
+
+.menu-bar ul li:hover .sub-menu{
+    display: block;
+    position: absolute;
+    background: #F8F9F9 ;
+    margin-top: 10px;
+    margin-left: -65px;
+}
+
+.menu-bar ul li:hover .sub-menu ul{
+    display: block ;
+    margin:auto;
+}
+
+.menu-bar ul li:hover .sub-menu ul li{
+    width: 250px;
+    padding: 10px;
+    border-bottom: 1px dotted #fff;
+    background: transparent;
+    border-radius: 0;
+    text-align: left ;
+}
+
+.menu-bar ul li:hover .sub-menu ul li:last-child{
+    border-bottom: none;
+}
+
+.menu-bar ul li:hover .sub-menu ul li a:hover{
+    color: #3498DB;
+}
+

@@ -1,46 +1,38 @@
-{% extends "layout.html" %}
+{% extends "home_layout.html" %}
 {% block content %}
 <head>
-
+	<meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="\static\css\home_tabla.css">
+        <script src="https://kit.fontawesome.com/a387a70883.js" crossorigin="anonymous"></script>
+        <title>HOME</title>
 </head>
-<body style="background-color:#D5DBDB;">
-<link rel="stylesheet" href="\static\css\tabla2.css">
-<center><h3>Datos de la empresa</h3></center>
-<div id="main-container">
-      <table width="100%" border="1" cellpadding="0" cellspacing="0">
-        <tr>
-          <td color="FFFFFF" bgcolor="#465F5A" valign="top">
-            <table width="100%" border="1" cellpadding="0" cellspacing="0">
-              <thead>
-              <tr>
-                    <td color="white" bgcolor="006666"><font color="white">Empresa</font></td>
-                  <td color="white" bgcolor="006666"><font color="white"></font></td>
-                </tr>
-              </thead>
-              <tbody>
+<body>
+	<div id="main-container">
+		<center><H1 class="titulo_tablas">Datos de la Empresa</H1></center>
+		<table>
+			<thead>
+				<tr>
+					<td>Empresa&nbsp;<i class="fas fa-book"></i></td>
+					<th></th></a></i></th>
+				</tr>
+			</thead>
+			<tbody>
                 {% for nivel in niveles %}
                   <tr>
                     <td>
                       {{ nivel.0 }}
                     </td>
-                    <td bgcolor="#9C9C9C" width="60">
-                      <center><a href="/ed_datos_empresa/{{nivel.0}}" class="btn btn-success" style="background:lightseagreen">Editar</a></center>
+					<td>
+                      <center><a href="/ed_datos_empresa/{{nivel.0}}" class="boton-editar">Editar&nbsp;<i class="far fa-edit"></i></i></a></center></td>
                     </td>
 
                   </tr>
                 {% endfor %}
               </tbody>
-            </table>
-          </td>
-        </tr>
-      </tbody>
-
-
-          <script type="text/javascript" src="/static/js/jquery-3.2.1.slim.min.js"></script>
-    <script type="text/javascript" src="/static/js/popper.min.js"></script>
-    <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
-    </table>
-</div>
+		</table>
+	</div>
 </body>
-
 {% endblock %}
+

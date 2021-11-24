@@ -1,75 +1,58 @@
-{% extends "layout.html" %}
+﻿{% extends "home_layout.html" %}
 {% block content %}
 <head>
-
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="\static\css\formulario4.css">
+    <script src="https://kit.fontawesome.com/a387a70883.js" crossorigin="anonymous"></script>
+    <title>HOME</title>
 </head>
-<body style="background-color:#D5DBDB;">
-<form action="/contacto_agr" method="post">
-<h2>Agregar Contacto</h2>
-
-<div class="form-row">
-    <label for="nombre">Nombre de contacto</label>
-</div>
-
-<div class="form-row">
-    <div class="col">
-        <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombre de contaco" required>
-    </div>
-</div>
-
-<div class="form-row">
-    <label for="dom">Domicilio</label>
-</div>
-<div class="form-row">
-    <div class="col">
-        <input type="text" class="form-control" name="dom" id="dom" placeholder="Domicilio" required>
-    </div>
-</div>
-
-<div class="form-row">
-    <label for="razon">Razon Social</label>
-</div>
-<div class="form-row">
-    <div class="col">
-        <input type="text" class="form-control" name="razon" id="razon" placeholder="Razon Social" required>
-    </div>
-</div>
-
-<div class="form-row">
-    <label for="tel">Telefono</label>
-</div>
-<div class="form-group col-md-2">
-    <div class="col">
-        <input type="text" class="form-control" name="tel" id="tel" placeholder="(999)-999-9999" pattern="[0-9.]+" required>
-    </div>
-</div>
-
-<div class="form-row">
-    <label for="email">E-mail</label>
-</div>
-<div class="form-row">
-    <div class="col">
-        <input type="text" class="form-control" name="email" id="email" placeholder="E-mail" required>
-    </div>
-</div>
-
-<div class="form-row">
-    <label for="link">Linkedin</label>
-</div>
-<div class="form-row">
-    <div class="col">
-        <input type="text" class="form-control" name="link" id="link" placeholder="Linkedin" required>
-    </div>
-</div>
-<br>
-<button type="submit" class="btn btn-primary" style="background-color: lightseagreen!important;">Agregar</button>
-
-
-<script type="text/javascript" src="/static/js/jquery-3.2.1.slim.min.js"></script>
-    <script type="text/javascript" src="/static/js/popper.min.js"></script>
-    <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
-
-    <a class="btn btn-primary" href="/agr_datos_contacto" align="right" style="background:lightseagreen">Regresar</a>
-</form>
-  {% endblock %}
+<body>
+    <main>
+        <form action="/contacto_agr" method="post">
+            <section>
+                <H1>Agregar Contacto</H1>
+                <div class="tama2">
+                    <label for="nombre" >Nombre de empresa</label>
+                        <div>
+                        <input type="text"  name="nombre" id="nombre" placeholder="Nombre de contaco" required>
+                    </div>
+                </div>
+                <div class="tama4">
+                    <label for="dom">Domicilio</label>
+                    <div class="formulario__group-input">
+                        <input type="text"  name="dom" id="dom"  placeholder="Domicilio" required>
+                    </div>
+                </div>
+                <div class="tama3">
+                    <label for="razon">Razon Social</label>
+                    <div class="formulario__group-input">
+                        <input type="text"  name="razon" id="razon" placeholder="Razon Social" required>
+                    </div>
+                </div>
+                    <div class="tama1">
+                    <label for="tel" >Telefono</label>
+                    <div class="formulario__group-input">
+                        <input type="text"  name="tel" id="tel"  placeholder="(999)-999-9999" pattern="[0-9.]+" required>
+                    </div>
+                </div>
+                <div class="tama4">
+                    <label for="email" >E-mail</label>
+                    <div class="formulario__group-input">
+                        <input type="text" name="email" id="email" placeholder="E-mail" required >
+                    </div>
+                </div>
+                <div class="tama1">
+                    <label for="link">Linkedin</label>
+                    <div class="formulario__group-input">
+                        <input type="text"  name="link" id="link" placeholder="Linkedin" required>
+                    </div>
+                </div>
+        </form>
+                <button type="submit" class="boton" >Agregar&nbsp;<i class="fas fa-plus"></i></button>
+                <a class="boton-2" href="/agr_datos_contacto">Regresar&nbsp;<i class="fas fa-arrow-circle-left"></i></a>
+            </section>
+    </main>
 </body>
+{% endblock %}

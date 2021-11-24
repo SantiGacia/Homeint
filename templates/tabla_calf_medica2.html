@@ -1,59 +1,39 @@
-{% extends "layout.html" %}
-
+﻿{% extends "home_layout.html" %}
 {% block content %}
-<body style="background-color:#D5DBDB;">
-<link rel="stylesheet" href="\static\css\tabla2.css">
-<center><h3>Solicitudes Registradas para la Calificacion Medica</h3></center>
-<div id="main-container">
-      <table width="100%" border="1" cellpadding="0" cellspacing="0" bordercolor="#000000">
-       <tbody>
-        <tr>
-          <td color="FFFFFF" bgcolor="#465F5A" valign="top">
-            <table width="100%" border="1" cellpadding="0" cellspacing="0" bordercolor="#000000">
-              <thead>
-                <tr>
-                    <td color="white" bgcolor="006666"><font color="white">Solicitud</font></td>
-                    <td color="white" bgcolor="006666"><font color="white">Fecha</font></td>
-                    <td color="white" bgcolor="006666"><font color="white">Area</font></td>
-                    <td color="white" bgcolor="006666"><font color="white">Puesto</font></td>
-                    <td color="white" bgcolor="006666"><font color="white"></font></td>
-                </tr>
-              </thead>
-              <tbody>
-
-                  <tr>
-                      <tbody>
-                {% for solicitud in can_seleccionados %}
-                  <tr>
-                    <td>
-                        {{ solicitud.0 }}
-                    </td>
-                    <td>
-                        {{ solicitud.1 }}
-                    </td>
-                    <td>
-                        {{ solicitud.3 }}
-                    </td >
-                    <td>
-                        {{ solicitud.5 }}
-                    </td >
-                    <td bgcolor="#9C9C9C" width="60">
-                        <center><a href="/nvo_calf_medica/{{solicitud.0}}" class="btn btn-success" style="background:lightseagreen">Candidatos</a></center>
-                    </td>
-                {% endfor %}
-              </tbody>
-                  </tr>
-              </tbody>
-            </table>
-          </td>
-        </tr>
-      </tbody>
-          <script type="text/javascript" src="/static/js/jquery-3.2.1.slim.min.js"></script>
-    <script type="text/javascript" src="/static/js/popper.min.js"></script>
-    <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
-    </table>
-</div>
+<head>
+	<meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="\static\css\home_tabla.css">
+        <script src="https://kit.fontawesome.com/a387a70883.js" crossorigin="anonymous"></script>
+        <title>HOME</title>
+</head>
+<body>
+	<div id="main-container">
+		<center><H1 class="titulo_tablas">Solicitudes Registradas para la Calificacion Medica</H1></center>	
+		<table>
+			<thead>
+				<tr>
+					<th>Solicitud</th><th>Fecha</th><th>Area</th><th>Puesto</th><th></th><th></th><th class="th-plus"><a href="" class="bt-agregar"><i class="fas fa-plus"></a></i></th>
+				</tr>
+			</thead>
+            <tr>
+				<td class="titulo-tablas">Prueba</td><td class="titulo-tablas">Prueba</td><td class="titulo-tablas">Prueba</td><td class="titulo-tablas">Prueba</td>
+                <td><center><a href="" class="boton-editar">Candidatos&nbsp;<i class="far fa-edit"></i></i></a></center></td>
+			</tr>
+            <tr>
+				<td class="titulo-tablas">Prueba</td><td class="titulo-tablas">Prueba</td><td class="titulo-tablas">Prueba</td><td class="titulo-tablas">Prueba</td>
+                <td><center><a href="" class="boton-editar">Candidatos&nbsp;<i class="far fa-edit"></i></i></a></center></td>
+			</tr>
+			<tr>
+				<td class="titulo-tablas">Prueba</td><td class="titulo-tablas">Prueba</td><td class="titulo-tablas">Prueba</td><td class="titulo-tablas">Prueba</td>
+                <td><center><a href="" class="boton-editar">Candidatos&nbsp;<i class="far fa-edit"></i></i></a></center></td>
+			</tr>
+			<tr>
+				<td class="titulo-tablas">Prueba</td><td class="titulo-tablas">Prueba</td><td class="titulo-tablas">Prueba</td><td class="titulo-tablas">Prueba</td>
+                <td><center><a href="" class="boton-editar">Candidatos&nbsp;<i class="far fa-edit"></i></i></a></center></td>
+			</tr>
+		</table>
+	</div>
 </body>
-
-
 {% endblock %}

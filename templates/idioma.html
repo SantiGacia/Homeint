@@ -1,24 +1,31 @@
-{% extends "layout.html" %}
+{% extends "home_layout.html" %}
 {% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="\static\css\homeformulario.css">
+    <script src="https://kit.fontawesome.com/a387a70883.js" crossorigin="anonymous"></script>
+    <title>HOME</title>
 
-<body style="background-color:#D5DBDB;">
-<h2>Agregar Idioma</h2>
-<form action="/idioma_agr" method="post">
-    <div class="form-row col-md-11">
-        <label for="fidioma">Idioma</label>
-     </div>
-     <div class="form-row col-md-11">
-         <div class="col">
-         <input type="text" class="form-control" name="fidioma" id="fidioma" placeholder="Idioma" required>
-         </div>
-     </div>
-    <br>
-        <button type="submit" class="btn btn-primary" style="background-color:lightseagreen!important"><font color="white">Agregar</font></button>
-    <script type="text/javascript" src="/static/js/jquery-3.2.1.slim.min.js"></script>
-    <script type="text/javascript" src="/static/js/popper.min.js"></script>
-    <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
-    <a class="btn btn-primary" href="/agr_datos_idioma" align="right" style="background:lightseagreen">Regresar</a>
-    </form>
+
+    <H1 class="titulos_formulario">Agregar Idioma&nbsp;<i class="fas fa-plus"></a></i></H1>
+</head>
+
+
+<body>
+    <main>
+        <form action="/idioma_agr" method="post">
+            <div class="formulario__group">
+                <label for="fidioma" class="formulario_label">Descripcion&nbsp;<i class="fas fa-book"></i></label>
+                    <div class="formulario__group-input">
+                        <input type="text" class="formulario__input" name="fidioma" id="fidioma" required>
+                    </div>
+                    <button type="submit" class="boton" >Agregar&nbsp;<i class="fas fa-plus"></i></button>
+                    <a class="boton-2" href="/agr_datos_idioma">Regresar&nbsp;<i class="fas fa-arrow-circle-left"></i></a>
+                    
+            </div>            
+        </form>
+    </main>
 </body>
-
 {% endblock %}

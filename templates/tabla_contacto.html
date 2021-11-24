@@ -1,51 +1,42 @@
-{% extends "layout.html" %}
+{% extends "home_layout.html" %}
 {% block content %}
 <head>
-
+	<meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="\static\css\home_tabla.css">
+        <script src="https://kit.fontawesome.com/a387a70883.js" crossorigin="anonymous"></script>
+        <title>HOME</title>
 </head>
-<body style="background-color:#D5DBDB;">
-<link rel="stylesheet" href="\static\css\tabla2.css">
-<a href="/contacto" class="btn btn-success" style="background:lightseagreen">Agregar contacto</a>
-<center><h3>Contactos registrados</h3></center>
-<div id="main-container">
-      <table width="100%" border="1" cellpadding="0" cellspacing="0">
-        <tr>
-          <td color="FFFFFF" bgcolor="646B63" valign="top">
-            <table width="100%" border="1" cellpadding="0" cellspacing="0" bordercolor="#000000">
-              <thead>
-                <tr>
-                  <td color="white" bgcolor="006666">Nombre de contacto</td>
-                  <td color="white" bgcolor="006666"></td>
-                  <td color="white" bgcolor="006666"></td>
-                </tr>
-              </thead>
-              <tbody>
+<body>
+	<div id="main-container">
+		<center><H1 class="titulo_tablas">Contactos Registrados</H1></center>	
+		<table>
+			<thead>
+				<tr>
+					<td>Nombre de Contacto&nbsp;<i class="fas fa-book"></i></td>
+					<td></td>
+					<th class="th-plus"><a href="/contacto" class="bt-agregar"><i class="fas fa-plus"></a></i></th>
+				</tr>
+			</thead>
+			<tbody>
                 {% for tcontacto in contactos %}
                   <tr>
                     <td>
                       {{ tcontacto.1 }}
                     </td>
-                    <td bgcolor="#9C9C9C" width="60">
-                      <center><a href="/ed_contacto/{{tcontacto.0}}" class="btn btn-success" style="background:lightseagreen">Editar</a></center>
+					<td>
+                      <center><a href="/ed_contacto/{{tcontacto.0}}" class="boton-editar">Editar&nbsp;<i class="far fa-edit"></i></i></a></center></td>
                     </td>
-                    <td  bgcolor="#BFBFBF" width="60">
-                      <center><a href="/bo_contacto/{{tcontacto.0}}" class="btn btn-success" style="background:lightseagreen">Borrar</a></center>
+                    <td>
+                      <center><a href="/bo_contacto/{{tcontacto.0}}" class="boton-eliminar">Eliminar&nbsp;<i class="fas fa-trash-alt"></i></a></center></td>
                     </td>
 
                   </tr>
                 {% endfor %}
               </tbody>
-            </table>
-          </td>
-        </tr>
-      </tbody>
-        <script type="text/javascript" src="/static/js/jquery-3.2.1.slim.min.js"></script>
-    <script type="text/javascript" src="/static/js/popper.min.js"></script>
-    <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
-    </table>
-
-</center>
-</div>
+		</table>
+	</div>
 </body>
-
 {% endblock %}
+

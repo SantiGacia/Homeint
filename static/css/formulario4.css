@@ -1,0 +1,224 @@
+
+
+section{
+    padding: .1rem 0;
+}
+
+h1{
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+h2{
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+form{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content:space-between;
+    width: 100%;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 1rem;
+}
+
+.contenedor{ 
+    display: flex;
+    flex-direction: column;
+    width: 14rem;
+    margin: 0.5rem 0;
+}
+
+.contenedor label{
+    font-size: 1rem;
+    margin-bottom: 0.2rem ;    
+    font-weight: bold;
+}
+
+.contenedor input{
+    font-size: 1.1rem;
+
+    width: 100%;
+    height: 2.2rem;
+    padding-left: 0.2rem;
+
+    border: 2px solid gray;
+    border-radius: 5px;
+    box-shadow: blue;
+}
+
+/*Inputs personalizaos*/
+.fecha{
+    display: flex;
+    flex-direction: column;
+    width: 32.5rem;
+    margin: 0.5rem 0;
+    margin-right: 18rem;
+}
+
+.fecha label{
+    font-size: 1rem;
+    margin-bottom: 0.2rem ;    
+    font-weight: bold;
+}
+
+.fecha input{
+    font-size: 1.1rem;
+
+    width: 47.5%;
+    height: 2.3rem;
+    padding-left: 0.2rem;
+
+    border: 2px solid gray;
+    border-radius: 5px;
+    box-shadow: blue;
+}
+
+.tama1{
+    display: flex;
+    flex-direction: column;
+    width: 18rem;
+    margin: 0.5rem 0;
+}
+
+.tama1 label{
+    font-size: 1rem;
+    margin-bottom: 0.2rem ;    
+    font-weight: bold;
+}
+
+.tama1 input{
+    font-size: 1.1rem;
+
+    width: 100%;
+    height: 2.2rem;
+    padding-left: 0.2rem;
+
+    border: 2px solid gray;
+    border-radius: 5px;
+    box-shadow: blue;
+}
+
+.tama2{
+    display: flex;
+    flex-direction: column;
+    width: 34rem;
+    margin: 0.5rem 0;
+}
+
+.tama2 label{
+    font-size: 1rem;
+    margin-bottom: 0.2rem ;    
+    font-weight: bold;
+}
+
+.tama2 input{
+    font-size: 1.1rem;
+
+    width: 100%;
+    height: 2.2rem;
+    padding-left: 0.2rem;
+
+    border: 2px solid gray;
+    border-radius: 5px;
+    box-shadow: blue;
+}
+
+.tama3{
+    display: flex;
+    flex-direction: column;
+    width: 15rem;
+    margin: 0.5rem 0;
+}
+
+.tama3 label{
+    font-size: 1rem;
+    margin-bottom: 0.2rem ;    
+    font-weight: bold;
+}
+
+.tama3 input{
+    font-size: 1.1rem;
+
+    width: 100%;
+    height: 2.2rem;
+    padding-left: 0.2rem;
+
+    border: 2px solid gray;
+    border-radius: 5px;
+    box-shadow: blue;
+}
+
+.tama4{
+    display: flex;
+    flex-direction: column;
+    width: 24.7rem;
+    margin: 0.5rem 0;
+}
+
+.tama4 label{
+    font-size: 1rem;
+    margin-bottom: 0.2rem ;    
+    font-weight: bold;
+}
+
+.tama4 input{
+    font-size: 1.1rem;
+
+    width: 100%;
+    height: 2.2rem;
+    padding-left: 0.2rem;
+
+    border: 2px solid gray;
+    border-radius: 5px;
+    box-shadow: blue;
+}
+
+.boton{
+    margin-left: 55%;
+    width: 10%;
+    padding: .2%;
+    margin-top: 1.5%;
+    border: 1px solid hsl(168, 42%, 74%) ;
+    text-decoration: none;
+    text-align: center;
+    background-color: #A2D9CE;
+    border-radius: 3px;
+    font-family: sans-serif ;
+    font-size: 100%;
+    color: black;
+    cursor: pointer;
+}
+
+.boton:hover{
+    color:#F4F6F6 ;
+}
+
+.boton-2{
+    margin-left: 1%;
+    width: 10%;
+    padding: .2%;
+    margin-top: 1.5%;
+    border: 1px solid #A2D9CE ;
+    text-decoration: none;
+    text-align: center;
+    background-color: #A2D9CE;
+    border-radius: 3px;
+    font-family: sans-serif ;
+    font-size: 100%;
+    color: black;
+    -webkit-appearance: button;
+    -moz-appearance: button;
+    appearance: button  ;
+}
+
+.boton-2:hover{
+    color:#F4F6F6
+}

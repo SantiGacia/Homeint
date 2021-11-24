@@ -1,30 +1,31 @@
-{% extends "layout.html" %}
-
+{% extends "home_layout.html" %}
 {% block content %}
-
-
 <head>
-    <title>HOME-INT</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="\static\css\homeformulario.css">
+    <script src="https://kit.fontawesome.com/a387a70883.js" crossorigin="anonymous"></script>
+    <title>HOME</title>
+
+
+    <H1 class="titulos_formulario">Agregar Habilidad&nbsp;<i class="fas fa-plus"></a></i></H1>
 </head>
-<body style="background-color:#D5DBDB;">
-<h2>Agregar Habilidad</h2>
-<form action="/habilidad_agr" method="post">
-  <script type="text/javascript" src="/static/js/jquery-3.2.1.slim.min.js"></script>
-    <script type="text/javascript" src="/static/js/popper.min.js"></script>
-    <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
 
-<div class="form-row">
- <label for="descripcion">Descripcion</label>
-</div>
 
-<div class="form-row">
- <div class="col">
- <input type="text" class="form-control" name="descripcion" id="descripcion" placeholder="Descripcion" required>
- </div>
-</div>
-<br>
-<button type="submit" class="btn btn-primary" style="background-color: lightseagreen!important;">Agregar</button>
-<a class="btn btn-primary" href="/agr_datos_habilidad" align="right" style="background:lightseagreen">Regresar</a>
-</form>
+<body>
+    <main>
+        <form action="/habilidad_agr" method="post">
+            <div class="formulario__group">
+                <label for="descripcion" class="formulario_label">Descripcion&nbsp;<i class="fas fa-book"></i></label>
+                    <div class="formulario__group-input">
+                        <input type="text" class="formulario__input" name="descripcion" id="descripcion" required>
+                    </div>
+                    <button type="submit" class="boton" >Agregar&nbsp;<i class="fas fa-plus"></i></button>
+                    <a class="boton-2" href="/agr_datos_habilidad">Regresar&nbsp;<i class="fas fa-arrow-circle-left"></i></a>
+                    
+            </div>            
+        </form>
+    </main>
 </body>
 {% endblock %}

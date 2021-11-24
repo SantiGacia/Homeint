@@ -1,49 +1,42 @@
-{% extends "layout.html" %}
-
+{% extends "home_layout.html" %}
 {% block content %}
-<body style="background-color:#D5DBDB;">
-<link rel="stylesheet" href="\static\css\tabla2.css">
-<a href="/nivel_academico" class="btn btn-success" style="background:lightseagreen">Agregar Nivel</a>
-<center><h3>Niveles registrados</h3></center>
-<div id="main-container">
-      <table width="100%" border="1" cellpadding="0" cellspacing="0" bordercolor="#000000">
-       <tbody>
-        <tr>
-          <td color="FFFFFF" bgcolor="#465F5A" valign="top">
-            <table width="100%" border="1" cellpadding="0" cellspacing="0" bordercolor="#000000">
-              <thead>
-                <tr>
-                  <td color="white" bgcolor="006666">Descripcion</td>
-                  <td color="white" bgcolor="006666"></td>
-                  <td color="white" bgcolor="006666"></td>
-                </tr>
-              </thead>
-              <tbody>
+<head>
+	<meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="\static\css\home_tabla.css">
+        <script src="https://kit.fontawesome.com/a387a70883.js" crossorigin="anonymous"></script>
+        <title>HOME</title>
+</head>
+<body>
+	<div id="main-container">
+		<center><H1 class="titulo_tablas">Niveles Registrados</H1></center>	
+		<table>
+			<thead>
+				<tr>
+					<td>Descripción&nbsp;<i class="fas fa-book"></i></td>
+					<td></td>
+					<th class="th-plus"><a href="/nivel_academico" class="bt-agregar"><i class="fas fa-plus"></a></i></th>
+				</tr>
+			</thead>
+			<tbody>
                 {% for nivel in niveles %}
                   <tr>
                     <td>
                       {{ nivel.1 }}
                     </td>
-                    <td bgcolor="#9C9C9C" width="60">
-                      <center><a href="/ed_nivel/{{nivel.0}}" class="btn btn-success" style="background:lightseagreen">Editar</a></center>
+					<td>
+                      <center><a href="/ed_nivel/{{nivel.0}}" class="boton-editar">Editar&nbsp;<i class="far fa-edit"></i></i></a></center></td>
                     </td>
-                    <td  bgcolor="#BFBFBF" width="60">
-                      <center><a href="/bo_nivel/{{nivel.0}}" class="btn btn-success" style="background:lightseagreen">Borrar</a></center>
+                    <td>
+                      <center><a href="/bo_nivel/{{nivel.0}}" class="boton-eliminar">Eliminar&nbsp;<i class="fas fa-trash-alt"></i></a></center></td>
                     </td>
 
                   </tr>
                 {% endfor %}
               </tbody>
-            </table>
-          </td>
-        </tr>
-      </tbody>
-        <script type="text/javascript" src="/static/js/jquery-3.2.1.slim.min.js"></script>
-    <script type="text/javascript" src="/static/js/popper.min.js"></script>
-    <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
-    </table>
-</div>
-
-
-
+		</table>
+	</div>
+</body>
 {% endblock %}
+

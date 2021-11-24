@@ -1,81 +1,144 @@
-{% extends "layout.html" %}
+{% extends "home_layout.html" %}
 {% block content %}
-
 <head>
-    <title>HOME-INT</title>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="\static\css\formulario3.css">
+    <script src="https://kit.fontawesome.com/a387a70883.js" crossorigin="anonymous"></script>
+	<title>HOME-INT</title>
 </head>
 <body>
-<form action="/datos_empresa_agr" method="post">
-<h1>Datos de la empresa</h1>
-    <div class="form-row">
-        <label for="nom_empresa">Nombre de la Empresa</label>
-    </div>
-    <div class="form-row">
-        <div class="col">
-            <input type="text" class="form-control" name="nom_empresa" id="nom_empresa" placeholder="Nombre de la Empresa">
-        </div>
-    </div>
-
-    <div class="form-row">
-        <label for="descripcion">Descripcion</label>
-    </div>
-    <div class="form-row">
-        <div class="col">
-            <input type="text" class="form-control" name="descripcion" id="descripcion" placeholder="Descripcion">
-        </div>
-    </div>
-
-    <div class="form-row">
-        <label for="estructura_juridica">Estructura Juridica</label>
-    </div>
-    <div class="form-row">
-        <div class="col">
-            <input type="text" class="form-control" name="estructura_juridica" id="estructura_juridica" placeholder="Estructura Juridica">
-        </div>
-    </div>
-
-    <div class="form-row">
-        <label for="razon_social">Razon Social</label>
-    </div>
-    <div class="form-row">
-        <div class="col">
-            <input type="text" class="form-control" name="razon_social" id="razon_social" placeholder="Razon Social">
-        </div>
-    </div>
-
-    <div class="form-group col-md-2">
-            <label for="correo">Direccion de Correo Electronico  </label>
-            <input type="email" class="form-control" name="correo" id="correo" placeholder="nombre@ejemplo.com">
-        </div>
-
-    <div class="form-group">
-        <label for="domicilio">Domicilio</label>
-        <input type="text" class="form-control" name="domicilio" id="domicilio" placeholder="Domicilio">
-    </div>
-
-    <div class="form-row">
-        <label for="tel">Telefonos</label>
-    </div>
-    <div class="form-row">
-        <div class="col">
-            <input type="tel" class="form-control" name="tel" id="tel" placeholder="495-999-99999">
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label for="encargado">Encargado</label>
-        <input type="text" class="form-control" name="encargado" id="encargado" placeholder="Encargado">
-    </div>
-
-    <div class="form-group">
-        <label for="CIF">CIF de Empresa</label>
-        <input type="text" class="form-control" name="CIF" id="CIF" placeholder="CIF de Empresa">
-    </div>
-    <button type="submit" class="btn btn-primary" style="background:lightseagreen">Agrega</button>
-<script type="text/javascript" src="/static/js/jquery-3.2.1.slim.min.js"></script>
-    <script type="text/javascript" src="/static/js/popper.min.js"></script>
-    <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
-
-</form>
+	<main>
+		<form action="/agr_datos_empresa/" method="post">
+		<section>
+			<h1>Editar Datos de la Empresa</h1>
+				<div class="tama1">
+					<label for="nom_empresa">Nombre de empresa&nbsp;<i class="fas fa-building"></i></label>
+                    <div>
+                        <input type="text"  name="nom_empresa" id="nom_empresa" placeholder="Nombre de la Empresa" required>
+                    </div>
+				</div>
+				<div class="tama2">
+					<label for="descripcion">Descripcion&nbsp;<i class="fas fa-book"></i></label>
+                    <div>
+                        <input type="text"  name="descripcion" id="descripcion" placeholder="Descripcion" required>
+                    </div>
+				</div>
+				<div class="tama3">
+					<label for="razon_social" >Razon Social de la empresa&nbsp;<i class="far fa-question-circle"></i></label>
+                    <div>
+                        <input type="text"  name="razon_social" id="razon_social" placeholder="Razon Social" required>
+                    </div>
+				</div>
+				<div class="tama1">
+					<label for="domicilio" >Domicilio&nbsp;<i class="fas fa-map-marked"></i></label>
+                    <div >
+                        <input type="text"  name="domicilio" id="domicilio" placeholder="Domicilio" >
+                    </div>
+				</div>
+				<div class="tama3">
+					<label for="correo" >E-mail&nbsp;<i class="fas fa-envelope"></i></label>
+                    <div >
+                        <input type="email"  name="correo" id="correo" placeholder="nombre@ejemplo.com" >
+                    </div>
+				</div>
+				<div class="tama3">
+					<label for="tel">Telefono&nbsp;<i class="fas fa-phone-square-alt"></i></label>
+                    <div >
+                        <input type="tel" name="tel" id="tel" placeholder="4999999999" >
+                    </div>
+				</div>
+				<div class="tama1">
+					<label for="CIF" >Cif de Empresa&nbsp;<i class="far fa-id-card"></i></label>
+                    <div >
+                        <input type="text"  name="CIF" id="CIF" placeholder="CIF de Empresa" >
+                    </div>
+				</div>
+			</form>
+		</section>
+		<section>
+			<h2>Datos de Encargado</h2>
+			<form action="/modificar_datos_empresa/{{nivel.0}}" method="post">
+				<div class="tama2">
+					<label for="encargado" >Encargado&nbsp;<i class="fas fa-portrait"></i></label>
+                    <div >
+                        <input type="text"  name="encargado" id="encargado" placeholder="Encargado" value=" >
+                    </div>
+				</div>
+				<div class="tama1">
+					<label for="estructura_juridica" >Estrucutura Juridica&nbsp;<i class="fas fa-file-alt"></i></label>
+                    <div >
+                        <input type="text"  name="estructura_juridica" id="estructura_juridica" placeholder="Estructura Juridica" value="{{nivel.6}}" >
+                    </div>
+				</div>
+				<div class="tama3">
+					<label for="acta_consti" >Acta Constitutiva&nbsp;<i class="fas fa-file-alt"></i></label>
+                    <div >
+                        <input type="text"  name="acta_consti" id="acta_consti" placeholder="Acta constitutiva" value="{{nivel.9}}">
+                    </div>
+				</div>
+			</form>
+		</section>
+		<section>
+			<h2>Datos de Escitura pública</h2>
+			<form action="/modificar_datos_empresa/{{nivel.0}}" method="post">
+				<div class="tama1">
+					<label for="encargado" >Representante Legal&nbsp;<i class="fas fa-balance-scale"></i></label>
+                    <div >
+                        <input type="text"  name="rlegal" id="rlegal" placeholder="Nombre del representante legal" value="{{nivel.17}}" >
+                    </div>
+				</div>
+				<div class="tama3">
+					<label for="no_esct_publica" >No.Escritura Publica&nbsp;<i class="fas fa-university"></i></label>
+                    <div >
+                        <input type="num"  name="numescpub" id="numescpub" placeholder="0000" value="{{nivel.10}}">
+                    </div>
+				</div>
+				<div class="tama2">
+					<label for="no_esct_publica" >No.Escritura Publica&nbsp;<i class="fas fa-university"></i></label>
+                    <div >
+                        <input type="text"  name="resultadol" id="resultadol" placeholder="0000" value="{{nivel.16}}" required >
+                    </div>
+				</div>
+				<div class="tama1">
+					<label for="libro_esct_publica" >Libro Escritura publica&nbsp;<i class="fas fa-file-invoice"></i></label>
+                    <div >
+                        <input type="text"  name="libro_esct_publica" id="libro_esct_publica" placeholder="Libro" value="{{nivel.11}}">
+                    </div>
+				</div>
+				<div class="fecha">
+					<label for="fecha_esct_publica" >Fecha Escritura publica&nbsp;<i class="fas fa-calendar-day"></i></label>
+                    <div>
+                        <input type="date"  name="fecha_esct_publica" id="fecha_esct_publica" placeholder="00/00/00" value="{{nivel.12}}">
+                    </div>
+				</div>
+			</form>
+		</section>
+		<section>
+			<h2>Datos del notario</h2>
+			<form action="/modificar_datos_empresa/{{nivel.0}}" method="post">
+				<div class="tama2">
+					<label for="fe_esct_publica" >Notario&nbsp;<i class="fas fa-user-alt"></i></label>
+                    <div >
+                        <input type="text"  name="fe_esct_publica" id="fe_esct_publica" placeholder="Nombre del Notaio publico" value="{{nivel.13}}">
+                    </div>
+				</div>
+				<div class="tama3">
+					<label for="np_esct_publica" >Numero de la Notaría&nbsp;<i class="fas fa-university"></i></label>
+                    <div >
+                        <input type="num"  name="np_esct_publica" id="np_esct_publica" placeholder="Numero Notaría publica" value="{{nivel.14}}">
+                    </div>
+				</div>
+				<div class="tama1">
+					<label for="ciu_escpub" >Ciudad de la Notaía&nbsp;<i class="fas fa-city"></i></label>
+                    <div >
+                        <input type="text"  name="ciu_escpub" id="ciu_escpub" placeholder="Ciudad Notaía publica" value="{{nivel.15}}">
+                    </div>
+				</div>
+				<button type="submit" class="boton" href="">Enviar Cambios&nbsp;<i class="fas fa-paper-plane"></i></button>
+                <a class="boton-2" href="/agr_datos_empresa">Regresar&nbsp;<i class="fas fa-arrow-circle-left"></i></a>
+			</form>
+		</section>
+	</main>
 </body>
-{% endblock %}

@@ -1,0 +1,70 @@
+/*
+	Color fondo: #632432;
+	Color header: 246355;
+	Color borde: 0F362D;
+	Color iluminado: 369681;
+*/
+body{
+	background-color: #fff;
+	font-family:sans-serif;
+}
+
+#main-container{
+	margin: 5% auto;
+	width: 800px;
+}
+
+.titulo_tablas{
+	font-family: sans-serif;
+	padding-bottom: 2%;
+    padding-left: 1%;
+}
+
+table{
+	background-color: white;
+	text-align: left;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+
+th, td{
+	padding: 15px;
+}
+
+thead{
+	background-color: #3498DB   ;
+	color: white;
+}
+
+tr:nth-child(even)	{
+	background-color: #F2F3F4;
+}
+
+tr:hover td{
+	background-color: #ddd;
+	color: black;
+}
+
+
+.boton-editar, .boton-eliminar{
+	text-decoration: none;
+	color: black;
+}
+/*
+.boton-editar:hover{
+	
+}
+*/
+
+.boton-eliminar:hover{
+	color: red;
+}
+
+.th-plus{
+	text-align: right;
+}
+
+.bt-agregar{
+	color: white;
+}
