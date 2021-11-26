@@ -4,6 +4,7 @@
 <head>
     <title>HOME-INT</title>
 </head>
+<script src="https://kit.fontawesome.com/c8a4eef53d.js" crossorigin="anonymous"></script>
 <form action="/modifica_puesto/{{puestos.0[0]}}" method="post">
     <h2>Editar Puesto</h2>
     <body style="background-color:#D5DBDB;">
@@ -68,7 +69,7 @@
         </div>
         {% endif %}
     </div>
-    <button type="submit" class="btn btn-primary" style="background:lightseagreen">Enviar Cambios</button>
+    <button type="submit" class="btn btn-primary" style="background:lightseagreen">Enviar Cambios &nbsp;<i class="fas fa-paper-plane"></i></button>
 </form>
 <!-- -----------------------------------------------------------------  -->
 <br>
@@ -119,7 +120,7 @@
                                 </td>
                                 <td  bgcolor="#9C9C9C" width="60">
                                   <center><a href="/bo_hab_pto/{{puesto.0}}/{{puesto.4}}" class="btn btn-success"
-                                             style="background:lightseagreen;">Borrar</a></center>
+                                             style="background:lightseagreen;">Borrar &nbsp;<i class="far fa-edit"></i></a></center>
                                 </td>
 
                               </tr>
@@ -151,7 +152,7 @@
                             <label for="nive">Nivel</label>&nbsp;&nbsp;&nbsp;
                             <input type="text" class="form-control" name="nive" id="nive" placeholder="Nivel en el idioma" required>&nbsp;&nbsp;&nbsp;
                         </div>&nbsp;&nbsp;&nbsp;
-                        <button type="submit" class="btn btn-primary" style="background:lightseagreen">Agrega Idioma</button>
+                        <button type="submit" class="btn btn-primary" style="background:lightseagreen">Agrega Idioma &nbsp;<i class="fas fa-plus"></i></button>
                     </form>
                   </div>
                   <br>
@@ -176,7 +177,7 @@
                                 </td>
                                 <td  bgcolor="#9C9C9C" width="60">
                                   <center><a href="/bo_idi_pto/{{ pue_idi.0 }}/{{ pue_idi.4 }}" class="btn btn-success"
-                                             style="background:lightseagreen;">Borrar</a></center>
+                                             style="background:lightseagreen;">Borrar &nbsp;<i class="fas fa-trash-alt"></i></a></center>
                                 </td>
 
                               </tr>
@@ -188,7 +189,7 @@
             </div>
             <br><br>
             <center>
-              <a class="btn btn-primary" href="/puesto" align="right" style="background:lightseagreen">Regresar</a>
+              <a class="btn btn-primary" href="/puesto" align="right" style="background:lightseagreen">Regresar &nbsp;<i class="fas fa-undo-alt"></i></a>
             </center>
             <br><br>
 

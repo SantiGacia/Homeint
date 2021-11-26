@@ -4,6 +4,7 @@
 <head>
     <title>HOME-INT</title>
 </head>
+<script src="https://kit.fontawesome.com/c8a4eef53d.js" crossorigin="anonymous"></script>
 <body style="background-color:#D5DBDB;">
 <br>
 <form action="/candidato_agr" method="post">
@@ -34,11 +35,11 @@
 
     <div class="form-row">
         <div class="form-group col-md-2">
-            <label for="telefono">Telefono</label>
+            <label for="telefono">Teléfono</label>
         <input type="text" class="form-control" name="telefono" id="telefono" placeholder="999-999-9999" pattern="[0-9.]+" required>
         </div>
         <div class="form-group col-md-3">
-            <label for="correoe">Correo Electronico</label>
+            <label for="correoe">Correo Electrónico</label>
             <input type="email" class="form-control" name="correoe" id="correoe" placeholder="correo@gmail.com">
         </div>
 
@@ -68,7 +69,7 @@
             </select>
         </div>
     </div>
-    <button type="submit" class="btn btn-primary" style="background:lightseagreen">Agregar</button>
+    <button type="submit" class="btn btn-primary" style="background:lightseagreen">Agregar &nbsp;<i class="fas fa-plus"></i></button>
 </form>
 
 <!-- -----------------------------------------------------------------  -->
@@ -92,7 +93,7 @@
                 <label for="expe">Experiencia</label>&nbsp;&nbsp;&nbsp;
                 <input type="text" class="form-control" name="expe" id="expe" placeholder="tiempo de experiencia">&nbsp;&nbsp;&nbsp;
             </div>&nbsp;&nbsp;&nbsp;
-            <button type="submit" class="btn btn-primary">Agrega habilidad</button>
+            <button type="submit" class="btn btn-primary">Agrega habilidad &nbsp;<i class="fas fa-plus"></i></button>
         </form>
     </div>
     <br>
@@ -116,7 +117,7 @@
                         {{ candidato.5 }}
                     </td>
                     <td  bgcolor="#3C3EC5" width="60">
-                        <center><a href="/bo_hab_candidato/{{candidato.0}}/{{candidato.4}}" style="color:#FFFF00;">Borrar</a></center>
+                        <center><a href="/bo_hab_candidato/{{candidato.0}}/{{candidato.4}}" style="color:#FFFF00;">Borrar &nbsp;<i class="fas fa-trash-alt"></i></a></center>
                     </td>
                 </tr>
                 {% endfor %}
@@ -148,11 +149,11 @@
     </div>
     <div class="form-row">
         <div class="form-group col-md-2">
-            <label for="telefono">Telefono</label>
+            <label for="telefono">Teléfono</label>
         <input type="text" class="form-control" name="telefono" id="telefono" placeholder="999-999-9999">
         </div>
         <div class="form-group col-md-3">
-            <label for="correoe">Correo Electronico</label>
+            <label for="correoe">Correo Electrónico</label>
             <input type="email" class="form-control" name="correoe" id="correoe" placeholder="correo@gmail.com">
         </div>
 
@@ -182,7 +183,7 @@
             </select>
         </div>
     </div>
-    <button type="submit" class="btn btn-primary" style="background:lightseagreen">Agregar</button>
+    <button type="submit" class="btn btn-primary" style="background:lightseagreen">Agregar &nbsp;<i class="fas fa-plus"></i></button>
     <script type="text/javascript" src="/static/js/jquery-3.2.1.slim.min.js"></script>
     <script type="text/javascript" src="/static/js/popper.min.js"></script>
     <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>

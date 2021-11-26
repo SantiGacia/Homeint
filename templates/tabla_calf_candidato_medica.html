@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
 
 {% block content %}
+<script src="https://kit.fontawesome.com/c8a4eef53d.js" crossorigin="anonymous"></script>
 <body style="background-color:#D5DBDB;">
 <link rel="stylesheet" href="\static\css\tabla2.css">
 <center><h3>Datos de la solicitud</h3></center>
@@ -12,7 +13,7 @@
                     <thead>
                     <tr>
                         <td color="white" bgcolor="006666"><font color="white">Fecha</font></td>
-                        <td color="white" bgcolor="006666"><font color="white">Area</font></td>
+                        <td color="white" bgcolor="006666"><font color="white">Área</font></td>
                         <td color="white" bgcolor="006666"><font color="white">Puesto</font></td>
                         <td color="white" bgcolor="006666"><font color="white">Vacantes</font></td>
                         <td color="white" bgcolor="006666"><font color="white">Estado</font></td>
@@ -54,7 +55,7 @@
                 <tr>
                     <td color="white" bgcolor="006666"><font color="white">CURP</font></td>
                     <td color="white" bgcolor="006666"><font color="white">Nombre</font></td>
-                    <td color="white" bgcolor="006666"><font color="white">Nivel Academico</font></td>
+                    <td color="white" bgcolor="006666"><font color="white">Nivel Académico</font></td>
                     <td color="white" bgcolor="006666"><font color="white">Carrera</font></td>
                     <td color="white" bgcolor="006666"><font color="white">Apto</font></td>
                     <td color="white" bgcolor="006666"><font color="white"></font></td>
@@ -81,10 +82,10 @@
                         {{ can_seleccionado.6 }}
                     </td>
                     <td  bgcolor="#BFBFBF" width="60">
-                        <center><a href="/cal_med/{{ can_seleccionado.0 }}/Apto/{{ solicitud }}" class="btn btn-success" style="background:lightseagreen">Apto</a></center>
+                        <center><a href="/cal_med/{{ can_seleccionado.0 }}/Apto/{{ solicitud }}" class="btn btn-success" style="background:lightseagreen">Apto&nbsp;<i class="fas fa-check"></i></a></center>
                     </td>
                     <td  bgcolor="#BFBFBF" width="60">
-                        <center><a href="/cal_med/{{ can_seleccionado.0 }}/No Apto/{{ solicitud }}" class="btn btn-success" style="background:lightseagreen">No apto</a></center>
+                        <center><a href="/cal_med/{{ can_seleccionado.0 }}/No Apto/{{ solicitud }}" class="btn btn-success" style="background:lightseagreen">No apto&nbsp;<i class="fas fa-times"></i></a></center>
                     </td>
                   </tr>
                   </tr>
@@ -97,7 +98,7 @@
     </table>
     <br><br>
     <center>
-    <a class="btn btn-primary" href="/agr_cal_medica" align="right" style="background:lightseagreen">Regresar</a>
+    <a class="btn btn-primary" href="/agr_cal_medica" align="right" style="background:lightseagreen">Regresar&nbsp;<i class="fas fa-undo-alt"></i></a>
     </center>
     <script type="text/javascript" src="/static/js/jquery-3.2.1.slim.min.js"></script>
     <script type="text/javascript" src="/static/js/popper.min.js"></script>

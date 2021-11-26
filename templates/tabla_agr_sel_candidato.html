@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
 
 {% block content %}
+<script src="https://kit.fontawesome.com/c8a4eef53d.js" crossorigin="anonymous"></script>
 <body style="background-color:#D5DBDB;">
 <link rel="stylesheet" href="\static\css\tabla2.css">
 <center><h3>Datos de la solicitud</h3></center>
@@ -12,7 +13,7 @@
                     <thead>
                     <tr>
                         <td color="white" bgcolor="006666"><font color="white">Fecha</font></td>
-                        <td color="white" bgcolor="006666"><font color="white">Area</font></td>
+                        <td color="white" bgcolor="006666"><font color="white">Área</font></td>
                         <td color="white" bgcolor="006666"><font color="white">Puesto</font></td>
                         <td color="white" bgcolor="006666"><font color="white">Vacantes</font></td>
                         <td color="white" bgcolor="006666"><font color="white">Estado</font></td>
@@ -54,7 +55,7 @@
                 <tr>
                     <td color="white" bgcolor="006666"><font color="white">CURP</font></td>
                     <td color="white" bgcolor="006666"><font color="white">Nombre</font></td>
-                    <td color="white" bgcolor="006666"><font color="white">Nivel Academico</font></td>
+                    <td color="white" bgcolor="006666"><font color="white">Nivel Académico</font></td>
                     <td color="white" bgcolor="006666"><font color="white">Carrera</font></td>
                     <td color="white" bgcolor="006666"><font color="white"></font></td>
 
@@ -76,7 +77,7 @@
                         {{ can_seleccionado.5 }}
                     </td>
                     <td  bgcolor="#BFBFBF" width="60">
-                        <center><a href="/bo_sol_candidato/{{can_seleccionado.0}}/{{solicitud}}" class="btn btn-success" style="background:lightseagreen">Borrar</a></center>
+                        <center><a href="/bo_sol_candidato/{{can_seleccionado.0}}/{{solicitud}}" class="btn btn-success" style="background:lightseagreen">Borrar&nbsp;<i class="fas fa-trash-alt"></i></a></center>
                     </td>
                   </tr>
                 {% endfor %}
@@ -97,7 +98,7 @@
                 <tr>
                     <td color="white" bgcolor="006666"><font color="white">CURP</font></td>
                     <td color="white" bgcolor="006666"><font color="white">Nombre</font></td>
-                    <td color="white" bgcolor="006666"><font color="white">Nivel Academico</font></td>
+                    <td color="white" bgcolor="006666"><font color="white">Nivel Académico</font></td>
                     <td color="white" bgcolor="006666"><font color="white">Carrera</font></td>
                     <td color="white" bgcolor="006666"><font color="white"></font></td>
                     <td color="white" bgcolor="006666"><font color="white"></font></td>
@@ -121,10 +122,10 @@
                     </td >
 
                       <td bgcolor="#9C9C9C" width="60">
-                      <center><a href="/ed_candidato2/{{candidato.0}}/{{solicitud}}" class="btn btn-success" style="background:lightseagreen">Perfil</a></center>
+                      <center><a href="/ed_candidato2/{{candidato.0}}/{{solicitud}}" class="btn btn-success" style="background:lightseagreen">Perfil&nbsp;<i class="far fa-edit"></i></a></center>
                     </td>
                     <td  bgcolor="#BFBFBF" width="60">
-                        <center><a href="/ins_candidato/{{candidato.0}}/{{solicitud}}/Pendiente" class="btn btn-success" style="background:lightseagreen">Seleccionar</a></center>
+                        <center><a href="/ins_candidato/{{candidato.0}}/{{solicitud}}/Pendiente" class="btn btn-success" style="background:lightseagreen">Seleccionar&nbsp;<i class="fas fa-clipboard-check"></i></a></center>
                     </td>
                   </tr>
                 {% endfor %}
@@ -140,7 +141,7 @@
     </table>
     <center>
       <br><br>
-      <a class="btn btn-primary" href="/agr_sel_candidato" align="right" style="background:lightseagreen">Solicitudes</a>
+      <a class="btn btn-primary" href="/agr_sel_candidato" align="right" style="background:lightseagreen">Solicitudes&nbsp;<i class="fas fa-list-ol"></i></a>
       <br><br>
     </center>
     

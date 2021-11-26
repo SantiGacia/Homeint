@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
 
 {% block content %}
+<script src="https://kit.fontawesome.com/c8a4eef53d.js" crossorigin="anonymous"></script>
 <body style="background-color:#D5DBDB;">
 <link rel="stylesheet" href="\static\css\tabla2.css">
 <center><h3>Candidatos Seleccionados</h3></center>
@@ -36,10 +37,10 @@
                         {{ can_seleccionado.5 }}
                     </td>
                     <td bgcolor="#9C9C9C" width="60">
-                        <center><a href="/#" class="btn btn-success" style="background:lightseagreen">Apto</a></center>
+                        <center><a href="/#" class="btn btn-success" style="background:lightseagreen">Apto&nbsp;<i class="fas fa-check"></i></a></center>
                     </td>
                     <td  bgcolor="#BFBFBF" width="60">
-                        <center><a href="/#" class="btn btn-success" style="background:lightseagreen">No Apto</a></center>
+                        <center><a href="/#" class="btn btn-success" style="background:lightseagreen">No Apto&nbsp;<i class="fas fa-times"></i></a></center>
                     </td>
                   </tr>
                 {% endfor %}

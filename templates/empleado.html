@@ -7,6 +7,7 @@
 <body style="background-color:#D5DBDB;">
 <br>
 <form action="/agrega_empleado" method="post">
+<script src="https://kit.fontawesome.com/c8a4eef53d.js" crossorigin="anonymous"></script>
 <h2>Agregar Empleado</h2>
     <script type="text/javascript" src="/static/js/jquery-3.2.1.slim.min.js"></script>
     <script type="text/javascript" src="/static/js/popper.min.js"></script>
@@ -38,7 +39,7 @@
     </div>
     <div class="form-row">
         <div class="form-group col-md-2">
-            <label for="telefono">Telefono</label>
+            <label for="telefono">Teléfono</label>
         <input minlength="10" maxlength="10" type="text" class="form-control" name="telefono" id="telefono" placeholder="999-999-9999" pattern="[0-9.]+"autocomplete="off" required>
         </div>
         <div class="form-group col-md-3">
@@ -74,7 +75,7 @@
     </div>
     <div class="form-row">
         <div class="form-group col-md-9">
-                <label for="nomcoy">Conyugue concubin@</label>
+                <label for="nomcoy">Cónyugue concubin@</label>
             <input type="text" class="form-control" name="nomcoy" id="nomcoy" value="" placeholder="Nombre Conyugue concubin@" >
         </div>
 
@@ -85,18 +86,18 @@
         </div>
 
         <div class="form-group col-md-2">
-            <label for="telaux">Telefono de contacto</label>
+            <label for="telaux">Teléfono de contacto</label>
         <input minlength="10" maxlength="10" type="text" class="form-control" name="telaux" id="telaux" placeholder="999-999-9999" pattern="[0-9.]+" required>
         </div>
 
 
     <div class="form-group col-md-4">
-            <label for="numinfonavit">Numero de infonavit</label>
+            <label for="numinfonavit">Número de infonavit</label>
             <input type="text" class="form-control" name="numinfonavit" id="numinfonavit" placeholder="0000000000000" value="" pattern="[0-9.]+" >
         </div>
     </div>
-    <button type="submit" class="btn btn-primary" style="background:lightseagreen">Agrega Empleado</button>
-    <a class="btn btn-primary" href="/empleado" align="right" style="background:lightseagreen">Regresar</a>
+    <button type="submit" class="btn btn-primary" style="background:lightseagreen">Agrega Empleado &nbsp;<i class="fas fa-plus"></i></button>
+    <a class="btn btn-primary" href="/empleado" align="right" style="background:lightseagreen">Regresar &nbsp;<i class="fas fa-undo-alt"></i></a>
 </form>
 </body>
 {% endblock %}

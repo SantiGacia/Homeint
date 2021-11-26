@@ -3,7 +3,8 @@
 {% block content %}
 <body style="background-color:#D5DBDB;">
 <link rel="stylesheet" href="\static\css\tabla2.css">
-<center><h3>Solicitudes Registradas para la Calificacion Psicologica</h3></center>
+<script src="https://kit.fontawesome.com/c8a4eef53d.js" crossorigin="anonymous"></script>
+<center><h3>Solicitudes Registradas para la Calificación Psicológica</h3></center>
 <div id="main-container">
       <table width="100%" border="1" cellpadding="0" cellspacing="0" bordercolor="#000000">
        <tbody>
@@ -14,7 +15,7 @@
                 <tr>
                     <td color="white" bgcolor="006666"><font color="white">Id Solicitud</font></td>
                     <td color="white" bgcolor="006666"><font color="white">Fecha</font></td>
-                    <td color="white" bgcolor="006666"><font color="white">Area</font></td>
+                    <td color="white" bgcolor="006666"><font color="white">Área</font></td>
                     <td color="white" bgcolor="006666"><font color="white">Puesto</font></td>
                     <td color="white" bgcolor="006666"><font color="white"></font></td>
                 </tr>
@@ -37,7 +38,7 @@
                         {{ solicitud.5 }}
                     </td >
                     <td bgcolor="#9C9C9C" width="60">
-                        <center><a href="/cal_sel_candidato/{{solicitud.0}}" class="btn btn-success" style="background:lightseagreen">Candidatos</a></center>
+                        <center><a href="/cal_sel_candidato/{{solicitud.0}}" class="btn btn-success" style="background:lightseagreen">Candidatos &nbsp;<i class="fas fa-user"></i></a></center>
                     </td>
                 {% endfor %}
               </tbody>
