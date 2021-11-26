@@ -1,5 +1,6 @@
 {% extends "layout.html" %}
 {% block content %}
+<script src="https://kit.fontawesome.com/c8a4eef53d.js" crossorigin="anonymous"></script>
 <body style="background-color:#D5DBDB;">
 <link rel="stylesheet" href="\static\css\tabla2.css">
 <center><h3>Solicitudes por Publicar o Publicadas</h3></center>
@@ -12,7 +13,7 @@
                     <thead>
                     <tr>
                         <td color="white" bgcolor="006666"><font color="white">Fecha</font></td>
-                        <td color="white" bgcolor="006666"><font color="white">Area</font></td>
+                        <td color="white" bgcolor="006666"><font color="white">Área</font></td>
                         <td color="white" bgcolor="006666"><font color="white">Puesto</font></td>
                         <td color="white" bgcolor="006666"><font color="white">Vacantes</font></td>
                         <td color="white" bgcolor="006666"><font color="white">Estado</font></td>
@@ -39,10 +40,10 @@
                             {{ solicitud.8 }}
                         </td>
                         <td bgcolor="#9C9C9C" width="60">
-                            <center><a href="/crea_pub/{{solicitud.0}}" class="btn btn-success" style="background:lightseagreen">Publicar</a></center>
+                            <center><a href="/crea_pub/{{solicitud.0}}" class="btn btn-success" style="background:lightseagreen">Publicar&nbsp;<i class="fas fa-paper-plane"></i></a></center>
                         </td>
                         <td bgcolor="#BFBFBF" width="60">
-                            <center><a href="/can_solicitud/{{solicitud.0}}" class="btn btn-success" style="background:lightseagreen">Regresar</a></center>
+                            <center><a href="/can_solicitud/{{solicitud.0}}" class="btn btn-success" style="background:lightseagreen">Regresar&nbsp;<i class="fas fa-undo-alt"></i></a></center>
                         </td>
                     </tr>
                     {% endfor %}

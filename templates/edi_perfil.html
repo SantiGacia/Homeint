@@ -4,6 +4,7 @@
 <head>
     <title>HOME-INT</title>
 </head>
+<script src="https://kit.fontawesome.com/c8a4eef53d.js" crossorigin="anonymous"></script>
 <form action="/modifica_perfil/{{perfiles.0[0]}}" method="post">
     <h2>Editar Perfil</h2>
     <body style="background-color:#D5DBDB;">
@@ -19,8 +20,8 @@
         </div>
     </div>
 
-    <button type="submit" class="btn btn-primary" style="background:lightseagreen">Enviar Cambios</button>
-    <button type="submit" class="btn btn-primary" href="/perfil" align="right" style="background:lightseagreen">Perfiles</button>
+    <button type="submit" class="btn btn-primary" style="background:lightseagreen">Enviar Cambios &nbsp;<i class="fas fa-paper-plane"></i></button>
+    <button type="submit" class="btn btn-primary" href="/perfil" align="right" style="background:lightseagreen">Perfiles &nbsp;<i class="fas fa-user-friends"></i></button>
 </form>
 <!-- -----------------------------------------------------------------  -->
 <br>
@@ -75,7 +76,7 @@
                         {{ perm_perfil.7 }}
                     </td>
                     <td  bgcolor="#9C9C9C" width="60">
-                        <center><a href="/bo_proceso_perfil/{{perm_perfil.0}}/{{perm_perfil.4}}/{{perm_perfil.6}}" class="btn btn-success" style="background:lightseagreen;">Borrar</a></center>
+                        <center><a href="/bo_proceso_perfil/{{perm_perfil.0}}/{{perm_perfil.4}}/{{perm_perfil.6}}" class="btn btn-success" style="background:lightseagreen;">Borrar &nbsp;<i class="fas fa-trash-alt"></i></a></center>
                     </td>
                 </tr>
                 {% endfor %}

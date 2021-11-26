@@ -2,6 +2,7 @@
 {% block content %}
 <body style="background-color:#D5DBDB;">
 <link rel="stylesheet" href="\static\css\tabla2.css">
+<script src="https://kit.fontawesome.com/c8a4eef53d.js" crossorigin="anonymous"></script>
 <a href="/nvo_solicitud" class="btn btn-success" style="background:lightseagreen">Agregar Solicitud</a>
 <center><h3>Solicitudes</h3></center>
 <div id="main-container">
@@ -13,7 +14,7 @@
                     <thead>
                     <tr>
                         <td color="white" bgcolor="006666"><font color="white">Fecha</font></td>
-                        <td color="white" bgcolor="006666"><font color="white">Area</font></td>
+                        <td color="white" bgcolor="006666"><font color="white">Área</font></td>
                         <td color="white" bgcolor="006666"><font color="white">Puesto</font></td>
                         <td color="white" bgcolor="006666"><font color="white">Vacantes</font></td>
                         <td color="white" bgcolor="006666"><font color="white">Estado</font></td>
@@ -41,10 +42,10 @@
                         </td>
                         {% if solicitud.7==1%}
                             <td bgcolor="#9C9C9C" width="60">
-                                <center><a href="/ed_solicitud/{{solicitud.0}}"class="btn btn-success" style="background:lightseagreen">Editar</a></center>
+                                <center><a href="/ed_solicitud/{{solicitud.0}}"class="btn btn-success" style="background:lightseagreen">Editar &nbsp;<i class="far fa-edit"></i></a></center>
                             </td>
                             <td bgcolor="#BFBFBF" width="60">
-                                <center><a href="/bo_solicitud/{{solicitud.0}}" class="btn btn-success" style="background:lightseagreen">Borrar</a></center>
+                                <center><a href="/bo_solicitud/{{solicitud.0}}" class="btn btn-success" style="background:lightseagreen">Borrar &nbsp;<i class="fas fa-trash-alt"></i></a></center>
                             </td>
                         {% else %}
                             <td bgcolor="#9C9C9C" width="60">

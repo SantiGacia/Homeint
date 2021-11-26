@@ -4,6 +4,7 @@
 <head>
     <title>HOME-INT</title>
 </head>
+<script src="https://kit.fontawesome.com/c8a4eef53d.js" crossorigin="anonymous"></script>
 <body style="background-color:#D5DBDB;">
 <br>
 <form action="/modifica_candidato/{{candidatos.0[0]}}" method="post">
@@ -37,11 +38,11 @@
     </div>
     <div class="form-row">
         <div class="form-group col-md-2">
-            <label for="telefono">Telefono</label>
+            <label for="telefono">Teléfono</label>
         <input type="text" class="form-control" name="telefono" id="telefono" value="{{candidatos.0[4]}}" disabled>
         </div>
         <div class="form-group col-md-3">
-            <label for="correoe">Correo Electronico</label>
+            <label for="correoe">Correo Electrónico</label>
             <input type="email" class="form-control" name="correoe" id="correoe" value="{{candidatos.0[5]}}" disabled>
         </div>
 
@@ -90,7 +91,7 @@
                             <tr>
                                 <td color="white" bgcolor="006666"><font color="white">Habilidad</font></td>
                                 <td color="white" bgcolor="006666"><font color="white">Experiencia</font></td>
-                                <td color="white" bgcolor="006666"><font color="white">Evaluacion</font></td>
+                                <td color="white" bgcolor="006666"><font color="white">Evaluación</font></td>
                                 <td color="white" bgcolor="006666"><font color="white">Tiene la</font></td>
                                 <td color="white" bgcolor="006666"><font color="white">habilidad?</font></td>
                             </tr>
@@ -108,10 +109,10 @@
                                     {{ can_hab.6 }}
                                 </td>
                                 <td bgcolor="#9C9C9C" width="60">
-                                <center><a href="/cal_hab_cdto/{{ can_hab.0 }}/{{ can_hab.1 }}/Si/{{ sol }}" class="btn btn-success" style="background:lightseagreen">Si</a></center>
+                                <center><a href="/cal_hab_cdto/{{ can_hab.0 }}/{{ can_hab.1 }}/Si/{{ sol }}" class="btn btn-success" style="background:lightseagreen">Si &nbsp; <i class="fas fa-check"></i></a></center>
                                 </td>
                                 <td bgcolor="#9C9C9C" width="60">
-                                <center><a href="/cal_hab_cdto/{{ can_hab.0 }}/{{ can_hab.1 }}/No/{{ sol }}" class="btn btn-success" style="background:lightseagreen">No</a></center>
+                                <center><a href="/cal_hab_cdto/{{ can_hab.0 }}/{{ can_hab.1 }}/No/{{ sol }}" class="btn btn-success" style="background:lightseagreen">No &nbsp;<i class="fas fa-times"></i></a></center>
                                 </td>
 
                               </tr>
@@ -136,7 +137,7 @@
                             <tr>
                                 <td color="white" bgcolor="006666"><font color="white">Idioma</font></td>
                                 <td color="white" bgcolor="006666"><font color="white">Nivel</font></td>
-                                <td color="white" bgcolor="006666"><font color="white">Evaluacion</font></td>
+                                <td color="white" bgcolor="006666"><font color="white">Evaluación</font></td>
                                 <td color="white" bgcolor="006666"><font color="white">Tiene el</font></td>
                                 <td color="white" bgcolor="006666"><font color="white">idioma?</font></td>
                             </tr>
@@ -154,10 +155,10 @@
                                     {{ can_idi.6 }}
                                 </td>
                                 <td bgcolor="#9C9C9C" width="60">
-                                <center><a href="/cal_idio_cdto/{{ can_idi.0 }}/{{ can_idi.1 }}/Si/{{ sol }}" class="btn btn-success" style="background:lightseagreen">Si</a></center>
+                                <center><a href="/cal_idio_cdto/{{ can_idi.0 }}/{{ can_idi.1 }}/Si/{{ sol }}" class="btn btn-success" style="background:lightseagreen">Si &nbsp;<i class="fas fa-check"></i></a></center>
                                 </td>
                                 <td bgcolor="#9C9C9C" width="60">
-                                <center><a href="/cal_idio_cdto/{{ can_idi.0 }}/{{ can_idi.1 }}/No/{{ sol }}" class="btn btn-success" style="background:lightseagreen">No</a></center>
+                                <center><a href="/cal_idio_cdto/{{ can_idi.0 }}/{{ can_idi.1 }}/No/{{ sol }}" class="btn btn-success" style="background:lightseagreen">No &nbsp;<i class="fas fa-times"></i></a></center>
                                 </td>
 
                               </tr>
@@ -168,7 +169,7 @@
                   </div>
             </div>
 <br>
-            <center><h3>Requerimientos de Nivel Academico</h3></center>
+            <center><h3>Requerimientos de Nivel Académico</h3></center>
 
              <div class="panel panel-primary">
                   <br>
@@ -177,10 +178,10 @@
                         <table width="80%" border="1" cellpadding="0" cellspacing="0" bordercolor="#000000">
                           <thead>
                             <tr>
-                                <td color="white" bgcolor="006666"><font color="white">Nivel Academico</font></td>
+                                <td color="white" bgcolor="006666"><font color="white">Nivel Acedémico</font></td>
                                 <td color="white" bgcolor="006666"><font color="white">Carrera</font></td>
-                                <td color="white" bgcolor="006666"><font color="white">Institucion</font></td>
-                                <td color="white" bgcolor="006666"><font color="white">Evaluacion</font></td>
+                                <td color="white" bgcolor="006666"><font color="white">Institución</font></td>
+                                <td color="white" bgcolor="006666"><font color="white">Evaluación</font></td>
                                 <td color="white" bgcolor="006666"><font color="white">Tiene el</font></td>
                                 <td color="white" bgcolor="006666"><font color="white">nivel?</font></td>
                             </tr>
@@ -201,10 +202,10 @@
                                     {{ can_aca.9 }}
                                 </td>
                                 <td bgcolor="#9C9C9C" width="60">
-                                <center><a href="/cal_aca_cdto/{{ can_aca.0 }}/{{ can_aca.1 }}/Si/{{ sol }}" class="btn btn-success" style="background:lightseagreen">Si</a></center>
+                                <center><a href="/cal_aca_cdto/{{ can_aca.0 }}/{{ can_aca.1 }}/Si/{{ sol }}" class="btn btn-success" style="background:lightseagreen">Si &nbsp;<i class="fas fa-check"></i></a></center>
                                 </td>
                                 <td bgcolor="#9C9C9C" width="60">
-                                <center><a href="/cal_aca_cdto/{{ can_aca.0 }}/{{ can_aca.1 }}/No/{{ sol }}" class="btn btn-success" style="background:lightseagreen">No</a></center>
+                                <center><a href="/cal_aca_cdto/{{ can_aca.0 }}/{{ can_aca.1 }}/No/{{ sol }}" class="btn btn-success" style="background:lightseagreen">No &nbsp;<i class="fas fa-times"></i></a></center>
                                 </td>
 
                               </tr>
@@ -214,7 +215,7 @@
                         </center>
                   </div>
             </div>
-    <center><a class="btn btn-primary" href="/sel_candidato2/{{ sol }}" align="right" style="background:lightseagreen">Regresar</a></center>
+    <center><a class="btn btn-primary" href="/sel_candidato2/{{ sol }}" align="right" style="background:lightseagreen">Regresar &nbsp;<i class="fas fa-undo-alt"></i></a></center>
 
 
 

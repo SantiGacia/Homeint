@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
 
 {% block content %}
+<script src="https://kit.fontawesome.com/c8a4eef53d.js" crossorigin="anonymous"></script>
 <body style="background-color:#D5DBDB;">
 <link rel="stylesheet" href="\static\css\tabla2.css">
 <center><h3>Solicitudes Registradas</h3></center>
@@ -45,7 +46,7 @@
                         {{ solicitud.8 }}
                     </td >
                     <td bgcolor="#9C9C9C" width="60">
-                        <center><a href="/sel_candidato_contratacion/{{solicitud.0}}" class="btn btn-success" style="background:lightseagreen">Candidatos</a></center>
+                        <center><a href="/sel_candidato_contratacion/{{solicitud.0}}" class="btn btn-success" style="background:lightseagreen">Candidatos &nbsp;<i class="fas fa-user-friends"></i></a></center>
                     </td>
                 {% endfor %}
               </tbody>

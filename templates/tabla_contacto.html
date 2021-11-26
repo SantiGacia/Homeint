@@ -1,9 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
-<head>
-
-</head>
 <body style="background-color:#D5DBDB;">
+<script src="https://kit.fontawesome.com/c8a4eef53d.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="\static\css\tabla2.css">
 <a href="/contacto" class="btn btn-success" style="background:lightseagreen">Agregar contacto</a>
 <center><h3>Contactos registrados</h3></center>
@@ -26,10 +24,10 @@
                       {{ tcontacto.1 }}
                     </td>
                     <td bgcolor="#9C9C9C" width="60">
-                      <center><a href="/ed_contacto/{{tcontacto.0}}" class="btn btn-success" style="background:lightseagreen">Editar</a></center>
+                      <center><a href="/ed_contacto/{{tcontacto.0}}" class="btn btn-success" style="background:lightseagreen">Editar &nbsp;<i class="far fa-edit"></i></a></center>
                     </td>
                     <td  bgcolor="#BFBFBF" width="60">
-                      <center><a href="/bo_contacto/{{tcontacto.0}}" class="btn btn-success" style="background:lightseagreen">Borrar</a></center>
+                      <center><a href="/bo_contacto/{{tcontacto.0}}" class="btn btn-success" style="background:lightseagreen">Borrar &nbsp;<i class="fas fa-trash-alt"></i></a></center>
                     </td>
 
                   </tr>

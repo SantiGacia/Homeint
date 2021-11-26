@@ -6,7 +6,7 @@
 </head>
 <body style="background-color:#D5DBDB;">
 <br>
-
+<script src="https://kit.fontawesome.com/c8a4eef53d.js" crossorigin="anonymous"></script>
 
 <h2>Contrato</h2>
     <script type="text/javascript" src="/static/js/jquery-3.2.1.slim.min.js"></script>
@@ -39,11 +39,11 @@
     </div>
     <div class="form-row">
         <div class="form-group col-md-2">
-            <label for="telefono">Telefono</label>
+            <label for="telefono">Teléfono</label>
         <input minlength="10" maxlength="10" type="text" class="form-control" name="telefono" id="telefono" value="{{empleados.0[5]}}" placeholder="000000.00" pattern="[0-9.]+" disabled>
         </div>
         <div class="form-group col-md-3">
-            <label for="correoe">Correo Electronico</label>
+            <label for="correoe">Correo Electrónico</label>
             <input type="email" class="form-control" name="correoe" id="correoe" value="{{empleados.0[6]}}" disabled>
         </div>
 
@@ -104,7 +104,7 @@
 
     <div class="form-row">
             <div class="form-group col-md-9">
-                    <label for="nomcoy">Conyugue_concubino(nombre de esposa)</label>
+                    <label for="nomcoy">Cónyugue_concubino(nombre de esposa)</label>
                 <input type="text" class="form-control" name="nomcoy" id="nomcoy" value="{{empleados.0[11]}}" disabled>
             </div>
 
@@ -115,19 +115,19 @@
             </div>
 
             <div class="form-group col-md-2">
-                <label for="telaux">Telefono de contacto</label>
+                <label for="telaux">Teléfono de contacto</label>
             <input type="text" class="form-control" name="telaux" id="telaux" value="{{empleados.0[12]}}" disabled>
             </div>
 
 
         <div class="form-group col-md-4">
-                <label for="numinfonavit">Numero de infonavit</label>
+                <label for="numinfonavit">Número de infonavit</label>
                 <input type="text" class="form-control" name="numinfonavit" id="numinfonavit"  value="{{empleados.0[14]}}" disabled>
         </div>
     </div>
     {% for empleado in empleados %}
-      <a href="/ed_empleado/{{ empleado.0 }}" class="btn btn-success" style="background:lightseagreen;">Editar Perfil</a></center>
-      <a href="/vercontrato/{{empleado.0}}" class="btn btn-success" style="background:lightseagreen;">Regresar</a></center>
+      <a href="/ed_empleado/{{ empleado.0 }}" class="btn btn-success" style="background:lightseagreen;">Editar Perfil &nbsp;<i class="far fa-edit"></i> </a></center>
+      <a href="/vercontrato/{{empleado.0}}" class="btn btn-success" style="background:lightseagreen;">Regresar &nbsp;<i class="fas fa-undo-alt"></i></a></center>
     </td>
   </tr>
   {% endfor %}
@@ -194,7 +194,7 @@
             </select>
         </div>
         <div class="form-group col-md-2">
-            <label for="diapaga">Dias de paga</label>
+            <label for="diapaga">Días de paga</label>
             <input type="text" class="form-control" name="diapaga" id="diapaga" required>
         </div>
 
@@ -203,12 +203,12 @@
    
         <div class=form-row>
           <div class="form-group col-md-2">
-            <label for="fecha_inicio">Fecha de inicio</label>
+            <label for="fecha_inicio">Fecha de inicio &nbsp;<i class="fas fa-calendar-day"></i></label>
             <input type="date" class="form-control" name="fecha_inicio" id="fecha_inicio" required>
               
           </div>
         <div class="form-group col-md-2">
-            <label for="fecha_fin">Fecha de conclusion</label>
+            <label for="fecha_fin">Fecha de conclusión &nbsp;<i class="fas fa-calendar-day"></i></label>
             <input type="date" class="form-control" name="fecha_fin" id="fecha_fin">
         </div>
 

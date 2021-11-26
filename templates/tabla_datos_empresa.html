@@ -1,10 +1,8 @@
 {% extends "layout.html" %}
 {% block content %}
-<head>
-
-</head>
 <body style="background-color:#D5DBDB;">
 <link rel="stylesheet" href="\static\css\tabla2.css">
+<script src="https://kit.fontawesome.com/c8a4eef53d.js" crossorigin="anonymous"></script>
 <center><h3>Datos de la empresa</h3></center>
 <div id="main-container">
       <table width="100%" border="1" cellpadding="0" cellspacing="0">
@@ -24,7 +22,7 @@
                       {{ nivel.0 }}
                     </td>
                     <td bgcolor="#9C9C9C" width="60">
-                      <center><a href="/ed_datos_empresa/{{nivel.0}}" class="btn btn-success" style="background:lightseagreen">Editar</a></center>
+                      <center><a href="/ed_datos_empresa/{{nivel.0}}" class="btn btn-success" style="background:lightseagreen">Editar &nbsp;<i class="far fa-edit"></i></a></center>
                     </td>
 
                   </tr>

@@ -3,6 +3,7 @@
 {% block content %}
 <body style="background-color:#D5DBDB;">
 <link rel="stylesheet" href="\static\css\tabla2.css">
+<script src="https://kit.fontawesome.com/c8a4eef53d.js" crossorigin="anonymous"></script>
 <a href="/nvo_candidato" class="btn btn-success" style="background:lightseagreen">Agregar Candidato</a>
 <center><h3>Candidatos registrados</h3></center>
 <div id="main-container">
@@ -30,10 +31,10 @@
                         {{ candidato.1 }}
                     </td >
                       <td bgcolor="#9C9C9C" width="60">
-                      <center><a href="/ed_candidato/{{candidato.0}}" class="btn btn-success" style="background:lightseagreen">Editar</a></center>
+                      <center><a href="/ed_candidato/{{candidato.0}}" class="btn btn-success" style="background:lightseagreen">Editar &nbsp;<i class="far fa-edit"></i></a></center>
                     </td>
                     <td  bgcolor="#BFBFBF" width="60">
-                        <center><a href="bo_candidato/{{candidato.0}}" class="btn btn-success" style="background:lightseagreen">Borrar</a></center>
+                        <center><a href="bo_candidato/{{candidato.0}}" class="btn btn-success" style="background:lightseagreen">Borrar &nbsp;<i class="fas fa-trash-alt"></i></a></center>
                     </td>
                   </tr>
                 {% endfor %}

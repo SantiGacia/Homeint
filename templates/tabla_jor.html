@@ -1,10 +1,8 @@
 {% extends "layout.html" %}
 {% block content %}
-<head>
-
-</head>
 <body style="background-color:#D5DBDB;">
 <link rel="stylesheet" href="\static\css\tabla2.css">
+<script src="https://kit.fontawesome.com/c8a4eef53d.js" crossorigin="anonymous"></script>
 <a href="/jornada" class="btn btn-success" style="background:lightseagreen">Agregar jornada</a>
 <center><h3>Jornadas registradas</h3></center>
 <div id="main-container">
@@ -30,10 +28,10 @@
                       {{ tarea.2 }}
                     </td>
                     <td bgcolor="#9C9C9C" width="60">
-                      <center><a href="/ed_jor/{{tarea.0}}" class="btn btn-success" style="background:lightseagreen">Editar</a></center>
+                      <center><a href="/ed_jor/{{tarea.0}}" class="btn btn-success" style="background:lightseagreen">Editar &nbsp;<i class="far fa-edit"></i></a></center>
                     </td>
                     <td  bgcolor="#BFBFBF" width="60">
-                      <center><a href="/bo_jor/{{tarea.0}}" class="btn btn-success" style="background:lightseagreen">Borrar</a></center>
+                      <center><a href="/bo_jor/{{tarea.0}}" class="btn btn-success" style="background:lightseagreen">Borrar &nbsp;<i class="fas fa-trash-alt"></i></a></center>
                     </td>
 
                   </tr>

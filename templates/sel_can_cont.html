@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
 
 {% block content %}
+<script src="https://kit.fontawesome.com/c8a4eef53d.js" crossorigin="anonymous"></script>
 <body style="background-color:#D5DBDB;">
 <link rel="stylesheet" href="\static\css\tabla2.css">
 <center><h3>Datos de la solicitud</h3></center>
@@ -12,7 +13,7 @@
                 <thead>
                 <tr>
                     <td color="white" bgcolor="006666"><font color="white">Fecha</font></td>
-                    <td color="white" bgcolor="006666"><font color="white">Area</font></td>
+                    <td color="white" bgcolor="006666"><font color="white">Área</font></td>
                     <td color="white" bgcolor="006666"><font color="white">Puesto</font></td>
                     <td color="white" bgcolor="006666"><font color="white">Vacantes</font></td>
                     <td color="white" bgcolor="006666"><font color="white">Estado</font></td>
@@ -54,10 +55,10 @@
                     <tr>
                         <td color="white" bgcolor="006666"><font color="white">CURP</font></td>
                         <td color="white" bgcolor="006666"><font color="white">Nombre</font></td>
-                        <td color="white" bgcolor="006666"><font color="white">Nivel Academico</font></td>
+                        <td color="white" bgcolor="006666"><font color="white">Nivel Académico</font></td>
                         <td color="white" bgcolor="006666"><font color="white">Carrera</font></td>
-                        <td color="white" bgcolor="006666"><font color="white">C.Psicoógica</font></td>
-                        <td color="white" bgcolor="006666"><font color="white">C.Medica</font></td>
+                        <td color="white" bgcolor="006666"><font color="white">C.Psicológica</font></td>
+                        <td color="white" bgcolor="006666"><font color="white">C.Médica</font></td>
                         <td color="white" bgcolor="006666"><font color="white">V.Perfil</font></td>
                         <td color="white" bgcolor="006666"><font color="white">V.Referencias</font></td>
                         <td color="white" bgcolor="006666"><font color="white">Contratar</font></td>
@@ -82,14 +83,14 @@
                             </td>
                             <td>
                                 <center>{{ candidato.9 }}</center>
-                                <a href="/muestra_calf_psicologica/{{ candidato.0 }}/{{ sol.0 }}" class="btn btn-success" style="background:lightseagreen">Ver P.S</a>
+                                <a href="/muestra_calf_psicologica/{{ candidato.0 }}/{{ sol.0 }}" class="btn btn-success" style="background:lightseagreen">Ver P.S&nbsp;<i class="fas fa-eye"></i></a>
                             </td>
                             <td>
                                 <center>{{ candidato.10 }}</center>
                             </td>
                             <td>
                                 <center>{{ candidato.7 }}</center>
-                                <a href="/mue_per_candidato/{{candidato.0}}" class="btn btn-success" style="background:lightseagreen">Ver C.P</a>
+                                <a href="/mue_per_candidato/{{candidato.0}}" class="btn btn-success" style="background:lightseagreen">Ver C.P&nbsp;<i class="fas fa-eye"></i></a>
                             </td>
                             <td>
                                 <center>{{ candidato.11 }}</center>
@@ -98,10 +99,10 @@
                                 {{ candidato.8 }}
                             </td>
                             <td bgcolor="#9C9C9C" width="60">
-                                <center><a href="/contrata_candidato/{{candidato.6}}/{{candidato.0}}/Si" class="btn btn-success" style="background:lightseagreen">Si</a></center>
+                                <center><a href="/contrata_candidato/{{candidato.6}}/{{candidato.0}}/Si" class="btn btn-success" style="background:lightseagreen">Si&nbsp;<i class="fas fa-check"></i></a></center>
                             </td>
                             <td bgcolor="#9C9C9C" width="60">
-                                <center><a href="/contrata_candidato/{{candidato.6}}/{{candidato.0}}/No" class="btn btn-success" style="background:lightseagreen">No</a></center>
+                                <center><a href="/contrata_candidato/{{candidato.6}}/{{candidato.0}}/No" class="btn btn-success" style="background:lightseagreen">No&nbsp;<i class="fas fa-times"></i></a></center>
                             </td>
                         </tr>
                         {% endfor %}
@@ -113,7 +114,7 @@
     </table>
     <br>
     <center>
-        <a class="btn btn-primary" href="/agr_candidato_contratacion" align="right" style="background:lightseagreen">Selección</a>
+        <a class="btn btn-primary" href="/agr_candidato_contratacion" align="right" style="background:lightseagreen">Selección&nbsp;<i class="fas fa-clipboard-check"></i></a>
     </center>
     <script type="text/javascript" src="/static/js/jquery-3.2.1.slim.min.js"></script>
     <script type="text/javascript" src="/static/js/popper.min.js"></script>

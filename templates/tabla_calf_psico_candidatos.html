@@ -3,6 +3,7 @@
 {% block content %}
 <body style="background-color:#D5DBDB;">
 <link rel="stylesheet" href="\static\css\tabla2.css">
+<script src="https://kit.fontawesome.com/c8a4eef53d.js" crossorigin="anonymous"></script>
 <center><h3>Datos de la solicitud</h3></center>
 <table width="100%" border="1" cellpadding="0" cellspacing="0" bordercolor="#000000">
     <tbody>
@@ -12,7 +13,7 @@
                 <thead>
                 <tr>
                     <td color="white" bgcolor="006666"><font color="white">Fecha</font></td>
-                    <td color="white" bgcolor="006666"><font color="white">Area</font></td>
+                    <td color="white" bgcolor="006666"><font color="white">Área</font></td>
                     <td color="white" bgcolor="006666"><font color="white">Puesto</font></td>
                     <td color="white" bgcolor="006666"><font color="white">Vacantes</font></td>
                     <td color="white" bgcolor="006666"><font color="white">Estado</font></td>
@@ -54,7 +55,7 @@
                     <tr>
                         <td color="white" bgcolor="006666"><font color="white">CURP</font></td>
                         <td color="white" bgcolor="006666"><font color="white">Nombre</font></td>
-                        <td color="white" bgcolor="006666"><font color="white">Nivel Academico</font></td>
+                        <td color="white" bgcolor="006666"><font color="white">Nivel Académico</font></td>
                         <td color="white" bgcolor="006666"><font color="white">Carrera</font></td>
                         <td color="white" bgcolor="006666"><font color="white">Apto</font></td>
                         <td color="white" bgcolor="006666"><font color="white"></font></td>
@@ -80,7 +81,7 @@
                                 {{ candidato.8}}
                             </td>
                             <td  bgcolor="#BFBFBF" width="60">
-                                <center><a href="/nvo_calf_psicologica/{{ candidato.0 }}/{{ sol.0 }}" class="btn btn-success" style="background:lightseagreen">Agregar/Editar Calificacion Psicologica</a></center>
+                                <center><a href="/nvo_calf_psicologica/{{ candidato.0 }}/{{ sol.0 }}" class="btn btn-success" style="background:lightseagreen">Agregar/Editar Calificación Psicológica &nbsp;<i class="fas fa-plus"></i></a></center>
                             </td>
                         </tr>
                         {% endfor %}

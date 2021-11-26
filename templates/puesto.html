@@ -2,13 +2,14 @@
 {% block content %}
 
 <head>
+  <script src="https://kit.fontawesome.com/c8a4eef53d.js" crossorigin="anonymous"></script>
     <title>HOME-INT</title>
 </head>
 <body style="background-color:#D5DBDB;">
 <form action="/agrega_puesto" method="post">
 <h2>Agregar Puesto</h2>
     <div class="form-row">
-        <label for="nompuesto">Nombre del puesto</label>
+        <label for="nompuesto">Nombre del puesto&nbsp;<i class="fas fa-calendar-day"></i></label>
     </div>
     <div class="form-row">
         <div class="col">
@@ -16,7 +17,7 @@
         </div>
     </div>
     <div class="form-row">
-        <label for="descripcion">Descripción del puesto</label>
+        <label for="descripcion">Descripción del puesto&nbsp;<i class="fas fa-book"></i> </label>
     </div>
     <div class="form-row">
         <div class="col">
@@ -25,15 +26,15 @@
     </div>
     <div class="form-row">
         <div class="form-group col-md-2">
-            <label for="salario">Salario Mensual</label>
+            <label for="salario">Salario Mensual&nbsp;<i class="fas fa-hand-holding-usd"></i></label>
             <input type="numer" class="form-control" name="salario" id="salario" placeholder="000000.00" pattern="[0-9.]+" required>
         </div>
         <div class="form-group col-md-8">
-            <label for="beneficios">Beneficios</label>
+            <label for="beneficios">Beneficios&nbsp;<i class="fas fa-hand-holding-usd"></i></label>
             <input type="text" class="form-control" name="beneficios" id="beneficios" required>
         </div>
         <div class="form-group col-md-2">
-            <label for="bonos">Bonos</label>
+            <label for="bonos">Bonos&nbsp;<i class="fas fa-hand-holding-usd"></i></label>
             <input type="text" class="form-control" name="bonos" id="bonos" placeholder="000000.00" pattern="[0-9.]+" required>
         </div>
         <div class="form-group col-md-3">
@@ -45,7 +46,7 @@
 
     <div class="form-row">
         
-        <label>Requiere Autorizacion:</label>&nbsp;
+        <label>Requiere Autorización:</label>&nbsp;
         <div class="form-check rorm-check-inline">
             <input class="form-check-input" type="radio" name="autorizar" id="autorizar1" value="0" checked >
             <label class="form-check-label" for="autorizar1">Si</label>
@@ -58,11 +59,11 @@
     </div>
 <br>
 
-    <button type="submit" class="btn btn-primary" style="background:lightseagreen">Agregar</button>
+    <button type="submit" class="btn btn-primary" style="background:lightseagreen">Agregar&nbsp;<i class="fas fa-plus"></i></button>
     <script type="text/javascript" src="/static/js/jquery-3.2.1.slim.min.js"></script>
     <script type="text/javascript" src="/static/js/popper.min.js"></script>
     <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
-    <a class="btn btn-primary" href="/puesto" align="right" style="background:lightseagreen">Regresar</a>
+    <a class="btn btn-primary" href="/puesto" align="right" style="background:lightseagreen">Regresar&nbsp;<i class="fas fa-undo-alt"></i></a>
 
 </form>
 <script>
