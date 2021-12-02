@@ -4120,8 +4120,8 @@ def capacitacion_contrato(Curp):
     return render_template('capacitacion_contrato.html', datos=datos,nombre=nombre, curp=Curp)
 
 
-@app.route('/datoscontrato/<string:Curp>/<string:id>')
-def datoscontrato(Curp,id):
+@app.route('/datoscontrato/<string:Curp>')
+def datoscontrato(Curp,):
     conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
     cursor = conn.cursor()
 
@@ -4131,7 +4131,7 @@ def datoscontrato(Curp,id):
 
     cursor.execute('SELECT a.idContrato, a.Curp, a.idPuesto,b.Nombrepuesto, a.idArea, c.AreaNombre ,a.Salario,a.dias_de_pago , a.fecha_inicio, a.fecha_fin, a.idJornada, e.jornombre , a.horas_semana, e.Descripcion, a.horario,a.SalarioL,a.Estatus_contrato,d.descripción, f.descripción '
                     'FROM contrato a, puesto b, area c , estatus_contrato d ,jornada e, tipo_contrato f '
-                    'where a.idPuesto=b.idPuesto and a.idArea= c.idArea and a.idJornada= e.IdJornada and a.Tipo_contrato=f.tipo_contrato and a.Estatus_contrato=d.estatus_contrato and a.idContrato=%s',(id))
+                    'where a.idPuesto=b.idPuesto and a.idArea= c.idArea and a.idJornada= e.IdJornada and a.Tipo_contrato=f.tipo_contrato and a.Estatus_contrato=d.estatus_contrato and a.Curp=%s',(Curp))
     datos9=cursor.fetchall()
 
     conn.close()

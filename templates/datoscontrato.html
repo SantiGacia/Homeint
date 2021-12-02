@@ -168,51 +168,11 @@
   </form>
   {% for empleado in empleados %}
     
-  <a href="/modifica_contrato/{{empleado.0}}/{{datoscontrato.0[0]}}" class="btn btn-success" style="background:lightseagreen "onclick="location.href=this.href+'/'+val;return false;">Editar contrato &nbsp;<i class="far fa-edit"></i></a></center>
-  <a href="/ed_empleado/{{ empleado.0 }}" class="btn btn-success" style="background:lightseagreen;">Editar Perfil &nbsp;<i class="far fa-edit"></i></a></center>
-  <a href="/cursos_contrato/{{empleado.0}}/{{datoscontrato.0[0]}} "class="btn btn-success" style="background:lightseagreen;"> Regresar &nbsp;<i class="fas fa-undo-alt"></i> </a></center>
+  <a href="/capacitacion_contrato/{{empleado.0}} "class="btn btn-success" style="background:lightseagreen;"> Regresar &nbsp;<i class="fas fa-undo-alt"></i> </a></center>
 </td>
 </tr>
 {% endfor %}
-<script>
 
-    //Script para comprobar la fecha de firma
-    var f = new Date();
-    var dnow=(f.getDate());
-    var mnow=(f.getMonth()+1);
-    var ynow=(f.getFullYear());
-    //Secciona por año, mes, dia la fecha de inicio
-    fechaini=document.getElementById('fecha_inicio').value;
-    var yini = parseInt(fechaini.slice(0,4));
-    var mini = parseInt(fechaini.slice(5,7));
-    var dini = parseInt(fechaini.slice(8,10));
-
-
-    //Hace la resta de ver cuantos dias faltan para la fecha de inicio
-    if(yini===ynow && mini===mnow && dini===dnow){
-      var vald="1"
-      var valm="1"
-      var valy="1"
-    }else{
-      var vald = dini-dnow;
-      var valm = mini-mnow;
-      var valy = yini-ynow;
-    }
-    //si algun valor es negativo lo convierte a 0
-    if(vald<=0)
-    var vald=0
-    if(valm<=0)
-    var valm=0
-    if(valy<=0)
-    var valy=0
-    //si todos los contadores llegan a 0, se establece un unico 0
-    if(vald===0 && valm===0 && valy===0){
-      var val=0
-    }else{
-      var val= vald+""+valm+""+valy;
-    }
-
-  </script>
 </body>
 
   {% endblock %}
