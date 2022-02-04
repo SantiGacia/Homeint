@@ -1,11 +1,51 @@
-{% extends "layout.html" %}
-{% block content %}
+{% extends "layout.html" %} {% block content %}
+
+<style>
+  .content-table {
+      border-collapse: collapse;
+      margin: 25px 0;
+      font-size: 0.9en;
+      min-width: 600px;
+      border-radius: 5px 5px 0 0;
+      overflow: hidden;
+      box-shadow: 0 0 20px rgb(0, 0, 0, 0.15);
+  }
+  
+  .content-table thead tr {
+      background-color: #333769;
+      color: #ffff;
+      text-align: left;
+      font-weight: bold;
+  }
+  
+  .content-table th,
+  .content-table td {
+      padding: 12px 15px;
+  }
+  
+  .content-table tbody tr {
+      border-bottom: 1px solid #dddd;
+  }
+  
+  .content-table tbody tr:nth-of-type(even) {
+      background-color: #f3f3f3;
+  }
+  
+  .content-table tbody tr:last-of-type {
+      border-bottom: 2px solid #333769;
+  }
+  
+  .content-table tbody tr.active-row {
+      font-weight: bold;
+      color: #333769;
+  }
+</style>
 
 <head>
     <title>HOME-INT</title>
 </head>
 <script src="https://kit.fontawesome.com/c8a4eef53d.js" crossorigin="anonymous"></script>
-<body style="background-color:#D5DBDB;">
+<body style="background-color:#ffff;">
 <br>
 <form action="/modifica_candidato/{{candidatos.0[0]}}" method="post">
 <h2>Perfil del Candidato</h2>
@@ -82,18 +122,17 @@
 <br>
 <center><h3>Habilidades asociadas</h3></center>
 <div class="panel panel-primary">
-
                   <br>
-                  <div class="panel-body">
-                        <center>
-                        <table width="80%" border="1" cellpadding="0" cellspacing="0" bordercolor="#000000">
+                  <center>
+                    <table class="content-table">
+                  </center>
                           <thead>
                             <tr>
-                                <td color="white" bgcolor="006666"><font color="white">Habilidad</font></td>
-                                <td color="white" bgcolor="006666"><font color="white">Experiencia</font></td>
-                                <td color="white" bgcolor="006666"><font color="white">Evaluación</font></td>
-                                <td color="white" bgcolor="006666"><font color="white">Tiene la</font></td>
-                                <td color="white" bgcolor="006666"><font color="white">habilidad?</font></td>
+                                <th>Habilidad</th>
+                                <th>Experiencia</th>
+                                <th>Evaluación</th>
+                                <th>Tiene la</th>
+                                <th>habilidad?</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -108,11 +147,11 @@
                                 <td>
                                     {{ can_hab.6 }}
                                 </td>
-                                <td bgcolor="#9C9C9C" width="60">
-                                <center><a href="/cal_hab_cdto/{{ can_hab.0 }}/{{ can_hab.1 }}/Si/{{ sol }}" class="btn btn-success" style="background:lightseagreen">Si &nbsp; <i class="fas fa-check"></i></a></center>
+                                <td bgcolor="#828282" width="60">
+                                <center><a href="/cal_hab_cdto/{{ can_hab.0 }}/{{ can_hab.1 }}/Si/{{ sol }}" style="color:#FFFFFF; text-decoration:none;">Si &nbsp; <i class="fas fa-check"></i></a></center>
                                 </td>
-                                <td bgcolor="#9C9C9C" width="60">
-                                <center><a href="/cal_hab_cdto/{{ can_hab.0 }}/{{ can_hab.1 }}/No/{{ sol }}" class="btn btn-success" style="background:lightseagreen">No &nbsp;<i class="fas fa-times"></i></a></center>
+                                <td bgcolor="#FFF5757" width="60">
+                                <center><a href="/cal_hab_cdto/{{ can_hab.0 }}/{{ can_hab.1 }}/No/{{ sol }}" style="color:#FFFFFF; text-decoration:none;">No &nbsp;<i class="fas fa-times"></i></a></center>
                                 </td>
 
                               </tr>
@@ -130,16 +169,16 @@
              <div class="panel panel-primary">
 
                   <br>
-                  <div class="panel-body">
-                        <center>
-                        <table width="80%" border="1" cellpadding="0" cellspacing="0" bordercolor="#000000">
+                  <center>
+                    <table class="content-table">
+                  </center>
                           <thead>
                             <tr>
-                                <td color="white" bgcolor="006666"><font color="white">Idioma</font></td>
-                                <td color="white" bgcolor="006666"><font color="white">Nivel</font></td>
-                                <td color="white" bgcolor="006666"><font color="white">Evaluación</font></td>
-                                <td color="white" bgcolor="006666"><font color="white">Tiene el</font></td>
-                                <td color="white" bgcolor="006666"><font color="white">idioma?</font></td>
+                                <th>Idioma</th>
+                                <th>Nivel</th>
+                                <th>Evaluación</th>
+                                <th>Tiene el</th>
+                                <th>idioma?</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -154,11 +193,11 @@
                                 <td>
                                     {{ can_idi.6 }}
                                 </td>
-                                <td bgcolor="#9C9C9C" width="60">
-                                <center><a href="/cal_idio_cdto/{{ can_idi.0 }}/{{ can_idi.1 }}/Si/{{ sol }}" class="btn btn-success" style="background:lightseagreen">Si &nbsp;<i class="fas fa-check"></i></a></center>
+                                <td bgcolor="#828282" width="60">
+                                <center><a href="/cal_idio_cdto/{{ can_idi.0 }}/{{ can_idi.1 }}/Si/{{ sol }}" style="color:#FFFFFF; text-decoration:none;">Si &nbsp;<i class="fas fa-check"></i></a></center>
                                 </td>
-                                <td bgcolor="#9C9C9C" width="60">
-                                <center><a href="/cal_idio_cdto/{{ can_idi.0 }}/{{ can_idi.1 }}/No/{{ sol }}" class="btn btn-success" style="background:lightseagreen">No &nbsp;<i class="fas fa-times"></i></a></center>
+                                <td bgcolor="#FFF5757" width="60">
+                                <center><a href="/cal_idio_cdto/{{ can_idi.0 }}/{{ can_idi.1 }}/No/{{ sol }}" style="color:#FFFFFF; text-decoration:none;">No &nbsp;<i class="fas fa-times"></i></a></center>
                                 </td>
 
                               </tr>
@@ -173,17 +212,17 @@
 
              <div class="panel panel-primary">
                   <br>
-                  <div class="panel-body">
-                        <center>
-                        <table width="80%" border="1" cellpadding="0" cellspacing="0" bordercolor="#000000">
+                  <center>
+                    <table class="content-table">
+                  </center>
                           <thead>
                             <tr>
-                                <td color="white" bgcolor="006666"><font color="white">Nivel Acedémico</font></td>
-                                <td color="white" bgcolor="006666"><font color="white">Carrera</font></td>
-                                <td color="white" bgcolor="006666"><font color="white">Institución</font></td>
-                                <td color="white" bgcolor="006666"><font color="white">Evaluación</font></td>
-                                <td color="white" bgcolor="006666"><font color="white">Tiene el</font></td>
-                                <td color="white" bgcolor="006666"><font color="white">nivel?</font></td>
+                                <th>Nivel Acedémico</th>
+                                <th>Carrera</th>
+                                <th>Institución</th>
+                                <th>Evaluación</th>
+                                <th>Tiene el</th>
+                                <th>nivel?</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -201,11 +240,11 @@
                                 <td>
                                     {{ can_aca.9 }}
                                 </td>
-                                <td bgcolor="#9C9C9C" width="60">
-                                <center><a href="/cal_aca_cdto/{{ can_aca.0 }}/{{ can_aca.1 }}/Si/{{ sol }}" class="btn btn-success" style="background:lightseagreen">Si &nbsp;<i class="fas fa-check"></i></a></center>
+                                <td bgcolor="#828282" width="60">
+                                <center><a href="/cal_aca_cdto/{{ can_aca.0 }}/{{ can_aca.1 }}/Si/{{ sol }}" style="color:#FFFFFF; text-decoration:none;">Si &nbsp;<i class="fas fa-check"></i></a></center>
                                 </td>
-                                <td bgcolor="#9C9C9C" width="60">
-                                <center><a href="/cal_aca_cdto/{{ can_aca.0 }}/{{ can_aca.1 }}/No/{{ sol }}" class="btn btn-success" style="background:lightseagreen">No &nbsp;<i class="fas fa-times"></i></a></center>
+                                <td bgcolor="#FFF5757" width="60">
+                                <center><a href="/cal_aca_cdto/{{ can_aca.0 }}/{{ can_aca.1 }}/No/{{ sol }}" style="color:#FFFFFF; text-decoration:none;">No &nbsp;<i class="fas fa-times"></i></a></center>
                                 </td>
 
                               </tr>
@@ -215,7 +254,7 @@
                         </center>
                   </div>
             </div>
-    <center><a class="btn btn-primary" href="/sel_candidato2/{{ sol }}" align="right" style="background:lightseagreen">Regresar &nbsp;<i class="fas fa-undo-alt"></i></a></center>
+    <center><a class="btn btn-primary" href="/sel_candidato2/{{ sol }}" align="right">Regresar &nbsp;<i class="fas fa-undo-alt"></i></a></center>
 
 
 

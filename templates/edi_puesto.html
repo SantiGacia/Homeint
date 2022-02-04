@@ -1,5 +1,45 @@
-{% extends "layout.html" %}
-{% block content %}
+{% extends "layout.html" %} {% block content %}
+
+<style>
+  .content-table {
+      border-collapse: collapse;
+      margin: 25px 0;
+      font-size: 0.9en;
+      min-width: 600px;
+      border-radius: 5px 5px 0 0;
+      overflow: hidden;
+      box-shadow: 0 0 20px rgb(0, 0, 0, 0.15);
+  }
+  
+  .content-table thead tr {
+      background-color: #333769;
+      color: #ffff;
+      text-align: left;
+      font-weight: bold;
+  }
+  
+  .content-table th,
+  .content-table td {
+      padding: 12px 15px;
+  }
+  
+  .content-table tbody tr {
+      border-bottom: 1px solid #dddd;
+  }
+  
+  .content-table tbody tr:nth-of-type(even) {
+      background-color: #f3f3f3;
+  }
+  
+  .content-table tbody tr:last-of-type {
+      border-bottom: 2px solid #333769;
+  }
+  
+  .content-table tbody tr.active-row {
+      font-weight: bold;
+      color: #333769;
+  }
+</style>
 
 <head>
     <title>HOME-INT</title>
@@ -7,7 +47,7 @@
 <script src="https://kit.fontawesome.com/c8a4eef53d.js" crossorigin="anonymous"></script>
 <form action="/modifica_puesto/{{puestos.0[0]}}" method="post">
     <h2>Editar Puesto</h2>
-    <body style="background-color:#D5DBDB;">
+    <body style="background-color:#ffff;">
     <script type="text/javascript" src="/static/js/jquery-3.2.1.slim.min.js"></script>
     <script type="text/javascript" src="/static/js/popper.min.js"></script>
     <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
@@ -69,7 +109,7 @@
         </div>
         {% endif %}
     </div>
-    <button type="submit" class="btn btn-primary" style="background:lightseagreen">Enviar Cambios &nbsp;<i class="fas fa-paper-plane"></i></button>
+    <button type="submit" class="btn btn-primary">Enviar Cambios &nbsp;<i class="fas fa-paper-plane"></i></button>
 </form>
 <!-- -----------------------------------------------------------------  -->
 <br>
@@ -95,46 +135,39 @@
                              <label for="expe">Experiencia</label>&nbsp;&nbsp;&nbsp;
                              <input type="text" class="form-control" name="expe" id="expe" placeholder="tiempo de experiencia" required>&nbsp;&nbsp;&nbsp;
                          </div>&nbsp;&nbsp;&nbsp;
-                        <button type="submit" class="btn btn-primary" style="background:lightseagreen">Agrega habilidad</button>
+                        <button type="submit" class="btn btn-primary">Agrega habilidad</button>
                     </form>
                   </div>
                   <br>
-                  <div class="panel-body">
-                        <center>
-                        <table width="80%" border="1" cellpadding="0" cellspacing="0" bordercolor="#000000">
-                          <thead>
-                            <tr>
-                                <td color="white" bgcolor="006666"><font color="white">Habilidad</font></td>
-                                <td color="white" bgcolor="006666"><font color="white">Experiencia</font></td>
-                              <td color="white" bgcolor="006666"></td>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {% for puesto in pue_habs %}
-                              <tr>
-                                <td>
-                                  {{ puesto.2 }}
-                                </td>
-                                <td>
-                                  {{ puesto.5 }}
-                                </td>
-                                <td  bgcolor="#9C9C9C" width="60">
-                                  <center><a href="/bo_hab_pto/{{puesto.0}}/{{puesto.4}}" class="btn btn-success"
-                                             style="background:lightseagreen;">Borrar &nbsp;<i class="far fa-edit"></i></a></center>
-                                </td>
-
-                              </tr>
-                            {% endfor %}
-                          </tbody>
-                        </table>
-                        </center>
-                  </div>
-            </div>
-
+                  <center>
+                    <table class="content-table">
+                  </center>
+                  <thead>
+                    <tr>
+                      <th>Habilidad</th>
+                      <th>Experiencia</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for puesto in pue_habs %}
+                    <tr>
+                      <td>
+                        {{ puesto.2 }}
+                      </td>
+                      <td>
+                        {{ puesto.5 }}
+                      </td>
+                      <td  bgcolor="#FFF5757" width="60">
+                        <center><a href="/bo_hab_pto/{{puesto.0}}/{{puesto.4}}" style="color:#FFFFFF; text-decoration:none;">Borrar &nbsp;<i class="far fa-edit"></i></a></center>
+                      </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                  </table>
 <!-- -----------------------------------------------------------------  -->
             <br>
             <center><h3>Requerimientos de Idioma</h3></center>
-
              <div class="panel panel-primary">
                   <div class="panel-heading" >
                     <form class="form-inline" action="/agrega_idio_pto/{{puestos.0[0]}}" method="post">
@@ -152,44 +185,39 @@
                             <label for="nive">Nivel</label>&nbsp;&nbsp;&nbsp;
                             <input type="text" class="form-control" name="nive" id="nive" placeholder="Nivel en el idioma" required>&nbsp;&nbsp;&nbsp;
                         </div>&nbsp;&nbsp;&nbsp;
-                        <button type="submit" class="btn btn-primary" style="background:lightseagreen">Agrega Idioma &nbsp;<i class="fas fa-plus"></i></button>
+                        <button type="submit" class="btn btn-primary">Agrega Idioma &nbsp;<i class="fas fa-plus"></i></button>
                     </form>
                   </div>
                   <br>
-                  <div class="panel-body">
-                        <center>
-                        <table width="80%" border="1" cellpadding="0" cellspacing="0" bordercolor="#000000">
-                          <thead>
-                            <tr>
-                                <td color="white" bgcolor="006666"><font color="white">Idioma</font></td>
-                                <td color="white" bgcolor="006666"><font color="white">Nivel</font></td>
-                              <td color="white" bgcolor="006666"></td>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {% for pue_idi in pue_idis %}
-                              <tr>
-                                <td>
-                                  {{ pue_idi.2 }}
-                                </td>
-                                <td>
-                                  {{ pue_idi.5 }}
-                                </td>
-                                <td  bgcolor="#9C9C9C" width="60">
-                                  <center><a href="/bo_idi_pto/{{ pue_idi.0 }}/{{ pue_idi.4 }}" class="btn btn-success"
-                                             style="background:lightseagreen;">Borrar &nbsp;<i class="fas fa-trash-alt"></i></a></center>
-                                </td>
-
-                              </tr>
-                            {% endfor %}
-                          </tbody>
-                        </table>
-                        </center>
-                  </div>
-            </div>
+                  <center>
+                    <table class="content-table">
+                  </center>
+                  <thead>
+                    <tr>
+                      <th>Idioma</th>
+                      <th>Nivel</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for pue_idi in pue_idis %}
+                    <tr>
+                      <td>
+                        {{ pue_idi.2 }}
+                      </td>
+                      <td>
+                        {{ pue_idi.5 }}
+                      </td>
+                      <td  bgcolor="#FFF5757" width="60">
+                        <center><a href="/bo_idi_pto/{{ pue_idi.0 }}/{{ pue_idi.4 }}" style="color:#FFFFFF; text-decoration:none;">Borrar &nbsp;<i class="fas fa-trash-alt"></i></a></center>
+                      </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                  </table>
             <br><br>
             <center>
-              <a class="btn btn-primary" href="/puesto" align="right" style="background:lightseagreen">Regresar &nbsp;<i class="fas fa-undo-alt"></i></a>
+              <a class="btn btn-primary" href="/puesto" align="right">Regresar &nbsp;<i class="fas fa-undo-alt"></i></a>
             </center>
             <br><br>
 

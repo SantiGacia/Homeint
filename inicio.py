@@ -1492,6 +1492,18 @@ def candidato():
     conn.close()
     return render_template("tabla_candidato.html", candidatos = datos)
 
+##Candidato
+@app.route('/buscar_candidato', methods=['POST'])
+def buscar_candidato():
+    if request.method == 'POST':
+        busca = request.form['busqueda']
+        conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
+        cursor = conn.cursor()
+        cursor.execute(' select Curp, Nombre from candidato WHERE Curp=%s order by Nombre',(busca))
+        datos=cursor.fetchall()
+        conn.close()
+        return render_template("tabla_candidato.html", candidatos = datos)
+
 @app.route('/agrega_candidato', methods=['POST'])
 def agrega_candidato():
     if request.method == 'POST':
@@ -3005,6 +3017,18 @@ def empleado():
     conn.close()
     return render_template("tabla_empleado.html", empleados = datos)
 
+@app.route('/buscar_empleado', methods=['POST'])
+def buscar_empleado():
+    if request.method == 'POST':
+        busca = request.form['busqueda']
+        conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
+        cursor = conn.cursor()
+        cursor.execute(' select Curp, Nombre from empleado order by Nombre',(busca))
+        datos=cursor.fetchall()
+        conn.close()
+        return render_template("tabla_empleado.html", empleados = datos)
+
+
 @app.route('/nvo_empleado')
 def nvo_empleado():
     conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
@@ -3563,6 +3587,18 @@ def contrato():
     conn.close()
     return render_template("tabla_contrato.html", empleados = datos)
 
+##Contrato 
+@app.route('/buscar_contrato', methods=['POST'])
+def buscar_contrato():
+    if request.method == 'POST':
+        busca = request.form['busqueda']
+        conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
+        cursor = conn.cursor()
+        cursor.execute(' select Curp, Nombre from empleado where Curp=%s order by Nombre',(busca))
+        datos=cursor.fetchall()
+        conn.close()
+        return render_template("tabla_contrato.html", empleados = datos)
+
 @app.route('/vercontrato/<string:Curp>')
 def vercontrato(Curp):
     conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
@@ -4107,6 +4143,20 @@ def capacitacion():
     conn.close()
     return render_template("tabla_capacitacion.html", empleados = datos)
 
+###Capacitacion
+@app.route('/buscar_capacitacion', methods=['POST'])
+def buscar_capacitacion():
+    if request.method == 'POST':
+        busca = request.form['busqueda']
+        conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
+        cursor = conn.cursor()
+        cursor.execute(' SELECT a.IdContrato,a.Tipo_contrato, a.Curp, b.nombre, d.descripción '
+                        ' FROM contrato a, empleado b, tipo_contrato d '
+                        ' where a.Curp=b.Curp and d.tipo_contrato=a.Tipo_contrato and a.Curp=%s ', (busca))
+        datos=cursor.fetchall()
+        conn.close()
+        return render_template("tabla_capacitacion.html", empleados = datos)
+
 
 @app.route('/capacitacion_contrato/<string:Curp>')
 def capacitacion_contrato(Curp):
@@ -4120,8 +4170,8 @@ def capacitacion_contrato(Curp):
     return render_template('capacitacion_contrato.html', datos=datos,nombre=nombre, curp=Curp)
 
 
-@app.route('/datoscontrato/<string:Curp>')
-def datoscontrato(Curp,):
+@app.route('/datoscontrato/<string:Curp>/<string:id>')
+def datoscontrato(Curp,id):
     conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
     cursor = conn.cursor()
 
@@ -4131,7 +4181,7 @@ def datoscontrato(Curp,):
 
     cursor.execute('SELECT a.idContrato, a.Curp, a.idPuesto,b.Nombrepuesto, a.idArea, c.AreaNombre ,a.Salario,a.dias_de_pago , a.fecha_inicio, a.fecha_fin, a.idJornada, e.jornombre , a.horas_semana, e.Descripcion, a.horario,a.SalarioL,a.Estatus_contrato,d.descripción, f.descripción '
                     'FROM contrato a, puesto b, area c , estatus_contrato d ,jornada e, tipo_contrato f '
-                    'where a.idPuesto=b.idPuesto and a.idArea= c.idArea and a.idJornada= e.IdJornada and a.Tipo_contrato=f.tipo_contrato and a.Estatus_contrato=d.estatus_contrato and a.Curp=%s',(Curp))
+                    'where a.idPuesto=b.idPuesto and a.idArea= c.idArea and a.idJornada= e.IdJornada and a.Tipo_contrato=f.tipo_contrato and a.Estatus_contrato=d.estatus_contrato and a.idContrato=%s',(id))
     datos9=cursor.fetchall()
 
     conn.close()
