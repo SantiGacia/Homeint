@@ -1,0 +1,60 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<script src="https://kit.fontawesome.com/c8a4eef53d.js" crossorigin="anonymous"></script>
+<body style="background-color:#D5DBDB;">
+<link rel="stylesheet" href="\static\css\tabla2.css">
+<center><h3>Candidatos Seleccionados</h3></center>
+<div id="main-container">
+      <table width="100%" border="1" cellpadding="0" cellspacing="0" bordercolor="#000000">
+       <tbody>
+        <tr>
+          <td color="FFFFFF" bgcolor="#465F5A" valign="top">
+            <table width="100%" border="1" cellpadding="0" cellspacing="0" bordercolor="#000000">
+              <thead>
+                <tr>
+                    <td color="white" bgcolor="006666"><font color="white">Curp</font></td>
+                    <td color="white" bgcolor="006666"><font color="white">Nombre</font></td>
+                    <td color="white" bgcolor="006666"><font color="white">Nivel Academico</font></td>
+                    <td color="white" bgcolor="006666"><font color="white">Carrera</font></td>
+                    <td color="white" bgcolor="006666"><font color="white"></font></td>
+                    <td color="white" bgcolor="006666"><font color="white"></font></td>
+                </tr>
+              </thead>
+                <tbody>
+                {% for can_seleccionado in can_seleccionados %}
+                  <tr>
+                    <td>
+                        {{ can_seleccionado.0 }}
+                    </td>
+                    <td>
+                        {{ can_seleccionado.1 }}
+                    </td>
+                    <td>
+                        {{ can_seleccionado.4 }}
+                    </td>
+                    <td>
+                        {{ can_seleccionado.5 }}
+                    </td>
+                    <td bgcolor="#9C9C9C" width="60">
+                        <center><a href="/#" class="btn btn-success" style="background:lightseagreen">Apto&nbsp;<i class="fas fa-check"></i></a></center>
+                    </td>
+                    <td  bgcolor="#BFBFBF" width="60">
+                        <center><a href="/#" class="btn btn-success" style="background:lightseagreen">No Apto&nbsp;<i class="fas fa-times"></i></a></center>
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+          <script type="text/javascript" src="/static/js/jquery-3.2.1.slim.min.js"></script>
+    <script type="text/javascript" src="/static/js/popper.min.js"></script>
+    <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+    </table>
+</div>
+</body>
+
+
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+{% block content %}
+<head>
+
+</head>
+<script src="https://kit.fontawesome.com/c8a4eef53d.js" crossorigin="anonymous"></script>
+<body style="background-color:#D5DBDB;">
+<link rel="stylesheet" href="\static\css\tabla2.css">
+<a href="/area" class="btn btn-success" style="background:lightseagreen">Agregar área&nbsp;<i class="fas fa-plus"></i></a>
+<center><h3>Areas registradas</h3></center>
+<div id="main-container">
+      <table width="100%" border="1" cellpadding="0" cellspacing="0">
+        <tr>
+          <td color="FFFFFF" bgcolor="646B63" valign="top">
+            <table width="100%" border="1" cellpadding="0" cellspacing="0" bordercolor="#000000">
+              <thead>
+                <tr>
+                  <td color="white" bgcolor="006666">Nombre del área</td>
+                  <td color="white" bgcolor="006666">Descripción del área</td>
+                  <td color="white" bgcolor="006666"></td>
+                  <td color="white" bgcolor="006666"></td>
+                </tr>
+              </thead>
+              <tbody>
+                {% for tarea in areas %}
+                  <tr>
+                    <td>
+                      {{ tarea.1 }}
+                    </td>
+                    <td>
+                      {{ tarea.2 }}
+                    </td>
+                    <td bgcolor="#9C9C9C" width="60">
+                      <center><a href="/ed_area/{{tarea.0}}" class="btn btn-success" style="background:lightseagreen">Editar&nbsp;<i class="far fa-edit"></i></a></center>
+                    </td>
+                    <td  bgcolor="#BFBFBF" width="60">
+                      <center><a href="/bo_area/{{tarea.0}}" class="btn btn-success" style="background:lightseagreen">Borrar&nbsp;<i class="fas fa-trash-alt"></i></a></center>
+                    </td>
+
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+        <script type="text/javascript" src="/static/js/jquery-3.2.1.slim.min.js"></script>
+    <script type="text/javascript" src="/static/js/popper.min.js"></script>
+    <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+    </table>
+
+</center>
+</div>
+</body>
+
+{% endblock %}

@@ -1,0 +1,202 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<head>
+  <script src="https://kit.fontawesome.com/c8a4eef53d.js" crossorigin="anonymous"></script>
+    <title>HOME-INT</title>
+</head>
+<body style="background-color:#D5DBDB;">
+<br>
+<form action="/modifica_candidato/{{candidatos.0[0]}}" method="post">
+<h2>Perfil del Candidato</h2>
+    <script type="text/javascript" src="/static/js/jquery-3.2.1.slim.min.js"></script>
+    <script type="text/javascript" src="/static/js/popper.min.js"></script>
+    <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+    <div class="form-row">
+        <div class="form-group col-md-2">
+            <label for="curp">CURP</label>
+        <input type="text" class="form-control" name="curp" id="curp" value="{{candidatos.0[0]}}" disabled>
+        </div>
+        <div class="form-group col-md-9">
+            <label for="nombre">AP. Paterno    Ap.Materno    Nombre(s)</label>
+            <input type="text" class="form-control" name="nombre" id="nombre" value="{{candidatos.0[2]}}" disabled>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-7">
+            <label for="domicilio">Domicilio</label>
+            <input type="text" class="form-control" name="domicilio" id="domicilio" value="{{candidatos.0[3]}}" disabled>
+        </div>
+        <div class="form-group col-md-4">
+            <label for="rfc">RFC</label>
+            <input type="text" class="form-control" name="rfc" id="rfc" placeholder="0101010101" value="{{candidatos.0[1]}}" disabled>
+        </div>
+        <div class="form-group col-md-7">
+          <label for="nacionalidad">Nacionalidad</label>
+          <input type="text" class="form-control" name="nacionalidad" id="nacionalidad" value="{{candidatos.0[10]}}" disabled>
+      </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-2">
+            <label for="telefono">Telefono</label>
+        <input type="text" class="form-control" name="telefono" id="telefono" value="{{candidatos.0[4]}}" disabled>
+        </div>
+        <div class="form-group col-md-3">
+            <label for="correoe">Correo Electronico</label>
+            <input type="email" class="form-control" name="correoe" id="correoe" value="{{candidatos.0[5]}}" disabled>
+        </div>
+
+        <div class="form-group col-md-1">
+            <label for="edad">Edad</label>
+        <input type="text" class="form-control" name="edad" id="edad" value="{{candidatos.0[7]}}" disabled>
+        </div>
+        <div class="form-group col-md-1">
+            <label for="nss">N.S.S</label>
+            <input type="text" class="form-control" name="nss" id="nss" value="{{candidatos.0[8]}}" disabled>
+        </div>
+        <div class="form-group col-md-2">
+            <label for="sexo">Sexo</label>
+            <select name="sexo" id="sexo" class="form-control" disabled>
+              {% if candidatos.0[6]== "M" %}
+              <option value="M">Masculino</option>
+              <option value="F">Femenino</option>
+            {% else %}
+               <option value="F">Femenino</option>
+               <option value="M">Masculino</option>
+            {% endif %}
+            </select>
+        </div>
+        <div class="form-group col-md-2">
+            <label for="edociv">E. Civil</label>
+            <select name="edociv" id="edociv" class="form-control" disabled>
+              <option selected>{{candidatos.0[11]}}</option>
+            </select>
+        </div>
+    </div>
+
+</form>
+<br>
+
+<!-- -----------------------------------------------------------------  -->
+<br>
+<br>
+<center><h3>Habilidades asociadas</h3></center>
+<div class="panel panel-primary">
+
+                  <br>
+                  <div class="panel-body">
+                        <center>
+                        <table width="80%" border="1" cellpadding="0" cellspacing="0" bordercolor="#000000">
+                          <thead>
+                            <tr>
+                                <td color="white" bgcolor="006666"><font color="white">Habilidad</font></td>
+                                <td color="white" bgcolor="006666"><font color="white">Experiencia</font></td>
+                                <td color="white" bgcolor="006666"><font color="white">Evaluacion</font></td>
+
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {% for can_hab in can_habs %}
+                              <tr>
+                                <td>
+                                  {{ can_hab.2 }}
+                                </td>
+                                <td>
+                                  {{ can_hab.5 }}
+                                </td>
+                                <td>
+                                    {{ can_hab.6 }}
+                                </td>
+
+                              </tr>
+                            {% endfor %}
+                          </tbody>
+                        </table>
+                        </center>
+                  </div>
+            </div>
+
+<!-- -----------------------------------------------------------------  -->
+            <br>
+            <center><h3>Requerimientos de Idioma</h3></center>
+
+             <div class="panel panel-primary">
+
+                  <br>
+                  <div class="panel-body">
+                        <center>
+                        <table width="80%" border="1" cellpadding="0" cellspacing="0" bordercolor="#000000">
+                          <thead>
+                            <tr>
+                                <td color="white" bgcolor="006666"><font color="white">Idioma</font></td>
+                                <td color="white" bgcolor="006666"><font color="white">Nivel</font></td>
+                                <td color="white" bgcolor="006666"><font color="white">Evaluacion</font></td>
+
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {% for can_idi in can_idis %}
+                              <tr>
+                                <td>
+                                  {{ can_idi.2 }}
+                                </td>
+                                <td>
+                                  {{ can_idi.5 }}
+                                </td>
+                                <td>
+                                    {{ can_idi.6 }}
+                                </td>
+
+                              </tr>
+                            {% endfor %}
+                          </tbody>
+                        </table>
+                        </center>
+                  </div>
+            </div>
+<br>
+            <center><h3>Requerimientos de Nivel Academico</h3></center>
+
+             <div class="panel panel-primary">
+                  <br>
+                  <div class="panel-body">
+                        <center>
+                        <table width="80%" border="1" cellpadding="0" cellspacing="0" bordercolor="#000000">
+                          <thead>
+                            <tr>
+                                <td color="white" bgcolor="006666"><font color="white">Nivel Academico</font></td>
+                                <td color="white" bgcolor="006666"><font color="white">Carrera</font></td>
+                                <td color="white" bgcolor="006666"><font color="white">Institucion</font></td>
+                                <td color="white" bgcolor="006666"><font color="white">Evaluacion</font></td>
+
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {% for can_aca in can_acas %}
+                              <tr>
+                                <td>
+                                  {{ can_aca.2 }}
+                                </td>
+                                <td>
+                                  {{ can_aca.4 }}
+                                </td>
+                                  <td>
+                                  {{ can_aca.8 }}
+                                </td>
+                                <td>
+                                    {{ can_aca.9 }}
+                                </td>
+
+                              </tr>
+                            {% endfor %}
+                          </tbody>
+                        </table>
+                        </center>
+                  </div>
+            </div>
+    <center><a class="btn btn-primary" href="/agr_candidato_contratacion" align="right" style="background:lightseagreen">Solicitudes </a></center>
+
+
+
+</body>
+{% endblock %}
