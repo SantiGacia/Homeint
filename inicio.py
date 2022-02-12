@@ -129,10 +129,17 @@ def bo_habilidad(id):
 def ed_habilidad(id):
     conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
     cursor = conn.cursor()
-    cursor.execute('select idHabilidad, Descripcion from habilidad where idHabilidad = %s', (id))
-    dato=cursor.fetchall()
-    conn.close()
-    return render_template("edi_habilidad.html", habs = dato[0])
+    cursor.execute('select count(*) from puesto_has_habilidad where idHabilidad = {0}'.format(id))
+    solicitudes = cursor.fetchone()
+    if (solicitudes[0] != 0):
+        error = "La habilidad tiene dependientes, no puede ser editado."
+        return render_template("advertencia.html", des_error=error, paginaant="/agr_datos_habilidad")
+    else:
+        cursor.execute('select idHabilidad, Descripcion from habilidad where idHabilidad = %s', (id))
+        dato=cursor.fetchall()
+        conn.close()
+        return render_template("edi_habilidad.html", habs = dato[0])
+    
 
 @app.route('/modifica_habilidad/<string:id>', methods=['POST'])
 def modifica_habilidad(id):
@@ -150,8 +157,6 @@ def modifica_habilidad(id):
             conn.commit()
             conn.close()
             return redirect(url_for('agr_datos_habilidad'))
-    return redirect(url_for('agr_datos_habilidad'))
-
 
 # Carrera
 @app.route('/carrera')
@@ -197,10 +202,16 @@ def modifica_carrera(id):
 def ed_carrera(id):
     conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
     cursor = conn.cursor()
-    cursor.execute('select idCarrera, Descripcion from carrera where idCarrera = %s', (id))
-    dato=cursor.fetchall()
-    conn.close()
-    return render_template("edi_carrera.html", nivel = dato[0])
+    cursor.execute('select count(*) from solicitud where idCarrera = {0}'.format(id))
+    solicitudes = cursor.fetchone()
+    if (solicitudes[0] != 0):
+        error = "La carrera tiene dependientes, no puede ser editado."
+        return render_template("advertencia.html", des_error=error, paginaant="/agr_datos_carrera")
+    else:
+        cursor.execute('select idCarrera, Descripcion from carrera where idCarrera = %s', (id))
+        dato=cursor.fetchall()
+        conn.close()
+        return render_template("edi_carrera.html", nivel = dato[0])
 
 
 @app.route('/agr_datos_carrera')
@@ -280,10 +291,16 @@ def agr_datos_publicidad():
 def ed_publicidad(id):
     conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
     cursor = conn.cursor()
-    cursor.execute('select idMedioPublicidad, Descripcion from mediopublicidad where idMedioPublicidad = %s', (id))
-    dato=cursor.fetchall()
-    conn.close()
-    return render_template("edi_publicidad.html", nivel=dato[0])
+    cursor.execute('select count(*) from anuncio where idMedioPublicidad = {0}'.format(id))
+    solicitudes=cursor.fetchone()
+    if (solicitudes[0] != 0):
+        error = "El medio tiene dependientes, no puede ser editado."
+        return render_template("advertencia.html", des_error=error, paginaant="/agr_datos_publicidad")
+    else:
+        cursor.execute('select idMedioPublicidad, Descripcion from mediopublicidad where idMedioPublicidad = %s', (id))
+        dato=cursor.fetchall()
+        conn.close()
+        return render_template("edi_publicidad.html", nivel=dato[0])
 
 @app.route('/modifica_publicidad/<string:id>', methods=['POST'])
 def modifica_publicidad(id):
@@ -353,10 +370,16 @@ def agr_datos_nivel_academico():
 def ed_nivel(id):
     conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
     cursor = conn.cursor()
-    cursor.execute('select idNivelAcademico, Descripcion from nivelacademico where idNivelAcademico = %s', (id))
-    dato=cursor.fetchall()
-    conn.close()
-    return render_template("edi_nivel_academico.html", nivel = dato[0])
+    cursor.execute('select count(*) from candidato_has_nivelacademico where idNivelAcademico = {0}'.format(id))
+    solicitudes=cursor.fetchone()
+    if (solicitudes[0] != 0):
+        error = "El nivel tiene dependientes, no puede ser editado."
+        return render_template("advertencia.html", des_error=error, paginaant="/agr_datos_nivel_academico")
+    else:
+        cursor.execute('select idNivelAcademico, Descripcion from nivelacademico where idNivelAcademico = %s', (id))
+        dato=cursor.fetchall()
+        conn.close()
+        return render_template("edi_nivel_academico.html", nivel = dato[0])
 
 @app.route('/modifica_nivel/<string:id>', methods=['POST'])
 def modifica_nivel(id):
@@ -784,10 +807,16 @@ def agr_datos_idioma():
 def ed_idioma(id):
     conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
     cursor = conn.cursor()
-    cursor.execute('select idIdioma,Lenguaje from idioma where idIdioma = %s', (id))
-    dato=cursor.fetchall()
-    conn.close()
-    return render_template("edi_idioma.html", nivel = dato[0])
+    cursor.execute('select count(*) from puesto_has_idioma where idIdioma = {0}'.format(id))
+    solicitudes = cursor.fetchone()
+    if (solicitudes[0] != 0):
+        error = "El idioma tiene dependientes, no puede ser editado."
+        return render_template("advertencia.html", des_error=error, paginaant="/agr_datos_idioma")
+    else:
+        cursor.execute('select idIdioma,Lenguaje from idioma where idIdioma = %s', (id))
+        dato=cursor.fetchall()
+        conn.close()
+        return render_template("edi_idioma.html", nivel = dato[0])
 
 ##curso
 
@@ -816,10 +845,16 @@ def curso_agr():
 def bo_curso(id):
     conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
     cursor = conn.cursor()
-    cursor.execute('delete from curso where idcurso = {0}'.format(id))
-    conn.commit()
-    conn.close()
-    return redirect(url_for('agr_datos_curso'))
+    cursor.execute('select count(*) from capacitacion where idcurso = {0}'.format(id))
+    solicitudes = cursor.fetchone()
+    if (solicitudes[0] != 0):
+        error = "El curso tiene dependientes, no puede ser borrado."
+        return render_template("error.html", des_error=error, paginaant="/agr_datos_curso")
+    else:
+        cursor.execute('delete from curso where idcurso = {0}'.format(id))
+        conn.commit()
+        conn.close()
+        return redirect(url_for('agr_datos_curso'))
 
 @app.route('/agr_datos_curso')
 def agr_datos_curso():
@@ -834,10 +869,16 @@ def agr_datos_curso():
 def ed_curso(id):
     conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
     cursor = conn.cursor()
-    cursor.execute('select idcurso, nombre, Descripcion from curso where idcurso = %s', (id))
-    dato=cursor.fetchall()
-    conn.close()
-    return render_template("edi_curso.html", curso = dato[0])
+    cursor.execute('select count(*) from capacitacion where idcurso = {0}'.format(id))
+    solicitudes = cursor.fetchone()
+    if (solicitudes[0] != 0):
+        error = "El curso tiene dependientes, no puede ser editado."
+        return render_template("advertencia.html", des_error=error, paginaant="/agr_datos_curso")
+    else:
+        cursor.execute('select idcurso, nombre, Descripcion from curso where idcurso = %s', (id))
+        dato=cursor.fetchall()
+        conn.close()
+        return render_template("edi_curso.html", curso = dato[0])
 
 @app.route('/modifica_curso/<string:id>', methods=['POST'])
 def modifica_curso(id):
@@ -855,7 +896,7 @@ def modifica_curso(id):
             cursor.execute('update curso set nombre=%s, Descripcion=%s where idcurso=%s', (nombr, descrip, id))
             conn.commit()
             conn.close()
-    return redirect(url_for('agr_datos_curso'))
+            return redirect(url_for('agr_datos_curso'))
 
 
 
@@ -895,10 +936,16 @@ def agr_datos_area():
 def ed_area(id):
     conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
     cursor = conn.cursor()
-    cursor.execute('select idArea, AreaNombre, AreaDescripcion from area where idArea = %s', (id))
-    dato=cursor.fetchall()
-    conn.close()
-    return render_template("edi_area.html", tarea = dato[0])
+    cursor.execute('select count(*) from solicitud where idArea = {0}'.format(id))
+    solicitudes = cursor.fetchone()
+    if (solicitudes[0] != 0):
+        error = "El area tiene dependientes, no puede ser editado."
+        return render_template("advertencia.html", des_error=error, paginaant="/agr_datos_area")
+    else:
+        cursor.execute('select idArea, AreaNombre, AreaDescripcion from area where idArea = %s', (id))
+        dato=cursor.fetchall()
+        conn.close()
+        return render_template("edi_area.html", tarea = dato[0])
 
 @app.route('/modifica_area/<string:id>', methods=['POST'])
 def modifica_area(id):
@@ -984,10 +1031,16 @@ def agr_datos_jor():
 def ed_jor(id):
     conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
     cursor = conn.cursor()
-    cursor.execute('select idJornada, jorNombre, Descripcion from jornada where idJornada = %s', (id))
-    dato=cursor.fetchall()
-    conn.close()
-    return render_template("edi_jor.html", tarea = dato[0])
+    cursor.execute('select count(*) from contrato where idJornada = {0}'.format(id))
+    solicitudes = cursor.fetchone()
+    if (solicitudes[0] != 0):
+        error = "La jornada tiene dependientes, no puede ser editada."
+        return render_template("advertencia.html", des_error=error, paginaant="/agr_datos_jor")
+    else:
+        cursor.execute('select idJornada, jorNombre, Descripcion from jornada where idJornada = %s', (id))
+        dato=cursor.fetchall()
+        conn.close()
+        return render_template("edi_jor.html", tarea = dato[0])
 
 @app.route('/modifica_jor/<string:id>', methods=['POST'])
 def modifica_jor(id):
@@ -1027,10 +1080,16 @@ def modifica_jor(id):
 def bo_jor(id):
     conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
     cursor = conn.cursor()
-    cursor.execute('delete from jornada where idJornada = {0}'.format(id))
-    conn.commit()
-    conn.close()
-    return redirect(url_for('agr_datos_jor'))
+    cursor.execute('select count(*) from contrato where idJornada = {0}'.format(id))
+    solicitudes = cursor.fetchone()
+    if (solicitudes[0] != 0):
+        error = "La jornada tiene dependientes, no puede ser borrada."
+        return render_template("advertecia.html", des_error=error, paginaant="/agr_datos_jor")
+    else:
+        cursor.execute('delete from jornada where idJornada = {0}'.format(id))
+        conn.commit()
+        conn.close()
+        return redirect(url_for('agr_datos_jor'))
 
 
 
@@ -1079,10 +1138,16 @@ def modifica_tipo(id):
 def ed_tipo(id):
     conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
     cursor = conn.cursor()
-    cursor.execute('select tipo_contrato, descripción from tipo_contrato where tipo_contrato = %s', (id))
-    dato=cursor.fetchall()
-    conn.close()
-    return render_template("edi_tipo.html", tipo = dato[0])
+    cursor.execute('select count(*) from tipo_contrato where tipo_contrato = {0}'.format(id))
+    tipo = cursor.fetchone()
+    if (tipo[0] == 0):
+        error = "El tipo de contrato tiene dependientes, no puede ser editado."
+        return render_template("advertencia.html", des_error=error, paginaant="/agr_datos_tipo")
+    else:
+        cursor.execute('select tipo_contrato, descripción from tipo_contrato where tipo_contrato = %s', (id))
+        dato=cursor.fetchall()
+        conn.close()
+        return render_template("edi_tipo.html", tipo = dato[0])
 
 
 @app.route('/agr_datos_tipo')
@@ -1152,10 +1217,16 @@ def agr_datos_contacto():
 def ed_contacto(id):
     conn = pymysql.connect(host='localhost', user='root', passwd='', db='r_humanos')
     cursor = conn.cursor()
-    cursor.execute('select idcontacto,Nombre,Domicilio,Razon_Social,Telefono,Email,Link from contacto where idcontacto = %s', (id))
-    dato=cursor.fetchall()
-    conn.close()
-    return render_template("edi_Contacto.html", tcontacto = dato[0])
+    cursor.execute('select count(*) from anuncio where idcontacto = {0}'.format(id))
+    solicitudes=cursor.fetchone()
+    if (solicitudes[0] != 0):
+        error = "El contacto tiene dependientes, no puede ser editado."
+        return render_template("advertencia.html", des_error=error, paginaant="/agr_datos_contacto")
+    else:
+        cursor.execute('select idcontacto,Nombre,Domicilio,Razon_Social,Telefono,Email,Link from contacto where idcontacto = %s', (id))
+        dato=cursor.fetchall()
+        conn.close()
+        return render_template("edi_Contacto.html", tcontacto = dato[0])
 
 @app.route('/modifica_contacto/<string:id>', methods=['POST'])
 def modifica_contacto(id):
