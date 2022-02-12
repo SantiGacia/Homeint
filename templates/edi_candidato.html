@@ -1,10 +1,50 @@
-{% extends "layout.html" %}
-{% block content %}
+{% extends "layout.html" %} {% block content %}
+
+<style>
+  .content-table {
+      border-collapse: collapse;
+      margin: 25px 0;
+      font-size: 0.9en;
+      min-width: 600px;
+      border-radius: 5px 5px 0 0;
+      overflow: hidden;
+      box-shadow: 0 0 20px rgb(0, 0, 0, 0.15);
+  }
+  
+  .content-table thead tr {
+      background-color: #333769;
+      color: #ffff;
+      text-align: left;
+      font-weight: bold;
+  }
+  
+  .content-table th,
+  .content-table td {
+      padding: 12px 15px;
+  }
+  
+  .content-table tbody tr {
+      border-bottom: 1px solid #dddd;
+  }
+  
+  .content-table tbody tr:nth-of-type(even) {
+      background-color: #f3f3f3;
+  }
+  
+  .content-table tbody tr:last-of-type {
+      border-bottom: 2px solid #333769;
+  }
+  
+  .content-table tbody tr.active-row {
+      font-weight: bold;
+      color: #333769;
+  }
+</style>
 
 <head>
     <title>HOME-INT</title>
 </head>
-<body style="background-color:#D5DBDB;">
+<body style="background-color:#ffff;">
 <br>
 <script src="https://kit.fontawesome.com/c8a4eef53d.js" crossorigin="anonymous"></script>
 <form action="/modifica_candidato/{{candidatos.0[0]}}" method="post">
@@ -99,8 +139,8 @@
             </select>
         </div>
     </div>
-    <button type="submit" class="btn btn-primary" style="background:lightseagreen">Enviar Cambios &nbsp;<i class="fas fa-paper-plane"></i></button>
-    <a href="/candidato" class="btn btn-success" style="background:lightseagreen;">Regresar &nbsp;<i class="fas fa-undo-alt"></i></a>
+    <button type="submit" class="btn btn-primary">Enviar Cambios &nbsp;<i class="fas fa-paper-plane"></i></button>
+    <a href="/candidato" class="btn btn-primary">Regresar &nbsp;<i class="fas fa-undo-alt"></i></a>
 </form>
 <br>
 
@@ -127,18 +167,18 @@
                              <label for="expe">Experiencia</label>&nbsp;&nbsp;&nbsp;
                              <input type="text" class="form-control" name="expe" id="expe" placeholder="tiempo de experiencia" required="">&nbsp;&nbsp;&nbsp;
                          </div>&nbsp;&nbsp;&nbsp;
-                        <button type="submit" class="btn btn-primary" style="background:lightseagreen">Agrega habilidad &nbsp;<i class="fas fa-plus"></i></button>
+                        <button type="submit" class="btn btn-primary">Agrega habilidad &nbsp;<i class="fas fa-plus"></i></button>
                     </form>
                   </div>
                   <br>
-                  <div class="panel-body">
-                        <center>
-                        <table width="80%" border="1" cellpadding="0" cellspacing="0" bordercolor="#000000">
+                  <center>
+                    <table class="content-table">
+                  </center>
                           <thead>
                             <tr>
-                                <td color="white" bgcolor="006666"><font color="white">Habilidad</font></td>
-                                <td color="white" bgcolor="006666"><font color="white">Experiencia</font></td>
-                              <td color="white" bgcolor="006666"></td>
+                                <th>Habilidad</th>
+                                <th>Experiencia</th>
+                              <th>></th>
                             </tr>
                           </thead>
                           <tbody>
@@ -150,9 +190,8 @@
                                 <td>
                                   {{ can_hab.5 }}
                                 </td>
-                                <td  bgcolor="#9C9C9C" width="60">
-                                  <center><a href="/bo_hab_can/{{can_hab.0}}/{{ can_hab.4 }}" class="btn btn-success"
-                                             style="background:lightseagreen;">Borrar &nbsp;<i class="fas fa-trash-alt"></i></a></center>
+                                <td  bgcolor="#FFF5757" width="60">
+                                  <center><a href="/bo_hab_can/{{can_hab.0}}/{{ can_hab.4 }}" style="color:#FFFFFF; text-decoration:none;">Borrar &nbsp;<i class="fas fa-trash-alt"></i></a></center>
                                 </td>
 
                               </tr>
@@ -183,18 +222,18 @@
                             <label for="nive">Nivel</label>&nbsp;&nbsp;&nbsp;
                             <input type="text" class="form-control" name="nive" id="nive" placeholder="Nivel en el idioma" required="">&nbsp;&nbsp;&nbsp;
                         </div>&nbsp;&nbsp;&nbsp;
-                        <button type="submit" class="btn btn-primary" style="background:lightseagreen">Agrega Idioma &nbsp;<i class="fas fa-plus"></i></button>
+                        <button type="submit" class="btn btn-primary">Agrega Idioma &nbsp;<i class="fas fa-plus"></i></button>
                     </form>
                   </div>
                   <br>
-                  <div class="panel-body">
-                        <center>
-                        <table width="80%" border="1" cellpadding="0" cellspacing="0" bordercolor="#000000">
+                  <center>
+                    <table class="content-table">
+                  </center>
                           <thead>
                             <tr>
-                                <td color="white" bgcolor="006666"><font color="white">Idioma</font></td>
-                                <td color="white" bgcolor="006666"><font color="white">Nivel</font></td>
-                              <td color="white" bgcolor="006666"></td>
+                                <th>Idioma</th>
+                                <th>Nivel</th>
+                              <th>></th>
                             </tr>
                           </thead>
                           <tbody>
@@ -206,8 +245,8 @@
                                 <td>
                                   {{ can_idi.5 }}
                                 </td>
-                                <td  bgcolor="#9C9C9C" width="60">
-                                  <center><a href="/bo_idi_can/{{ can_idi.0 }}/{{ can_idi.4 }}" class="btn btn-success" style="background:lightseagreen;">Borrar &nbsp;<i class="fas fa-trash-alt"></i></a></center>
+                                <td  bgcolor="#FFF5757" width="60">
+                                  <center><a href="/bo_idi_can/{{ can_idi.0 }}/{{ can_idi.4 }}" style="color:#FFFFFF; text-decoration:none;">Borrar &nbsp;<i class="fas fa-trash-alt"></i></a></center>
                                 </td>
                               </tr>
                             {% endfor %}
@@ -242,20 +281,20 @@
                             <label for="nive">Institucion</label>&nbsp;&nbsp;&nbsp;
                             <input type="text" class="form-control" name="insti" id="insti" placeholder="Institucion" required="">&nbsp;&nbsp;&nbsp;
 
-                      <center><button type="submit" class="btn btn-primary" style="background:lightseagreen">Agrega Nivel Academico &nbsp;<i class="fas fa-plus"></i></button></center>
+                      <center><button type="submit" class="btn btn-primary">Agrega Nivel Academico &nbsp;<i class="fas fa-plus"></i></button></center>
                       </div>
                     </form>
                   </div>
                   <br>
-                  <div class="panel-body">
-                        <center>
-                        <table width="80%" border="1" cellpadding="0" cellspacing="0" bordercolor="#000000">
+                  <center>
+                    <table class="content-table">
+                  </center>
                           <thead>
                             <tr>
-                                <td color="white" bgcolor="006666"><font color="white">Nivel Académico</font></td>
-                                <td color="white" bgcolor="006666"><font color="white">Carrera</font></td>
-                                <td color="white" bgcolor="006666"><font color="white">Institución</font></td>
-                              <td color="white" bgcolor="006666"></td>
+                                <th>Nivel Académico</th>
+                                <th>Carrera</th>
+                                <th>Institución</th>
+                              <th>></th>
                             </tr>
                           </thead>
                           <tbody>
@@ -270,8 +309,8 @@
                                   <td>
                                   {{ can_aca.8 }}
                                 </td>
-                                <td  bgcolor="#9C9C9C" width="60">
-                                  <center><a href="/bo_aca_can/{{ can_aca.0 }}/{{ can_aca.1 }}/{{can_aca.3}}" class="btn btn-success" style="background:lightseagreen;">Borrar &nbsp;<i class="fas fa-trash-alt"></i></a></center>
+                                <td  bgcolor="#FFF5757" width="60">
+                                  <center><a href="/bo_aca_can/{{ can_aca.0 }}/{{ can_aca.1 }}/{{can_aca.3}}" style="color:#FFFFFF; text-decoration:none;">Borrar &nbsp;<i class="fas fa-trash-alt"></i></a></center>
                                 </td>
 
                               </tr>
